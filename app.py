@@ -25,12 +25,11 @@ app.config.update(
 )
 db = SQLAlchemy(app)
 
-# Sample social links data
+# Social links data
 social_links = [
-    {'name': 'Twitter', 'url': 'https://twitter.com/johndoe', 'icon': 'fa-twitter'},
-    {'name': 'LinkedIn', 'url': 'https://linkedin.com/in/johndoe', 'icon': 'fa-linkedin'},
-    {'name': 'GitHub', 'url': 'https://github.com/johndoe', 'icon': 'fa-github'},
-    {'name': 'Instagram', 'url': 'https://instagram.com/johndoe', 'icon': 'fa-instagram'}
+    {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter'},
+    {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
+    {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
 ]
 
 class LinkClick(db.Model):
