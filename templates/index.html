@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 text-center">
+            <div class="profile-section mb-4">
+                <img src="https://images.unsplash.com/photo-1576558656222-ba66febe3dec" 
+                     alt="Profile Picture" 
+                     class="profile-image mb-3">
+                <h1 class="display-6 mb-2">John Doe</h1>
+                <p class="text-muted mb-4">Digital Creator & Developer</p>
+            </div>
+
+            <div class="links-section">
+                {% for link in social_links %}
+                <a href="{{ link.url }}" 
+                   class="btn btn-outline-secondary d-block mb-3 social-link"
+                   data-link-name="{{ link.name }}"
+                   target="_blank">
+                    <i class="fab {{ link.icon }} me-2"></i>
+                    {{ link.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
