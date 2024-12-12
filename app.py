@@ -1,24 +1,27 @@
 import logging
+import os
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-import os
+from flask_cors import CORS
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)
 
-# Configure SQLite database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///links.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Database configuration
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///links.db')
+if database_url.startswith("postgres://"):
+    database_url = database_url.replace("postgres://", "postgresql://", 1)
 
-# Force HTTP configuration
 app.config.update(
-    PREFERRED_URL_SCHEME='http',
+    SQLALCHEMY_DATABASE_URI=database_url,
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
     SESSION_COOKIE_SECURE=False,
     SESSION_COOKIE_HTTPONLY=True,
-    SERVER_NAME=None
+    PREFERRED_URL_SCHEME='http'
 )
 db = SQLAlchemy(app)
 
