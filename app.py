@@ -14,6 +14,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///links.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['PREFERRED_URL_SCHEME'] = 'http'
 app.config['SESSION_COOKIE_SECURE'] = False
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+
+# Ensure no SSL redirect
+app.config['PREFERRED_URL_SCHEME'] = 'http'
+app.config['SERVER_NAME'] = None
 db = SQLAlchemy(app)
 
 # Sample social links data
