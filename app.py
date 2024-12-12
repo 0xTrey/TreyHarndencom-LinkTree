@@ -9,9 +9,11 @@ logging.basicConfig(level=logging.DEBUG)
 # Initialize Flask app
 app = Flask(__name__)
 
-# Configure SQLite database
+# Configure SQLite database and force HTTP
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///links.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['PREFERRED_URL_SCHEME'] = 'http'
+app.config['SESSION_COOKIE_SECURE'] = False
 db = SQLAlchemy(app)
 
 # Sample social links data
