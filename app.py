@@ -9,16 +9,17 @@ logging.basicConfig(level=logging.DEBUG)
 # Initialize Flask app
 app = Flask(__name__)
 
-# Configure SQLite database and force HTTP
+# Configure SQLite database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///links.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['PREFERRED_URL_SCHEME'] = 'http'
-app.config['SESSION_COOKIE_SECURE'] = False
-app.config['SESSION_COOKIE_HTTPONLY'] = True
 
-# Ensure no SSL redirect
-app.config['PREFERRED_URL_SCHEME'] = 'http'
-app.config['SERVER_NAME'] = None
+# Force HTTP configuration
+app.config.update(
+    PREFERRED_URL_SCHEME='http',
+    SESSION_COOKIE_SECURE=False,
+    SESSION_COOKIE_HTTPONLY=True,
+    SERVER_NAME=None
+)
 db = SQLAlchemy(app)
 
 # Sample social links data
