@@ -26,27 +26,137 @@ app.config.update(
     PREFERRED_URL_SCHEME='https'
 )
 
-# Configure CORS for custom domains
-ALLOWED_ORIGINS = os.environ.get('ALLOWED_ORIGINS', '*').split(',')
-CORS(app, resources={
-    r"/*": {
-        "origins": ALLOWED_ORIGINS,
-        "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"],
-        "supports_credentials": True
-    }
-})
+# Configure domain settings
+def validate_domain(domain):
+    """Validate and format domain string."""
+    if not domain:
+        return None
+    
+    domain = domain.strip().lower()
+    
+    # Remove protocol if present
+    if domain.startswith(('http://', 'https://')):
+        domain = domain.split('://', 1)[1]
+    
+    # Remove trailing slashes
+    domain = domain.rstrip('/')
+    
+    # Basic domain validation
+    if not all(c.isalnum() or c in '-._' for c in domain.replace('/', '')):
+        logger.warning(f"Invalid domain format: {domain}")
+        return None
+        
+    return domain
+
+def setup_domains():
+    """Configure allowed domains for the application."""
+    logger.info("Setting up domain configuration...")
+    allowed_origins = set()
+    
+    try:
+        # Get Replit domain
+        repl_slug = os.environ.get('REPL_SLUG', 'workspace')
+        repl_owner = os.environ.get('REPL_OWNER', 'harndentrey')
+        replit_domain = f"{repl_slug}.{repl_owner}.repl.co"
+        allowed_origins.add(f"https://{replit_domain}")
+        logger.info(f"Added Replit domain: {replit_domain}")
+        
+        # Add custom domain if specified
+        custom_domain = validate_domain(os.environ.get('CUSTOM_DOMAIN', ''))
+        if custom_domain:
+            allowed_origins.add(f"https://{custom_domain}")
+            logger.info(f"Added custom domain: {custom_domain}")
+        
+        # Add additional domains
+        additional_domains = os.environ.get('ADDITIONAL_DOMAINS', '').strip()
+        if additional_domains:
+            for domain in additional_domains.split(','):
+                domain = validate_domain(domain)
+                if domain:
+                    allowed_origins.add(f"https://{domain}")
+                    logger.info(f"Added additional domain: {domain}")
+    
+    except Exception as e:
+        logger.error(f"Error setting up domains: {str(e)}")
+        # Fallback to Replit domain only
+        allowed_origins = {f"https://{repl_slug}.{repl_owner}.repl.co"}
+    
+    return list(allowed_origins)
+
+# Set up allowed origins
+ALLOWED_ORIGINS = setup_domains()
+
+# Configure CORS with security settings
+cors_config = {
+    "resources": {
+        r"/*": {
+            "origins": ALLOWED_ORIGINS,
+            "methods": ["GET", "POST", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+            "supports_credentials": True,
+            "max_age": 3600,
+            "expose_headers": ["Content-Type", "Content-Length"]
+        }
+    },
+    "vary_header": True
+}
+
+try:
+    CORS(app, **cors_config)
+    logger.info("CORS configuration applied successfully")
+except Exception as e:
+    logger.error(f"Error configuring CORS: {str(e)}")
+    # Fallback to basic CORS configuration
+    CORS(app)
+
+# Log configured domains
+logger.info(f"Configured domains: {', '.join(ALLOWED_ORIGINS)}")
+
+# Don't set SERVER_NAME to allow both custom domain and Replit domain access
+app.config['SERVER_NAME'] = None
 
 # Add security headers
 @app.after_request
 def add_security_headers(response):
-    response.headers.update({
-        'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-        'X-Content-Type-Options': 'nosniff',
-        'X-Frame-Options': 'SAMEORIGIN',
-        'X-XSS-Protection': '1; mode=block',
-        'Referrer-Policy': 'strict-origin-when-cross-origin'
-    })
+    try:
+        # Generate CSP with all allowed origins
+        connect_src = ["'self'"] + ALLOWED_ORIGINS
+        trusted_cdn_domains = [
+            "cdn.jsdelivr.net",
+            "cdnjs.cloudflare.com",
+            "cdn.replit.com"
+        ]
+        
+        csp_directives = [
+            "default-src 'self'",
+            f"connect-src {' '.join(connect_src)}",
+            f"img-src 'self' data: {' '.join(trusted_cdn_domains)}",
+            f"script-src 'self' 'unsafe-inline' {' '.join(trusted_cdn_domains)}",
+            f"style-src 'self' 'unsafe-inline' {' '.join(trusted_cdn_domains)}",
+            f"font-src 'self' {' '.join(trusted_cdn_domains)}",
+            "frame-ancestors 'none'",
+            "base-uri 'self'",
+            "form-action 'self'"
+        ]
+        
+        # Security headers with logging
+        headers = {
+            'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+            'X-Content-Type-Options': 'nosniff',
+            'X-Frame-Options': 'DENY',
+            'X-XSS-Protection': '1; mode=block',
+            'Referrer-Policy': 'strict-origin-when-cross-origin',
+            'Content-Security-Policy': '; '.join(csp_directives),
+            'Permissions-Policy': 'geolocation=(), camera=(), microphone=()',
+            'Cross-Origin-Opener-Policy': 'same-origin'
+        }
+        
+        response.headers.update(headers)
+        logger.debug(f"Security headers added successfully for path: {request.path}")
+        
+    except Exception as e:
+        logger.error(f"Error adding security headers: {str(e)}")
+        
     return response
 
 # Database configuration
