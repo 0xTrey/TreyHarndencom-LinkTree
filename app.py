@@ -169,46 +169,38 @@ def add_security_headers(response):
     response.headers.update(headers)
     return response
 
-# Database configuration
-database_url = os.environ.get('DATABASE_URL')
-if not database_url:
-    raise ValueError("DATABASE_URL environment variable is not set")
-
-# Ensure proper URL format for SQLAlchemy
-if database_url.startswith("postgres://"):
-    database_url = database_url.replace("postgres://", "postgresql://", 1)
-
-# Configure SQLAlchemy
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-    'pool_size': 10,
-    'max_overflow': 20,
-    'pool_recycle': 300,
-    'pool_pre_ping': True,
-    'pool_timeout': 60,
-    'connect_args': {
-        'connect_timeout': 10,
-        'application_name': 'flask_app_production'
-    }
-}
-
 # Initialize database
-db = SQLAlchemy()
-db.init_app(app)
+from models import db, init_db, LinkClick
 
-# Test database connection
+# Configure logging for database operations
+db_logger = logging.getLogger('sqlalchemy.engine')
+db_logger.setLevel(logging.INFO)
+
 try:
+    # Initialize the database with proper error handling
+    logger.info("Starting database initialization...")
+    init_db(app)
+    logger.info("Database initialized successfully")
+    
+    # Verify database connection
     with app.app_context():
-        db.engine.connect()
-        logger.info("Database connection successful")
+        try:
+            # Simple connection test
+            db.session.execute('SELECT 1')
+            db.session.commit()
+            logger.info("Database connection verified successfully")
+        except Exception as e:
+            logger.error(f"Database connection verification failed: {str(e)}")
+            if hasattr(e, 'orig'):
+                logger.error(f"Original error: {str(e.orig)}")
+            raise
 except Exception as e:
-    logger.error(f"Error connecting to database: {str(e)}")
+    logger.error(f"Database initialization error: {str(e)}")
     if os.environ.get('FLASK_ENV') == 'production':
-        logger.critical("Failed to connect to database in production")
+        logger.critical("Critical: Failed to initialize database in production")
         raise
     else:
-        logger.warning("Database connection failed in development")
+        logger.warning("Warning: Database initialization failed in development")
 
 # Social links data
 social_links = [
@@ -219,10 +211,7 @@ social_links = [
     {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
 ]
 
-class LinkClick(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    link_name = db.Column(db.String(64), nullable=False)
-    clicked_at = db.Column(db.DateTime, default=db.func.current_timestamp())
+from models import LinkClick
 
 @app.route('/')
 def index():
@@ -254,9 +243,7 @@ def track_click():
         db.session.rollback()
         return jsonify({'error': 'Internal server error'}), 500
 
-# Initialize database
-with app.app_context():
-    db.create_all()
+# Database tables are initialized in models.py
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
