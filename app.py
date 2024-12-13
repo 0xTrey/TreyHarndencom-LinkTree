@@ -28,18 +28,35 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = '15dbbd2e-8afd-4ead-a254-33d2e2b94539-00-19iunixpyknjp.picard.repl.co'
+REPLIT_DOMAIN = os.environ.get('REPL_SLUG', 'workspace.treyharnden.repl.co')
 ALLOWED_HOSTS = [
     PRIMARY_DOMAIN,
     f"www.{PRIMARY_DOMAIN}",
     REPLIT_DOMAIN,
+    f"{REPLIT_DOMAIN}.repl.co",
     "treyharnden.com",
     "www.treyharnden.com",
-    "*.repl.co",
-    "*.replit.dev",
-    "*.id.repl.co",
-    # Allow all during DNS propagation
-    "*"
+    "159.203.160.162",  # Replit instance IP - matches Cloudflare DNS A records
+    "*"  # Allow all hosts temporarily during DNS propagation
+]
+
+# Configure Cloudflare proxy settings
+PROXY_ALLOWED_IPS = [
+    '173.245.48.0/20',
+    '103.21.244.0/22',
+    '103.22.200.0/22',
+    '103.31.4.0/22',
+    '141.101.64.0/18',
+    '108.162.192.0/18',
+    '190.93.240.0/20',
+    '188.114.96.0/20',
+    '197.234.240.0/22',
+    '198.41.128.0/17',
+    '162.158.0.0/15',
+    '104.16.0.0/13',
+    '104.24.0.0/14',
+    '172.64.0.0/13',
+    '131.0.72.0/22',
 ]
 
 # Enhanced logging for debugging
@@ -56,12 +73,9 @@ def setup_domains():
     allowed_origins = {
         f"https://{PRIMARY_DOMAIN}",
         f"https://www.{PRIMARY_DOMAIN}",
-        f"https://{REPLIT_DOMAIN}",
-        "https://*.repl.co",
-        "https://*.repl.dev",
-        "https://*.replit.dev",
-        # Temporary allow all during DNS transition
-        "*"
+        f"https://{REPLIT_DOMAIN}.repl.co",
+        "https://treyharnden.com",
+        "https://www.treyharnden.com"
     }
     logger.info(f"Domain configuration: {allowed_origins}")
     return list(allowed_origins)
@@ -105,14 +119,22 @@ def redirect_to_primary_domain():
     - Method: {request.method}
     """)
     
-    # Force HTTPS
-    if request.headers.get('X-Forwarded-Proto', 'http') == 'http':
+    # Handle Cloudflare headers
+    cf_visitor = request.headers.get('CF-Visitor', '')
+    if cf_visitor and '"scheme":"http"' in cf_visitor:
         url = request.url.replace('http://', 'https://', 1)
-        logger.info(f"Redirecting HTTP to HTTPS: {url}")
+        logger.info(f"Redirecting HTTP to HTTPS via Cloudflare: {url}")
         return redirect(url, code=301)
 
-    # During DNS propagation, allow all hosts
-    logger.info(f"Allowing access for host: {host} (DNS propagation period)")
+    # During DNS propagation, allow all hosts but log the details
+    logger.info(f"""
+    Detailed Request Info:
+    - Host: {host}
+    - CF-Visitor: {cf_visitor}
+    - CF-Connecting-IP: {request.headers.get('CF-Connecting-IP', '')}
+    - X-Forwarded-For: {request.headers.get('X-Forwarded-For', '')}
+    - X-Forwarded-Proto: {request.headers.get('X-Forwarded-Proto', '')}
+    """)
     return None
 
 # Add security headers
