@@ -2,27 +2,33 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8 col-lg-6 text-center">
-            <div class="profile-section mb-5">
+    <div class="row justify-content-between">
+        <!-- Left column: Profile -->
+        <div class="col-md-5">
+            <div class="profile-section">
                 <div class="profile-image-wrapper mb-4">
                     <img src="{{ url_for('static', filename='images/Trey Rainier Headshot.jpeg') }}" 
                          alt="Profile Picture" 
                          class="profile-image">
                 </div>
-                <h1 class="display-6 mb-2">Trey Harnden</h1>
-                <p class="bio-text text-muted mb-4">
+                <h1 class="profile-name mb-3">Trey Harnden</h1>
+                <p class="bio-text">
                     Huge fan of public parks, all this mountains, and make you sweat spicy food.
                 </p>
             </div>
-
+        </div>
+        
+        <!-- Right column: Links -->
+        <div class="col-md-6">
             <div class="links-section">
                 {% for link in social_links %}
                 <a href="{{ link.url }}" 
-                   class="btn btn-outline-secondary d-block mb-3 social-link"
+                   class="btn btn-link social-link"
                    data-link-name="{{ link.name }}"
                    target="_blank">
+                    {% if link.icon %}
                     <i class="fab {{ link.icon }} me-2"></i>
+                    {% endif %}
                     {{ link.name }}
                 </a>
                 {% endfor %}
