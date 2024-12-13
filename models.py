@@ -1,5 +1,8 @@
-from app import db
+
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+
+db = SQLAlchemy()
 
 class LinkClick(db.Model):
     id = db.Column(db.Integer, primary_key=True)

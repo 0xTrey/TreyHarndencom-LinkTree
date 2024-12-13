@@ -178,30 +178,37 @@ if not database_url:
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
 
-try:
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-        'pool_size': 20,
-        'max_overflow': 40,
-        'pool_recycle': 300,
-        'pool_pre_ping': True,
-        'pool_timeout': 30,
+# Configure SQLAlchemy
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+    'pool_size': 10,
+    'max_overflow': 20,
+    'pool_recycle': 300,
+    'pool_pre_ping': True,
+    'pool_timeout': 60,
+    'connect_args': {
+        'connect_timeout': 10,
+        'application_name': 'flask_app_production'
     }
-    # Test database connection
-    db = SQLAlchemy(app)
+}
+
+# Initialize database
+db = SQLAlchemy()
+db.init_app(app)
+
+# Test database connection
+try:
     with app.app_context():
         db.engine.connect()
         logger.info("Database connection successful")
 except Exception as e:
-    logger.error(f"Error configuring database: {str(e)}")
+    logger.error(f"Error connecting to database: {str(e)}")
     if os.environ.get('FLASK_ENV') == 'production':
-        logger.critical("Failed to initialize database in production")
+        logger.critical("Failed to connect to database in production")
         raise
     else:
-        logger.warning("Database initialization failed in development")
-
-db = SQLAlchemy(app)
+        logger.warning("Database connection failed in development")
 
 # Social links data
 social_links = [
