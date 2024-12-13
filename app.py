@@ -12,8 +12,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Initialize Flask app
-app = Flask(__name__)
+# Initialize Flask app with explicit static folder
+app = Flask(__name__, static_folder='static', static_url_path='/static')
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching during development
 
 # Configure ProxyFix for proper handling of protocols and hosts behind proxies
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)

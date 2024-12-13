@@ -1,13 +1,15 @@
 body {
     min-height: 100vh;
-    background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
-    color: white;
+    background: linear-gradient(180deg, #1e5799 0%, #2989d8 50%, #207cca 100%);
+    color: #ffffff;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
@@ -83,13 +85,13 @@ body {
 
 .social-link:hover {
     background-color: white !important;
-    color: #1e3c72 !important;
+    color: rgb(30, 87, 153) !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .social-link:hover i {
-    color: #1e3c72 !important;
+    color: rgb(30, 87, 153) !important;
 }
 
 /* Responsive Design */
