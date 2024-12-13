@@ -14,21 +14,40 @@ logger = logging.getLogger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__)
-app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(24))
-CORS(app)
 
-# Production configurations
+# Configure ProxyFix for proper handling of protocols and hosts behind proxies
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
+
+# Security configurations
 app.config.update(
-    ENV='production',
-    DEBUG=False,
-    TESTING=False,
+    SECRET_KEY=os.environ.get('SECRET_KEY', os.urandom(24)),
     SESSION_COOKIE_SECURE=True,
     SESSION_COOKIE_HTTPONLY=True,
-    PREFERRED_URL_SCHEME='https',
-    SEND_FILE_MAX_AGE_DEFAULT=31536000,
-    PROPAGATE_EXCEPTIONS=True
+    PREFERRED_URL_SCHEME='https'
 )
+
+# Configure CORS for custom domains
+ALLOWED_ORIGINS = os.environ.get('ALLOWED_ORIGINS', '*').split(',')
+CORS(app, resources={
+    r"/*": {
+        "origins": ALLOWED_ORIGINS,
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"],
+        "supports_credentials": True
+    }
+})
+
+# Add security headers
+@app.after_request
+def add_security_headers(response):
+    response.headers.update({
+        'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'SAMEORIGIN',
+        'X-XSS-Protection': '1; mode=block',
+        'Referrer-Policy': 'strict-origin-when-cross-origin'
+    })
+    return response
 
 # Database configuration
 database_url = os.environ.get('DATABASE_URL')
@@ -40,7 +59,7 @@ if database_url.startswith("postgres://"):
 
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-logger.info("Database URL configured successfully")
+
 db = SQLAlchemy(app)
 
 # Social links data
@@ -59,7 +78,12 @@ class LinkClick(db.Model):
 
 @app.route('/')
 def index():
-    return render_template('index.html', social_links=social_links)
+    try:
+        logger.info("Rendering index page")
+        return render_template('index.html', social_links=social_links)
+    except Exception as e:
+        logger.error(f"Error rendering index page: {str(e)}")
+        return "An error occurred", 500
 
 @app.route('/track-click', methods=['POST'])
 def track_click():
@@ -76,7 +100,7 @@ def track_click():
         
         return jsonify({'message': 'Click tracked successfully'}), 200
     except Exception as e:
-        logging.error(f"Error tracking click: {str(e)}")
+        logger.error(f"Error tracking click: {str(e)}")
         db.session.rollback()
         return jsonify({'error': 'Internal server error'}), 500
 
@@ -86,4 +110,4 @@ with app.app_context():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host='0.0.0.0', port=port)
