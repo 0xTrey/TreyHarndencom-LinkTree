@@ -1,9 +1,13 @@
 import logging
 import os
-from flask import Flask, render_template, request, jsonify, redirect
-from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
-from werkzeug.middleware.proxy_fix import ProxyFix
+try:
+    from flask import Flask, render_template, request, jsonify, redirect
+    from flask_sqlalchemy import SQLAlchemy
+    from flask_cors import CORS
+    from werkzeug.middleware.proxy_fix import ProxyFix
+except ImportError as e:
+    print(f"Error importing dependencies: {e}")
+    raise
 
 # Configure logging for production
 logging.basicConfig(
@@ -14,7 +18,12 @@ logger = logging.getLogger(__name__)
 
 # Initialize Flask app with explicit static folder
 app = Flask(__name__, static_folder='static', static_url_path='/static')
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching during development
+
+# Production-specific configurations
+if os.environ.get('FLASK_ENV') == 'production':
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 year cache
+else:
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching during development
 
 # Configure ProxyFix for proper handling of protocols and hosts behind proxies
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -172,10 +181,25 @@ if database_url.startswith("postgres://"):
 try:
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        'pool_size': 20,
+        'max_overflow': 40,
+        'pool_recycle': 300,
+        'pool_pre_ping': True,
+        'pool_timeout': 30,
+    }
+    # Test database connection
+    db = SQLAlchemy(app)
+    with app.app_context():
+        db.engine.connect()
+        logger.info("Database connection successful")
 except Exception as e:
     logger.error(f"Error configuring database: {str(e)}")
-    raise
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    if os.environ.get('FLASK_ENV') == 'production':
+        logger.critical("Failed to initialize database in production")
+        raise
+    else:
+        logger.warning("Database initialization failed in development")
 
 db = SQLAlchemy(app)
 
@@ -232,5 +256,7 @@ if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         port=port,
-        debug=True
+        debug=False,
+        ssl_context=None,
+        threaded=True
     )
