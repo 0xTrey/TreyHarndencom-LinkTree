@@ -28,7 +28,7 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = 'treyharnden.com'
-REPLIT_SLUG = os.environ.get('REPL_SLUG', 'workspace')
+REPLIT_SLUG = os.environ.get('REPL_SLUG', 'trey-harndencom-link-tree-harndentrey')
 REPLIT_OWNER = os.environ.get('REPL_OWNER', 'treyharnden')
 FULL_REPLIT_DOMAIN = f"{REPLIT_SLUG}.{REPLIT_OWNER}.repl.co"
 
@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [
     PRIMARY_DOMAIN,
     f"www.{PRIMARY_DOMAIN}",
     FULL_REPLIT_DOMAIN,
+    '159.89.214.31',  # Replit's IP
     '*'  # Allow all hosts during DNS propagation
 ]
 
@@ -59,7 +60,11 @@ PROXY_ALLOWED_IPS = [
     '104.24.0.0/14',
     '172.64.0.0/13',
     '131.0.72.0/22',
+    '159.89.214.31/32',  # Added Replit's IP
 ]
+
+# Ensure Cloudflare headers are trusted
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 # Enhanced logging for debugging
 logging.getLogger('werkzeug').setLevel(logging.DEBUG)
@@ -217,4 +222,8 @@ with app.app_context():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(
+        host='0.0.0.0',
+        port=port,
+        ssl_context=None  # Let Replit handle HTTPS
+    )

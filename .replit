@@ -46,5 +46,5 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "FLASK_DEBUG=1 FLASK_ENV=production PYTHONUNBUFFERED=true gunicorn 'app:app' --bind '0.0.0.0:80' --workers 4 --log-level debug --timeout 120 --preload"
-waitForPort = 80
+args = "FLASK_DEBUG=1 FLASK_ENV=production PYTHONUNBUFFERED=true gunicorn 'app:app' --bind '0.0.0.0:3000' --workers 4 --log-level debug --timeout 120 --preload"
+waitForPort = 3000
