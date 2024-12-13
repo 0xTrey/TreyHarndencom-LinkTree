@@ -41,21 +41,24 @@ def create_app():
     
     # Initialize database during app creation
     logger.info("Starting database initialization...")
+    
+    # Check for DATABASE_URL before proceeding
+    if not os.environ.get('DATABASE_URL'):
+        error_msg = "DATABASE_URL environment variable is not set in the environment"
+        logger.critical(error_msg)
+        raise ValueError(error_msg)
+        
     try:
-        if not init_db(app, max_retries=5):
-            error_msg = "Failed to initialize database after all retry attempts"
+        if not init_db(app):
+            error_msg = "Failed to initialize database"
             logger.error(error_msg)
-            if flask_env == 'production':
-                raise RuntimeError(error_msg)
-            logger.warning("Database initialization failed but continuing in development mode")
+            raise RuntimeError(error_msg)
     except Exception as e:
         error_msg = f"Critical database initialization error: {str(e)}"
         logger.critical(error_msg)
         if flask_env == 'production':
-            # In production, we want to fail fast if database initialization fails
-            logger.critical("Cannot continue without database in production mode")
             raise
-        logger.warning("Continuing without database in development mode")
+        logger.warning("Database initialization failed")
     
     # Define routes
     @app.route('/')

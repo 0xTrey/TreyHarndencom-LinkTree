@@ -2,8 +2,7 @@ import time
 import random
 import logging
 from functools import wraps
-from typing import Callable, Any, Type, Union, Tuple
-from sqlalchemy.exc import SQLAlchemyError, OperationalError, IntegrityError, TimeoutError
+from typing import Callable, Any, Type, Union, Tuple, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -12,28 +11,10 @@ def retry_database_operation(
     initial_delay: float = 1.0,
     exponential_base: float = 2.0,
     max_delay: float = 30.0,
-    jitter: float = 0.1,
-    exceptions: Tuple[Type[Exception], ...] = (
-        SQLAlchemyError,
-        OperationalError,
-        IntegrityError,
-        TimeoutError,
-        Exception  # Catch all database-related exceptions
-    )
+    jitter: float = 0.1
 ) -> Callable:
     """
     Decorator that implements a retry mechanism with exponential backoff and jitter for database operations.
-    
-    Args:
-        max_retries: Maximum number of retry attempts
-        initial_delay: Initial delay between retries in seconds
-        exponential_base: Base for exponential backoff calculation
-        max_delay: Maximum delay between retries in seconds
-        jitter: Random jitter factor (0-1) to add to delay
-        exceptions: Tuple of exception types to catch and retry
-    
-    Returns:
-        Callable: Decorated function with retry logic
     """
     def decorator(func: Callable) -> Callable:
         @wraps(func)
@@ -44,7 +25,7 @@ def retry_database_operation(
             for attempt in range(max_retries):
                 try:
                     return func(*args, **kwargs)
-                except exceptions as e:
+                except Exception as e:
                     last_exception = e
                     
                     if attempt == max_retries - 1:
@@ -67,7 +48,6 @@ def retry_database_operation(
                     time.sleep(actual_delay)
                     delay = min(delay * exponential_base, max_delay)
             
-            # This should never be reached due to the raise in the final attempt
             return None
         return wrapper
     return decorator
@@ -75,14 +55,7 @@ def retry_database_operation(
 def is_retriable_error(exception: Exception) -> bool:
     """
     Determine if an exception should trigger a retry attempt.
-    
-    Args:
-        exception: The exception to check
-        
-    Returns:
-        bool: True if the error should trigger a retry, False otherwise
     """
-    # Common retriable error messages
     retriable_messages = [
         "connection timed out",
         "deadlock detected",

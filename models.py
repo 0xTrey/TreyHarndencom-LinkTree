@@ -1,4 +1,6 @@
 import os
+import time
+import random
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from sqlalchemy import text
@@ -12,13 +14,19 @@ logger = logging.getLogger(__name__)
 
 def validate_database_url() -> Optional[str]:
     """Validate and return the database URL from environment variables."""
+    logger.info("Checking DATABASE_URL environment variable...")
     database_url = os.environ.get('DATABASE_URL')
+    
     if not database_url:
         logger.critical("DATABASE_URL environment variable is not set")
         return None
     
+    if not database_url.startswith('postgresql://'):
+        logger.critical("DATABASE_URL must start with 'postgresql://'")
+        return None
+    
     # Log success but not the actual URL for security
-    logger.info("Successfully retrieved DATABASE_URL from environment")
+    logger.info("Successfully validated DATABASE_URL format")
     return database_url
 
 from utils import retry_database_operation, is_retriable_error
@@ -36,74 +44,55 @@ def test_database_connection(app):
         db.session.execute(text('SELECT 1'))
         db.session.commit()
 
+@retry_database_operation(max_retries=5, initial_delay=1.0)
 def init_db(app, max_retries: int = 5) -> bool:
-    """Initialize database with comprehensive retry mechanism and proper error handling."""
+    """Initialize database with retry mechanism and proper error handling."""
+    logger.info("Starting database initialization process...")
     
-    # Check if database is already initialized
-    if hasattr(app, '_database_initialized'):
+    try:
+        # Validate database URL
+        database_url = os.environ.get('DATABASE_URL')
+        if not database_url:
+            logger.critical("DATABASE_URL environment variable is not set")
+            raise ValueError("DATABASE_URL environment variable is not set")
+            
+        logger.info("Database URL found, configuring SQLAlchemy...")
+        
+        # Configure SQLAlchemy with minimal settings
+        app.config.update(
+            SQLALCHEMY_DATABASE_URI=database_url,
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+            SQLALCHEMY_ENGINE_OPTIONS={
+                'pool_pre_ping': True
+            }
+        )
+        
+        # Initialize Flask-SQLAlchemy
+        logger.info("Initializing Flask-SQLAlchemy...")
+        db.init_app(app)
+        
+        # Test database connection
+        with app.app_context():
+            logger.info("Testing database connection...")
+            db.session.execute(text('SELECT 1'))
+            db.session.commit()
+            logger.info("Database connection test successful")
+            
+            # Create tables
+            logger.info("Creating database tables...")
+            db.create_all()
+            logger.info("Database tables created successfully")
+            
+        logger.info("Database initialization completed successfully")
         return True
         
-    for attempt in range(max_retries):
-        try:
-            # Validate database URL
-            database_url = validate_database_url()
-            if not database_url:
-                raise ValueError("DATABASE_URL environment variable is not set")
-            
-            # Configure SQLAlchemy with optimized settings
-            app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-            app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-            app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-                'pool_size': 5,
-                'max_overflow': 10,
-                'pool_timeout': 30,
-                'pool_recycle': 1800,
-                'pool_pre_ping': True,
-                'echo_pool': True if app.debug else False
-            }
-            
-            # Initialize Flask-SQLAlchemy
-            logger.info(f"Initializing Flask-SQLAlchemy (attempt {attempt + 1}/{max_retries})...")
-            db.init_app(app)
-            
-            # Test database connection with retry mechanism
-            logger.info(f"Testing database connection (attempt {attempt + 1}/{max_retries})...")
-            with app.app_context():
-                test_database_connection(app)
-                logger.info("Database connection test successful")
-                
-                # Create tables
-                logger.info("Creating database tables...")
-                db.create_all()
-                logger.info("Database tables created successfully")
-            
-            # Mark database as initialized
-            setattr(app, '_database_initialized', True)
-            return True
-            
-        except Exception as e:
-            error_message = str(e)
-            is_retriable = is_retriable_error(e)
-            
-            if attempt < max_retries - 1 and is_retriable:
-                delay = (2 ** attempt) + random.uniform(0, 0.1)  # Exponential backoff with jitter
-                logger.warning(
-                    f"Database initialization attempt {attempt + 1}/{max_retries} failed: {error_message}. "
-                    f"Retrying in {delay:.2f} seconds..."
-                )
-                time.sleep(delay)
-                continue
-            
-            logger.error(
-                f"Database initialization failed after {attempt + 1} attempts: {error_message}. "
-                f"Error is {'retriable' if is_retriable else 'non-retriable'}"
-            )
-            
-            if app.config.get('FLASK_ENV') == 'production' and not is_retriable:
-                raise
-            return False
-            
-    return False
+    except Exception as e:
+        error_msg = f"Database initialization failed: {str(e)}"
+        logger.error(error_msg)
+        if app.config.get('FLASK_ENV') == 'production':
+            logger.critical("Critical: Failed to initialize database in production")
+            raise ValueError(error_msg)
+        return False
 
 class LinkClick(db.Model):
     """Model for tracking link clicks"""
