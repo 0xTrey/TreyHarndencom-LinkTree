@@ -28,7 +28,8 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = f"{os.environ.get('REPL_SLUG', 'workspace')}.{os.environ.get('REPL_OWNER', 'harndentrey')}.repl.co"
+REPLIT_DOMAIN = f"harndentrey.repl.co"
+REPLIT_ID = os.environ.get('REPL_ID', '')
 
 def setup_domains():
     """Configure allowed domains for the application."""
