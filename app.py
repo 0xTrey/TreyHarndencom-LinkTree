@@ -28,8 +28,8 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = "harndentrey.repl.co"
-REPLIT_ID = os.environ.get('REPL_ID', '')
+REPLIT_DOMAIN = os.environ.get('REPL_SLUG', '15dbbd2e-8afd-4ead-a254-33d2e2b94539-00-19iunixpyknjp.picard.repl.co')
+REPLIT_URL = f"{REPLIT_DOMAIN}.repl.co"
 
 def setup_domains():
     """Configure allowed domains for the application."""
@@ -39,7 +39,10 @@ def setup_domains():
         f"https://www.{PRIMARY_DOMAIN}",
         f"https://{REPLIT_DOMAIN}",
         "https://*.repl.co",
-        "https://*.repl.dev"
+        "https://*.repl.dev",
+        "https://*.replit.dev",
+        # Temporary allow all during DNS transition
+        "*"
     }
     logger.info(f"Domain configuration: {allowed_origins}")
     return list(allowed_origins)
@@ -71,10 +74,16 @@ def redirect_to_primary_domain():
     host = request.headers.get('Host', '')
     logger.info(f"Processing request for host: {host}")
     
-    # Skip redirects for Replit domains and local development
-    if '.repl.co' in host or '.repl.dev' in host:
-        logger.debug(f"Skipping redirect for development domain: {host}")
+    # Allow Replit domain during development and transition
+    if host == REPLIT_URL:
+        logger.debug(f"Allowing Replit domain access: {host}")
         return None
+        
+    # Handle requests to non-primary domains
+    if host not in [PRIMARY_DOMAIN, f"www.{PRIMARY_DOMAIN}"]:
+        target = f"https://{PRIMARY_DOMAIN}{request.path}"
+        logger.info(f"Redirecting to primary domain: {target}")
+        return redirect(target, code=301)
         
     # Force HTTPS
     if request.headers.get('X-Forwarded-Proto', 'http') == 'http':
