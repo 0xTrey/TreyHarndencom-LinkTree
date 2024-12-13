@@ -32,26 +32,49 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
     
     # Configure database
-    logger.info("Checking DATABASE_URL environment variable...")
-    if not os.environ.get('DATABASE_URL'):
-        logger.critical("DATABASE_URL environment variable is not set")
-        raise ValueError("DATABASE_URL environment variable is not set in the environment")
+    logger.info("Application environment: %s", os.environ.get('FLASK_ENV', 'development'))
+    
+    try:
+        logger.info("Checking DATABASE_URL environment variable...")
+        database_url = os.environ.get('DATABASE_URL')
         
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
-    # Import and initialize database
-    from models import db
-    db.init_app(app)
-    
-    # Create tables
-    with app.app_context():
-        try:
+        if not database_url:
+            logger.critical("DATABASE_URL environment variable is not set")
+            raise ValueError("DATABASE_URL environment variable is not set")
+        
+        # Configure SQLAlchemy
+        app.config.update(
+            SQLALCHEMY_DATABASE_URI=database_url,
+            SQLALCHEMY_TRACK_MODIFICATIONS=False,
+            SQLALCHEMY_ENGINE_OPTIONS={
+                'pool_pre_ping': True,
+                'pool_recycle': 300,
+                'pool_size': 5,
+                'max_overflow': 10,
+                'connect_args': {
+                    'connect_timeout': 10
+                }
+            }
+        )
+        logger.info("Database configuration successful")
+        
+        # Import and initialize database
+        from models import db
+        db.init_app(app)
+        
+        # Create tables within app context
+        with app.app_context():
             db.create_all()
-            logger.info("Database tables created successfully")
-        except Exception as e:
-            logger.error(f"Error creating database tables: {str(e)}")
-            raise
+            # Verify database connection
+            db.session.execute(text('SELECT 1'))
+            db.session.commit()
+            logger.info("Database initialized successfully")
+            
+    except Exception as e:
+        logger.error(f"Database initialization failed: {str(e)}")
+        if 'DatabaseError' in str(e.__class__):
+            logger.error("Database connection failed - please check DATABASE_URL")
+        raise
     
     # Social links data
     social_links = [
@@ -75,8 +98,9 @@ def create_app():
         """Health check endpoint that verifies database connection"""
         try:
             # Test database connection
-            db.session.execute(text('SELECT 1'))
-            db.session.commit()
+            with app.app_context():
+                db.session.execute(text('SELECT 1'))
+                db.session.commit()
             return jsonify({
                 'status': 'healthy',
                 'database': 'connected',
