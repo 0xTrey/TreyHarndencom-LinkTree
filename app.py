@@ -51,83 +51,26 @@ def validate_domain(domain):
 def setup_domains():
     """Configure allowed domains for the application."""
     logger.info("Setting up domain configuration...")
-    allowed_origins = set()
+    allowed_origins = {
+        "https://treyharnden.com",
+        "https://www.treyharnden.com",
+        "http://treyharnden.com",
+        "http://www.treyharnden.com",
+        "https://*.repl.co",
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        f"https://{os.environ.get('REPL_SLUG')}.{os.environ.get('REPL_OWNER')}.repl.co"
+    }
     
-    try:
-        # Get environment variables with defaults
-        repl_id = os.environ.get('REPL_ID')
-        repl_slug = os.environ.get('REPL_SLUG')
-        repl_owner = os.environ.get('REPL_OWNER')
-        custom_domain = os.environ.get('CUSTOM_DOMAIN')
-        
-        # Add Replit domains if available
-        if repl_id:
-            replit_id_domain = f"{repl_id}.id.repl.co"
-            allowed_origins.add(f"https://{replit_id_domain}")
-            logger.info(f"Added Replit ID domain: {replit_id_domain}")
-            
-        # Always add *.repl.co domains for Replit's proxy
-        allowed_origins.add("https://*.repl.co")
-        logger.info("Added wildcard Replit domain")
-        
-        # Add custom domain if specified
-        if custom_domain:
-            custom_domain = validate_domain(custom_domain)
-            if custom_domain:
-                # Add both www and non-www versions
-                allowed_origins.add(f"https://{custom_domain}")
-                allowed_origins.add(f"https://www.{custom_domain}")
-                logger.info(f"Added custom domain: {custom_domain}")
-                logger.info(f"Added www subdomain: www.{custom_domain}")
-            else:
-                logger.warning(f"Invalid custom domain format: {custom_domain}")
-        
-        # Always add development domains for testing
-        allowed_origins.add("http://localhost:3000")
-        allowed_origins.add("http://127.0.0.1:3000")
-        
-        # Ensure we have at least one domain
-        if not allowed_origins:
-            logger.warning("No domains configured, using default Replit domain")
-            allowed_origins = {"https://workspace.harndentrey.repl.co"}
-        
-    except Exception as e:
-        logger.error(f"Error setting up domains: {str(e)}")
-        # Fallback to a safe default that should always work
-        allowed_origins = {
-            "https://workspace.harndentrey.repl.co",
-            "http://localhost:3000",
-            "http://127.0.0.1:3000"
-        }
-    
-    logger.info(f"Final domain configuration: {allowed_origins}")
+    logger.info(f"Domain configuration: {allowed_origins}")
     return list(allowed_origins)
 
 # Set up allowed origins
 ALLOWED_ORIGINS = setup_domains()
 
-# Configure CORS with security settings
-cors_config = {
-    "resources": {
-        r"/*": {
-            "origins": ALLOWED_ORIGINS,
-            "methods": ["GET", "POST", "OPTIONS"],
-            "allow_headers": ["Content-Type", "Authorization"],
-            "supports_credentials": True,
-            "max_age": 3600,
-            "expose_headers": ["Content-Type", "Content-Length"]
-        }
-    },
-    "vary_header": True
-}
-
-try:
-    CORS(app, **cors_config)
-    logger.info("CORS configuration applied successfully")
-except Exception as e:
-    logger.error(f"Error configuring CORS: {str(e)}")
-    # Fallback to basic CORS configuration
-    CORS(app)
+# Configure CORS
+CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
+logger.info("CORS configuration applied")
 
 # Log configured domains
 logger.info(f"Configured domains: {', '.join(ALLOWED_ORIGINS)}")
@@ -211,7 +154,11 @@ class LinkClick(db.Model):
 @app.route('/')
 def index():
     try:
-        logger.info("Rendering index page")
+        host = request.headers.get('Host', '')
+        protocol = request.headers.get('X-Forwarded-Proto', 'http')
+        logger.info(f"Incoming request - Host: {host}, Protocol: {protocol}")
+        logger.info(f"Request headers: {dict(request.headers)}")
+        
         return render_template('index.html', social_links=social_links)
     except Exception as e:
         logger.error(f"Error rendering index page: {str(e)}")
