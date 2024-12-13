@@ -61,15 +61,14 @@ def setup_domains():
         custom_domain = os.environ.get('CUSTOM_DOMAIN')
         
         # Add Replit domains if available
-        if all([repl_slug, repl_owner]):
-            replit_domain = f"{repl_slug}.{repl_owner}.repl.co"
-            allowed_origins.add(f"https://{replit_domain}")
-            logger.info(f"Added Replit domain: {replit_domain}")
-        
         if repl_id:
             replit_id_domain = f"{repl_id}.id.repl.co"
             allowed_origins.add(f"https://{replit_id_domain}")
             logger.info(f"Added Replit ID domain: {replit_id_domain}")
+            
+        # Always add *.repl.co domains for Replit's proxy
+        allowed_origins.add("https://*.repl.co")
+        logger.info("Added wildcard Replit domain")
         
         # Add custom domain if specified
         if custom_domain:
@@ -135,6 +134,8 @@ logger.info(f"Configured domains: {', '.join(ALLOWED_ORIGINS)}")
 
 # Don't set SERVER_NAME to allow both custom domain and Replit domain access
 app.config['SERVER_NAME'] = None
+# Ensure the application handles both www and non-www variants
+app.config['PREFERRED_URL_SCHEME'] = 'https'
 
 # Add security headers
 @app.after_request
