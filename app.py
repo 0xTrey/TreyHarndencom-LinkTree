@@ -38,13 +38,12 @@ def create_app():
         env = os.environ.get('FLASK_ENV', 'development')
         logger.info(f"Application environment: {env}")
         
-        # Get database URL from environment with better error handling
+        # Get database URL from environment with fallback to SQLite
         logger.info("Checking DATABASE_URL environment variable...")
         database_url = os.environ.get('DATABASE_URL')
         if not database_url:
-            error_msg = "DATABASE_URL environment variable is not set"
-            logger.critical(error_msg)
-            raise ValueError(error_msg)
+            logger.warning("DATABASE_URL not set, falling back to SQLite")
+            database_url = 'sqlite:///instance/links.db'
             
         logger.info("Database URL found, configuring connection...")
         
