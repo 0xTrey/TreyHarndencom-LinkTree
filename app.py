@@ -80,24 +80,25 @@ logging.getLogger('werkzeug').setLevel(logging.DEBUG)
 def setup_domains():
     """Configure allowed domains for the application."""
     logger.info("Setting up domain configuration...")
-    allowed_origins = {
+    allowed_origins = [
         "https://treyharnden.com",
         "https://www.treyharnden.com",
-        f"https://{FULL_REPLIT_DOMAIN}"
-    }
+        f"https://{FULL_REPLIT_DOMAIN}",
+        "*"  # Temporarily allow all origins during development
+    ]
     logger.info(f"Domain configuration: {allowed_origins}")
-    return list(allowed_origins)
+    return allowed_origins
 
 # Set up allowed origins
 ALLOWED_ORIGINS = setup_domains()
 
 # Configure CORS
-CORS(app, resources={
-    r"/*": {
-        "origins": ALLOWED_ORIGINS,
-        "supports_credentials": True
-    }
-})
+CORS(app, 
+     resources={r"/*": {"origins": "*"}},
+     supports_credentials=True,
+     allow_headers=["Content-Type", "Authorization"],
+     methods=["GET", "POST", "OPTIONS"]
+)
 
 # Configure domain settings
 app.config.update(
