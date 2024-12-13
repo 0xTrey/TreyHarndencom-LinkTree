@@ -36,12 +36,11 @@ ALLOWED_HOSTS = [
     PRIMARY_DOMAIN,
     f"www.{PRIMARY_DOMAIN}",
     FULL_REPLIT_DOMAIN,
-    "treyharnden.com",
-    "www.treyharnden.com"
+    '*'  # Allow all hosts during DNS propagation
 ]
 
-# Update server URL for production
-SERVER_NAME = PRIMARY_DOMAIN
+# Don't set SERVER_NAME to allow for flexible host handling
+app.config['SERVER_NAME'] = None
 
 # Configure Cloudflare proxy settings
 PROXY_ALLOWED_IPS = [

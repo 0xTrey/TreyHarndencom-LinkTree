@@ -11,6 +11,10 @@ ignorePorts = false
 build = ["sh", "-c", "pip install -r requirements.txt"]
 
 [[ports]]
+localPort = 80
+externalPort = 3001
+
+[[ports]]
 localPort = 3000
 externalPort = 3000
 
@@ -42,5 +46,5 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "FLASK_DEBUG=1 FLASK_ENV=production PYTHONUNBUFFERED=true REPL_OWNER=treyharnden REPL_SLUG=workspace CUSTOM_DOMAIN=treyharnden.com SERVER_NAME=treyharnden.com gunicorn 'app:app' --bind '0.0.0.0:3000' --workers 4 --log-level debug --timeout 120 --preload"
-waitForPort = 3000
+args = "FLASK_DEBUG=1 FLASK_ENV=production PYTHONUNBUFFERED=true gunicorn 'app:app' --bind '0.0.0.0:80' --workers 4 --log-level debug --timeout 120 --preload"
+waitForPort = 80
