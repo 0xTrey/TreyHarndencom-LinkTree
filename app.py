@@ -30,18 +30,20 @@ app.config.update(
 PRIMARY_DOMAIN = 'treyharnden.com'
 REPLIT_SLUG = os.environ.get('REPL_SLUG', 'trey-harndencom-link-tree-harndentrey')
 REPLIT_OWNER = os.environ.get('REPL_OWNER', 'treyharnden')
-FULL_REPLIT_DOMAIN = f"{REPLIT_SLUG}.{REPLIT_OWNER}.repl.co"
+FULL_REPLIT_DOMAIN = f"{REPLIT_SLUG}.replit.app"
 
 ALLOWED_HOSTS = [
-    PRIMARY_DOMAIN,
-    f"www.{PRIMARY_DOMAIN}",
+    'treyharnden.com',
+    'www.treyharnden.com',
     FULL_REPLIT_DOMAIN,
-    '159.89.214.31',  # Replit's IP
-    '*'  # Allow all hosts during DNS propagation
+    '34.111.179.208',
+    '*'  # Temporarily allow all during DNS propagation
 ]
 
-# Don't set SERVER_NAME to allow for flexible host handling
-app.config['SERVER_NAME'] = None
+# Remove SERVER_NAME to allow flexible domain handling
+app.config.update(
+    PREFERRED_URL_SCHEME='https'
+)
 
 # Configure Cloudflare proxy settings
 PROXY_ALLOWED_IPS = [
@@ -78,11 +80,9 @@ def setup_domains():
     """Configure allowed domains for the application."""
     logger.info("Setting up domain configuration...")
     allowed_origins = {
-        f"https://{PRIMARY_DOMAIN}",
-        f"https://www.{PRIMARY_DOMAIN}",
-        f"https://{FULL_REPLIT_DOMAIN}",
         "https://treyharnden.com",
-        "https://www.treyharnden.com"
+        "https://www.treyharnden.com",
+        f"https://{FULL_REPLIT_DOMAIN}"
     }
     logger.info(f"Domain configuration: {allowed_origins}")
     return list(allowed_origins)
@@ -101,8 +101,7 @@ CORS(app, resources={
 # Configure domain settings
 app.config.update(
     PRIMARY_DOMAIN=PRIMARY_DOMAIN,
-    PREFERRED_URL_SCHEME='https',
-    SERVER_NAME=PRIMARY_DOMAIN
+    PREFERRED_URL_SCHEME='https'
 )
 
 # Add domain redirect middleware
