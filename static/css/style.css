@@ -96,20 +96,62 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
     .profile-section {
         text-align: center;
         margin-bottom: 2rem;
+        padding: 10px;
     }
     
     .profile-image-wrapper {
         margin: 0 auto;
+        width: 140px;
+        height: 140px;
     }
     
-    .links-section {
-        align-items: center;
+    .profile-name {
+        font-size: 1.8rem;
+        margin-top: 0.8rem;
     }
     
     .bio-text {
         margin: 0 auto;
+        font-size: 1rem;
+        padding: 0 10px;
+    }
+    
+    .links-section {
+        align-items: center;
+        padding: 10px;
+    }
+    
+    .social-link {
+        padding: 10px 16px;
+        margin-bottom: 10px;
+        font-size: 1rem;
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0.5rem;
+    }
+    
+    .profile-image-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .profile-name {
+        font-size: 1.6rem;
+    }
+    
+    .social-link {
+        width: 100%;
+        padding: 8px 12px;
     }
 }
