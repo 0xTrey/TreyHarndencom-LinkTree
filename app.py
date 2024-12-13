@@ -3,8 +3,8 @@ import os
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
-from sqlalchemy import text
 from datetime import datetime
+from sqlalchemy import text
 
 # Configure logging
 logging.basicConfig(
@@ -31,37 +31,37 @@ def create_app():
     # Configure CORS
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
     
-    # Import database models
-    from models import db
-    
     # Configure database
-    database_url = os.environ.get('DATABASE_URL')
-    if not database_url:
+    logger.info("Checking DATABASE_URL environment variable...")
+    if not os.environ.get('DATABASE_URL'):
         logger.critical("DATABASE_URL environment variable is not set")
-        raise ValueError("DATABASE_URL environment variable is not set")
+        raise ValueError("DATABASE_URL environment variable is not set in the environment")
         
-    app.config.update(
-        SQLALCHEMY_DATABASE_URI=database_url,
-        SQLALCHEMY_TRACK_MODIFICATIONS=False,
-        SQLALCHEMY_ENGINE_OPTIONS={
-            'pool_pre_ping': True,
-        }
-    )
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
-    # Initialize Flask-SQLAlchemy
+    # Import and initialize database
+    from models import db
     db.init_app(app)
     
     # Create tables
     with app.app_context():
         try:
             db.create_all()
-            logger.info("Database initialized successfully")
+            logger.info("Database tables created successfully")
         except Exception as e:
-            logger.error(f"Failed to initialize database: {str(e)}")
-            if app.config.get('FLASK_ENV') == 'production':
-                raise
+            logger.error(f"Error creating database tables: {str(e)}")
+            raise
     
-    # Define routes
+    # Social links data
+    social_links = [
+        {'name': 'Personal Website', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': ''},
+        {'name': 'Book A Call', 'url': 'https://calendly.com/harnden/consulting-intro-call', 'icon': ''},
+        {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter'},
+        {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
+        {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
+    ]
+    
     @app.route('/')
     def index():
         try:
@@ -74,6 +74,7 @@ def create_app():
     def health_check():
         """Health check endpoint that verifies database connection"""
         try:
+            # Test database connection
             db.session.execute(text('SELECT 1'))
             db.session.commit()
             return jsonify({
@@ -89,35 +90,7 @@ def create_app():
                 'error': str(e),
                 'timestamp': datetime.utcnow().isoformat()
             }), 500
-    
-    # Social links data
-    social_links = [
-        {'name': 'Personal Website', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': ''},
-        {'name': 'Book A Call', 'url': 'https://calendly.com/harnden/consulting-intro-call', 'icon': ''},
-        {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter'},
-        {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
-        {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
-    ]
-    
-    @app.route('/track-click', methods=['POST'])
-    def track_click():
-        try:
-            data = request.get_json()
-            link_name = data.get('link_name')
-            
-            if not link_name:
-                return jsonify({'error': 'Link name is required'}), 400
-                
-            from models import LinkClick
-            click = LinkClick(link_name=link_name)
-            db.session.add(click)
-            db.session.commit()
-            return jsonify({'message': 'Click tracked successfully'}), 200
-        except Exception as e:
-            logger.error(f"Error tracking click: {str(e)}")
-            db.session.rollback()
-            return jsonify({'error': 'Internal server error'}), 500
-    
+
     return app
 
 # Create the application instance
