@@ -64,11 +64,26 @@ def create_app():
         
         # Create tables within app context
         with app.app_context():
-            db.create_all()
-            # Verify database connection
-            db.session.execute(text('SELECT 1'))
-            db.session.commit()
-            logger.info("Database initialized successfully")
+            try:
+                # First verify database connection
+                db.session.execute(text('SELECT 1'))
+                db.session.commit()
+                logger.info("Database connection verified")
+                
+                # Create tables
+                db.create_all()
+                db.session.commit()
+                logger.info("Created database tables successfully")
+                
+                # Verify tables were created
+                inspector = inspect(db.engine)
+                tables = inspector.get_table_names()
+                logger.info(f"Initialized tables: {', '.join(tables)}")
+                
+            except Exception as e:
+                logger.error(f"Error during database initialization: {str(e)}")
+                db.session.rollback()
+                raise
             
     except Exception as e:
         logger.error(f"Database initialization failed: {str(e)}")
