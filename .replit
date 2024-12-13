@@ -34,6 +34,10 @@ author = "agent"
 task = "workflow.run"
 args = "Production Server"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Flask Server"
+
 [[workflows.workflow]]
 name = "Production Server"
 author = "agent"
@@ -47,4 +51,19 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "FLASK_DEBUG=1 FLASK_ENV=production PYTHONUNBUFFERED=true gunicorn 'app:app' --bind '0.0.0.0:3000' --workers 4 --log-level debug --timeout 120 --preload"
+waitForPort = 3000
+
+[[workflows.workflow]]
+name = "Flask Server"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "packager.installForAll"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "FLASK_DEBUG=1 FLASK_ENV=production PYTHONUNBUFFERED=true python app.py"
 waitForPort = 3000
