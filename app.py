@@ -28,8 +28,18 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = os.environ.get('REPL_SLUG', '15dbbd2e-8afd-4ead-a254-33d2e2b94539-00-19iunixpyknjp.picard.repl.co')
-REPLIT_URL = f"{REPLIT_DOMAIN}.repl.co"
+REPLIT_DOMAIN = '15dbbd2e-8afd-4ead-a254-33d2e2b94539-00-19iunixpyknjp'
+REPLIT_URL = f"{REPLIT_DOMAIN}.id.repl.co"
+ALLOWED_HOSTS = [
+    PRIMARY_DOMAIN, 
+    f"www.{PRIMARY_DOMAIN}", 
+    REPLIT_URL,
+    f"{REPLIT_DOMAIN}.id.repl.co",
+    "treyharnden.com",
+    "www.treyharnden.com",
+    "*.repl.co",
+    "*.id.repl.co"
+]
 
 def setup_domains():
     """Configure allowed domains for the application."""
@@ -74,30 +84,21 @@ def redirect_to_primary_domain():
     host = request.headers.get('Host', '')
     logger.info(f"Processing request for host: {host}")
     
-    # Allow Replit domain during development and transition
-    if host == REPLIT_URL:
-        logger.debug(f"Allowing Replit domain access: {host}")
-        return None
-        
-    # Handle requests to non-primary domains
-    if host not in [PRIMARY_DOMAIN, f"www.{PRIMARY_DOMAIN}"]:
-        target = f"https://{PRIMARY_DOMAIN}{request.path}"
-        logger.info(f"Redirecting to primary domain: {target}")
-        return redirect(target, code=301)
-        
     # Force HTTPS
     if request.headers.get('X-Forwarded-Proto', 'http') == 'http':
         url = request.url.replace('http://', 'https://', 1)
         logger.info(f"Redirecting HTTP to HTTPS: {url}")
         return redirect(url, code=301)
 
-    # Handle www subdomain
-    if host.startswith('www.'):
-        target = request.url.replace('www.', '', 1)
-        logger.info(f"Redirecting www to non-www: {target}")
-        return redirect(target, code=301)
+    # During DNS transition, allow both Replit and primary domain
+    if any(allowed_host in host for allowed_host in ALLOWED_HOSTS):
+        logger.debug(f"Allowing access for host: {host}")
+        return None
 
-    return None
+    # For any other domain, redirect to primary
+    target = f"https://{PRIMARY_DOMAIN}{request.path}"
+    logger.info(f"Redirecting to primary domain: {target}")
+    return redirect(target, code=301)
 
 # Add security headers
 @app.after_request
