@@ -27,18 +27,21 @@ app.config.update(
 )
 
 # Configure domain settings
-PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = os.environ.get('REPL_SLUG', 'workspace.treyharnden.repl.co')
+PRIMARY_DOMAIN = 'treyharnden.com'
+REPLIT_SLUG = os.environ.get('REPL_SLUG', 'workspace')
+REPLIT_OWNER = os.environ.get('REPL_OWNER', 'treyharnden')
+FULL_REPLIT_DOMAIN = f"{REPLIT_SLUG}.{REPLIT_OWNER}.repl.co"
+
 ALLOWED_HOSTS = [
     PRIMARY_DOMAIN,
     f"www.{PRIMARY_DOMAIN}",
-    REPLIT_DOMAIN,
-    f"{REPLIT_DOMAIN}.repl.co",
+    FULL_REPLIT_DOMAIN,
     "treyharnden.com",
-    "www.treyharnden.com",
-    "159.203.160.162",  # Replit instance IP - matches Cloudflare DNS A records
-    "*"  # Allow all hosts temporarily during DNS propagation
+    "www.treyharnden.com"
 ]
+
+# Update server URL for production
+SERVER_NAME = PRIMARY_DOMAIN
 
 # Configure Cloudflare proxy settings
 PROXY_ALLOWED_IPS = [
@@ -73,7 +76,7 @@ def setup_domains():
     allowed_origins = {
         f"https://{PRIMARY_DOMAIN}",
         f"https://www.{PRIMARY_DOMAIN}",
-        f"https://{REPLIT_DOMAIN}.repl.co",
+        f"https://{FULL_REPLIT_DOMAIN}",
         "https://treyharnden.com",
         "https://www.treyharnden.com"
     }
@@ -94,7 +97,8 @@ CORS(app, resources={
 # Configure domain settings
 app.config.update(
     PRIMARY_DOMAIN=PRIMARY_DOMAIN,
-    PREFERRED_URL_SCHEME='https'
+    PREFERRED_URL_SCHEME='https',
+    SERVER_NAME=PRIMARY_DOMAIN
 )
 
 # Add domain redirect middleware
