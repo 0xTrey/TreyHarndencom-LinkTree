@@ -35,37 +35,34 @@ def create_app():
     logger.info("Application environment: %s", os.environ.get('FLASK_ENV', 'development'))
     
     try:
-        logger.info("Checking DATABASE_URL environment variable...")
+        # Get database URL from environment
         database_url = os.environ.get('DATABASE_URL')
-        
         if not database_url:
-            logger.critical("DATABASE_URL environment variable is not set")
             raise ValueError("DATABASE_URL environment variable is not set")
         
+        # Ensure the database URL starts with postgresql://
+        if database_url.startswith('postgres://'):
+            database_url = database_url.replace('postgres://', 'postgresql://', 1)
+        
         # Configure SQLAlchemy
-        app.config.update(
-            SQLALCHEMY_DATABASE_URI=database_url,
-            SQLALCHEMY_TRACK_MODIFICATIONS=False,
-            SQLALCHEMY_ENGINE_OPTIONS={
-                'pool_pre_ping': True,
-                'pool_recycle': 300,
-                'pool_size': 5,
-                'max_overflow': 10,
-                'connect_args': {
-                    'connect_timeout': 10
-                }
-            }
-        )
-        logger.info("Database configuration successful")
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+            'pool_pre_ping': True,
+            'pool_recycle': 300,
+            'pool_size': 5,
+            'max_overflow': 10,
+            'connect_args': {'connect_timeout': 10}
+        }
         
         # Import and initialize database
-        from models import db
+        from models import db, LinkClick
         db.init_app(app)
         
-        # Create tables within app context
+        # Initialize database tables within app context
         with app.app_context():
             try:
-                # First verify database connection
+                # Verify database connection
                 db.session.execute(text('SELECT 1'))
                 db.session.commit()
                 logger.info("Database connection verified")
@@ -73,22 +70,15 @@ def create_app():
                 # Create tables
                 db.create_all()
                 db.session.commit()
-                logger.info("Created database tables successfully")
-                
-                # Verify tables were created
-                inspector = inspect(db.engine)
-                tables = inspector.get_table_names()
-                logger.info(f"Initialized tables: {', '.join(tables)}")
+                logger.info("Database tables initialized successfully")
                 
             except Exception as e:
-                logger.error(f"Error during database initialization: {str(e)}")
+                logger.error(f"Database initialization error: {str(e)}")
                 db.session.rollback()
                 raise
-            
+                
     except Exception as e:
-        logger.error(f"Database initialization failed: {str(e)}")
-        if 'DatabaseError' in str(e.__class__):
-            logger.error("Database connection failed - please check DATABASE_URL")
+        logger.error(f"Application configuration error: {str(e)}")
         raise
     
     # Social links data
