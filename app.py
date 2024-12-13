@@ -1,10 +1,12 @@
 import logging
 import os
+import time
 try:
-    from flask import Flask, render_template, request, jsonify, redirect
+    from flask import Flask, render_template, request, jsonify, redirect, g
     from flask_sqlalchemy import SQLAlchemy
     from flask_cors import CORS
     from werkzeug.middleware.proxy_fix import ProxyFix
+    from sqlalchemy import text as sqlalchemy_text
 except ImportError as e:
     print(f"Error importing dependencies: {e}")
     raise
@@ -169,38 +171,104 @@ def add_security_headers(response):
     response.headers.update(headers)
     return response
 
-# Initialize database
+# Initialize database and configure logging
 from models import db, init_db, LinkClick
 
 # Configure logging for database operations
 db_logger = logging.getLogger('sqlalchemy.engine')
 db_logger.setLevel(logging.INFO)
 
-try:
-    # Initialize the database with proper error handling
-    logger.info("Starting database initialization...")
-    init_db(app)
-    logger.info("Database initialized successfully")
+# Set up database logging handler
+handler = logging.StreamHandler()
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+db_logger.addHandler(handler)
+
+def init_database(app):
+    """Initialize database with error handling and retries"""
+    max_retries = 3
+    retry_delay = 5  # seconds
     
-    # Verify database connection
-    with app.app_context():
+    for attempt in range(max_retries):
         try:
-            # Simple connection test
-            db.session.execute('SELECT 1')
-            db.session.commit()
-            logger.info("Database connection verified successfully")
+            logger.info(f"Starting database initialization (attempt {attempt + 1}/{max_retries})...")
+            
+            # Initialize the database with the application
+            if init_db(app):
+                logger.info("Database initialized successfully")
+                return True
+                
         except Exception as e:
-            logger.error(f"Database connection verification failed: {str(e)}")
-            if hasattr(e, 'orig'):
-                logger.error(f"Original error: {str(e.orig)}")
-            raise
-except Exception as e:
-    logger.error(f"Database initialization error: {str(e)}")
-    if os.environ.get('FLASK_ENV') == 'production':
-        logger.critical("Critical: Failed to initialize database in production")
+            logger.error(f"Database initialization error (attempt {attempt + 1}/{max_retries}): {str(e)}")
+            
+            if attempt < max_retries - 1:
+                logger.info(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # Exponential backoff
+            else:
+                if os.environ.get('FLASK_ENV') == 'production':
+                    logger.critical("Critical: Failed to initialize database in production after all retries")
+                    raise
+                else:
+                    logger.warning("Warning: Database initialization failed in development after all retries")
+                return False
+    
+    return False
+    
+    for attempt in range(max_retries):
+        try:
+            logger.info(f"Starting database initialization (attempt {attempt + 1}/{max_retries})...")
+            
+            # Initialize the database with the application
+            if init_db(app):
+                logger.info("Database initialized successfully")
+                return True
+                
+        except Exception as e:
+            logger.error(f"Database initialization error (attempt {attempt + 1}/{max_retries}): {str(e)}")
+            
+            if attempt < max_retries - 1:
+                logger.info(f"Retrying in {retry_delay} seconds...")
+                time.sleep(retry_delay)
+                retry_delay *= 2  # Exponential backoff
+            else:
+                if os.environ.get('FLASK_ENV') == 'production':
+                    logger.critical("Critical: Failed to initialize database in production after all retries")
+                    raise
+                else:
+                    logger.warning("Warning: Database initialization failed in development after all retries")
+                return False
+    
+    return False
+
+# Initialize the database during app startup
+def initialize_app():
+    try:
+        if init_database(app):
+            logger.info("Database initialized successfully during startup")
+        else:
+            logger.error("Failed to initialize database during startup")
+    except Exception as e:
+        logger.error(f"Error during app initialization: {str(e)}")
         raise
-    else:
-        logger.warning("Warning: Database initialization failed in development")
+
+# Check database connection before each request
+@app.before_request
+def check_database():
+    if not hasattr(g, '_database_checked'):
+        try:
+            # Quick connection check
+            with app.app_context():
+                db.session.execute(sqlalchemy_text("SELECT 1"))
+                db.session.commit()
+            g._database_checked = True
+        except Exception as e:
+            logger.error(f"Database connection check failed: {str(e)}")
+            return "Database connection error", 500
+
+# Initialize the application
+initialize_app()
 
 # Social links data
 social_links = [
