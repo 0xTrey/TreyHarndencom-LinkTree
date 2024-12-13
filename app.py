@@ -28,18 +28,27 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = '15dbbd2e-8afd-4ead-a254-33d2e2b94539-00-19iunixpyknjp'
-REPLIT_URL = f"{REPLIT_DOMAIN}.id.repl.co"
+REPLIT_DOMAIN = '15dbbd2e-8afd-4ead-a254-33d2e2b94539-00-19iunixpyknjp.picard.repl.co'
 ALLOWED_HOSTS = [
-    PRIMARY_DOMAIN, 
-    f"www.{PRIMARY_DOMAIN}", 
-    REPLIT_URL,
-    f"{REPLIT_DOMAIN}.id.repl.co",
+    PRIMARY_DOMAIN,
+    f"www.{PRIMARY_DOMAIN}",
+    REPLIT_DOMAIN,
     "treyharnden.com",
     "www.treyharnden.com",
     "*.repl.co",
-    "*.id.repl.co"
+    "*.replit.dev",
+    "*.id.repl.co",
+    # Allow all during DNS propagation
+    "*"
 ]
+
+# Enhanced logging for debugging
+logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+logging.getLogger('gunicorn.access').setLevel(logging.DEBUG)
+logging.getLogger('gunicorn.error').setLevel(logging.DEBUG)
+
+# Enhanced logging for domain debugging
+logging.getLogger('werkzeug').setLevel(logging.DEBUG)
 
 def setup_domains():
     """Configure allowed domains for the application."""
@@ -82,7 +91,19 @@ def redirect_to_primary_domain():
         return None
 
     host = request.headers.get('Host', '')
-    logger.info(f"Processing request for host: {host}")
+    forwarded_for = request.headers.get('X-Forwarded-For', '')
+    cf_visitor = request.headers.get('CF-Visitor', '')
+    cf_connecting_ip = request.headers.get('CF-Connecting-IP', '')
+    
+    logger.info(f"""
+    Request Details:
+    - Host: {host}
+    - X-Forwarded-For: {forwarded_for}
+    - CF-Visitor: {cf_visitor}
+    - CF-Connecting-IP: {cf_connecting_ip}
+    - Path: {request.path}
+    - Method: {request.method}
+    """)
     
     # Force HTTPS
     if request.headers.get('X-Forwarded-Proto', 'http') == 'http':
@@ -90,15 +111,9 @@ def redirect_to_primary_domain():
         logger.info(f"Redirecting HTTP to HTTPS: {url}")
         return redirect(url, code=301)
 
-    # During DNS transition, allow both Replit and primary domain
-    if any(allowed_host in host for allowed_host in ALLOWED_HOSTS):
-        logger.debug(f"Allowing access for host: {host}")
-        return None
-
-    # For any other domain, redirect to primary
-    target = f"https://{PRIMARY_DOMAIN}{request.path}"
-    logger.info(f"Redirecting to primary domain: {target}")
-    return redirect(target, code=301)
+    # During DNS propagation, allow all hosts
+    logger.info(f"Allowing access for host: {host} (DNS propagation period)")
+    return None
 
 # Add security headers
 @app.after_request
