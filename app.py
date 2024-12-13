@@ -28,7 +28,7 @@ app.config.update(
 
 # Configure domain settings
 PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
-REPLIT_DOMAIN = f"harndentrey.repl.co"
+REPLIT_DOMAIN = "harndentrey.repl.co"
 REPLIT_ID = os.environ.get('REPL_ID', '')
 
 def setup_domains():
