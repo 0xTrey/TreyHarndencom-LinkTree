@@ -1,33 +1,22 @@
 import logging
 import os
-import time
-try:
-    from flask import Flask, render_template, request, jsonify, redirect, g
-    from flask_sqlalchemy import SQLAlchemy
-    from flask_cors import CORS
-    from werkzeug.middleware.proxy_fix import ProxyFix
-    from sqlalchemy import text as sqlalchemy_text
-except ImportError as e:
-    print(f"Error importing dependencies: {e}")
-    raise
+from flask import Flask, render_template, request, jsonify, redirect, g
+from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from werkzeug.middleware.proxy_fix import ProxyFix
+from sqlalchemy import text as sqlalchemy_text
 
-# Configure logging for production
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Initialize Flask app with explicit static folder
+# Initialize Flask app
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 
-# Production-specific configurations
-if os.environ.get('FLASK_ENV') == 'production':
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 31536000  # 1 year cache
-else:
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0  # Disable caching during development
-
-# Configure ProxyFix for proper handling of protocols and hosts behind proxies
+# Configure ProxyFix
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
 # Security configurations
@@ -38,237 +27,19 @@ app.config.update(
     PREFERRED_URL_SCHEME='https'
 )
 
-# Configure domain settings
-PRIMARY_DOMAIN = 'treyharnden.com'
-REPLIT_SLUG = os.environ.get('REPL_SLUG', 'trey-harndencom-link-tree-harndentrey')
-REPLIT_OWNER = os.environ.get('REPL_OWNER', 'treyharnden')
-FULL_REPLIT_DOMAIN = f"{REPLIT_SLUG}.replit.app"
-
-ALLOWED_HOSTS = [
-    'treyharnden.com',
-    'www.treyharnden.com',
-    FULL_REPLIT_DOMAIN,
-    '34.111.179.208',
-    '*'  # Temporarily allow all during DNS propagation
-]
-
-# Remove SERVER_NAME to allow flexible domain handling
-app.config.update(
-    PREFERRED_URL_SCHEME='https'
-)
-
-# Configure Cloudflare proxy settings
-PROXY_ALLOWED_IPS = [
-    '173.245.48.0/20',
-    '103.21.244.0/22',
-    '103.22.200.0/22',
-    '103.31.4.0/22',
-    '141.101.64.0/18',
-    '108.162.192.0/18',
-    '190.93.240.0/20',
-    '188.114.96.0/20',
-    '197.234.240.0/22',
-    '198.41.128.0/17',
-    '162.158.0.0/15',
-    '104.16.0.0/13',
-    '104.24.0.0/14',
-    '172.64.0.0/13',
-    '131.0.72.0/22',
-    '159.89.214.31/32',  # Added Replit's IP
-]
-
-# Ensure Cloudflare headers are trusted
-app.config['PREFERRED_URL_SCHEME'] = 'https'
-
-# Enhanced logging for debugging
-logging.getLogger('werkzeug').setLevel(logging.DEBUG)
-logging.getLogger('gunicorn.access').setLevel(logging.DEBUG)
-logging.getLogger('gunicorn.error').setLevel(logging.DEBUG)
-
-# Enhanced logging for domain debugging
-logging.getLogger('werkzeug').setLevel(logging.DEBUG)
-
-def setup_domains():
-    """Configure allowed domains for the application."""
-    logger.info("Setting up domain configuration...")
-    allowed_origins = [
-        "https://treyharnden.com",
-        "https://www.treyharnden.com",
-        f"https://{FULL_REPLIT_DOMAIN}",
-        "*"  # Temporarily allow all origins during development
-    ]
-    logger.info(f"Domain configuration: {allowed_origins}")
-    return allowed_origins
-
-# Set up allowed origins
-ALLOWED_ORIGINS = setup_domains()
-
 # Configure CORS
 CORS(app, 
      resources={r"/*": {"origins": "*"}},
-     supports_credentials=True,
-     allow_headers=["Content-Type", "Authorization"],
-     methods=["GET", "POST", "OPTIONS"]
-)
+     supports_credentials=True)
 
-# Configure domain settings
-app.config.update(
-    PRIMARY_DOMAIN=PRIMARY_DOMAIN,
-    PREFERRED_URL_SCHEME='https'
-)
-
-# Add domain redirect middleware
-@app.before_request
-def redirect_to_primary_domain():
-    """Handle domain redirects and protocol upgrades."""
-    if request.method == 'OPTIONS':
-        return None
-
-    host = request.headers.get('Host', '')
-    forwarded_for = request.headers.get('X-Forwarded-For', '')
-    cf_visitor = request.headers.get('CF-Visitor', '')
-    cf_connecting_ip = request.headers.get('CF-Connecting-IP', '')
-    
-    logger.info(f"""
-    Request Details:
-    - Host: {host}
-    - X-Forwarded-For: {forwarded_for}
-    - CF-Visitor: {cf_visitor}
-    - CF-Connecting-IP: {cf_connecting_ip}
-    - Path: {request.path}
-    - Method: {request.method}
-    """)
-    
-    # Handle Cloudflare headers
-    cf_visitor = request.headers.get('CF-Visitor', '')
-    if cf_visitor and '"scheme":"http"' in cf_visitor:
-        url = request.url.replace('http://', 'https://', 1)
-        logger.info(f"Redirecting HTTP to HTTPS via Cloudflare: {url}")
-        return redirect(url, code=301)
-
-    # During DNS propagation, allow all hosts but log the details
-    logger.info(f"""
-    Detailed Request Info:
-    - Host: {host}
-    - CF-Visitor: {cf_visitor}
-    - CF-Connecting-IP: {request.headers.get('CF-Connecting-IP', '')}
-    - X-Forwarded-For: {request.headers.get('X-Forwarded-For', '')}
-    - X-Forwarded-Proto: {request.headers.get('X-Forwarded-Proto', '')}
-    """)
-    return None
-
-# Add security headers
-@app.after_request
-def add_security_headers(response):
-    """Add security headers to all responses."""
-    headers = {
-        'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
-        'X-Content-Type-Options': 'nosniff',
-        'X-Frame-Options': 'DENY',
-        'X-XSS-Protection': '1; mode=block',
-        'Referrer-Policy': 'strict-origin-when-cross-origin'
-    }
-    response.headers.update(headers)
-    return response
-
-# Initialize database and configure logging
+# Import and initialize database
 from models import db, init_db, LinkClick
 
-# Configure logging for database operations
-db_logger = logging.getLogger('sqlalchemy.engine')
-db_logger.setLevel(logging.INFO)
-
-# Set up database logging handler
-handler = logging.StreamHandler()
-handler.setLevel(logging.INFO)
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-handler.setFormatter(formatter)
-db_logger.addHandler(handler)
-
-def init_database(app):
-    """Initialize database with error handling and retries"""
-    max_retries = 3
-    retry_delay = 5  # seconds
-    
-    for attempt in range(max_retries):
-        try:
-            logger.info(f"Starting database initialization (attempt {attempt + 1}/{max_retries})...")
-            
-            # Initialize the database with the application
-            if init_db(app):
-                logger.info("Database initialized successfully")
-                return True
-                
-        except Exception as e:
-            logger.error(f"Database initialization error (attempt {attempt + 1}/{max_retries}): {str(e)}")
-            
-            if attempt < max_retries - 1:
-                logger.info(f"Retrying in {retry_delay} seconds...")
-                time.sleep(retry_delay)
-                retry_delay *= 2  # Exponential backoff
-            else:
-                if os.environ.get('FLASK_ENV') == 'production':
-                    logger.critical("Critical: Failed to initialize database in production after all retries")
-                    raise
-                else:
-                    logger.warning("Warning: Database initialization failed in development after all retries")
-                return False
-    
-    return False
-    
-    for attempt in range(max_retries):
-        try:
-            logger.info(f"Starting database initialization (attempt {attempt + 1}/{max_retries})...")
-            
-            # Initialize the database with the application
-            if init_db(app):
-                logger.info("Database initialized successfully")
-                return True
-                
-        except Exception as e:
-            logger.error(f"Database initialization error (attempt {attempt + 1}/{max_retries}): {str(e)}")
-            
-            if attempt < max_retries - 1:
-                logger.info(f"Retrying in {retry_delay} seconds...")
-                time.sleep(retry_delay)
-                retry_delay *= 2  # Exponential backoff
-            else:
-                if os.environ.get('FLASK_ENV') == 'production':
-                    logger.critical("Critical: Failed to initialize database in production after all retries")
-                    raise
-                else:
-                    logger.warning("Warning: Database initialization failed in development after all retries")
-                return False
-    
-    return False
-
-# Initialize the database during app startup
-def initialize_app():
-    try:
-        if init_database(app):
-            logger.info("Database initialized successfully during startup")
-        else:
-            logger.error("Failed to initialize database during startup")
-    except Exception as e:
-        logger.error(f"Error during app initialization: {str(e)}")
-        raise
-
-# Check database connection before each request
-@app.before_request
-def check_database():
-    if not hasattr(g, '_database_checked'):
-        try:
-            # Quick connection check
-            with app.app_context():
-                db.session.execute(sqlalchemy_text("SELECT 1"))
-                db.session.commit()
-            g._database_checked = True
-        except Exception as e:
-            logger.error(f"Database connection check failed: {str(e)}")
-            return "Database connection error", 500
-
-# Initialize the application
-initialize_app()
+# Initialize database
+if not init_db(app):
+    if os.environ.get('FLASK_ENV') == 'production':
+        raise ValueError("Failed to initialize database in production")
+    logger.error("Failed to initialize database")
 
 # Social links data
 social_links = [
@@ -279,18 +50,9 @@ social_links = [
     {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
 ]
 
-from models import LinkClick
-
 @app.route('/')
 def index():
-    try:
-        host = request.headers.get('Host', '')
-        protocol = request.headers.get('X-Forwarded-Proto', 'http')
-        logger.info(f"Incoming request - Host: {host}, Protocol: {protocol}")
-        return render_template('index.html', social_links=social_links)
-    except Exception as e:
-        logger.error(f"Error rendering index page: {str(e)}")
-        return "An error occurred", 500
+    return render_template('index.html', social_links=social_links)
 
 @app.route('/track-click', methods=['POST'])
 def track_click():
@@ -311,14 +73,6 @@ def track_click():
         db.session.rollback()
         return jsonify({'error': 'Internal server error'}), 500
 
-# Database tables are initialized in models.py
-
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 3000))
-    app.run(
-        host='0.0.0.0',
-        port=port,
-        debug=False,
-        ssl_context=None,
-        threaded=True
-    )
+    port = int(os.environ.get('PORT', 80))
+    app.run(host='0.0.0.0', port=port)
