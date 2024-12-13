@@ -38,25 +38,48 @@ def create_app():
     flask_env = os.environ.get('FLASK_ENV', 'production')
     app.config['FLASK_ENV'] = flask_env
     logger.info(f"Application environment: {flask_env}")
-
-    # Initialize database with proper error handling and logging
+    
+    # Initialize database during app creation
     logger.info("Starting database initialization...")
     try:
-        # Verify environment variables
-        logger.info("Checking DATABASE_URL environment variable...")
-        if 'DATABASE_URL' not in os.environ:
-            raise ValueError("DATABASE_URL environment variable is not set in the environment")
-            
-        if not init_db(app):
-            logger.error("Failed to initialize database")
+        if not init_db(app, max_retries=5):
+            error_msg = "Failed to initialize database after all retry attempts"
+            logger.error(error_msg)
             if flask_env == 'production':
-                raise RuntimeError("Database initialization failed in production")
+                raise RuntimeError(error_msg)
+            logger.warning("Database initialization failed but continuing in development mode")
     except Exception as e:
-        logger.error(f"Database initialization error: {str(e)}")
+        error_msg = f"Critical database initialization error: {str(e)}"
+        logger.critical(error_msg)
         if flask_env == 'production':
-            logger.critical("Critical: Failed to initialize database in production")
+            # In production, we want to fail fast if database initialization fails
+            logger.critical("Cannot continue without database in production mode")
             raise
         logger.warning("Continuing without database in development mode")
+    
+    # Define routes
+    @app.route('/')
+    def index():
+        try:
+            return render_template('index.html', social_links=social_links)
+        except Exception as e:
+            logger.error(f"Error rendering index page: {str(e)}")
+            return "Internal Server Error", 500
+    
+    @app.route('/health')
+    def health_check():
+        """Health check endpoint that verifies database connection"""
+        try:
+            db.session.execute(text('SELECT 1'))
+            db.session.commit()
+            return jsonify({'status': 'healthy', 'database': 'connected'}), 200
+        except Exception as e:
+            logger.error(f"Health check failed: {str(e)}")
+            return jsonify({
+                'status': 'unhealthy',
+                'database': 'disconnected',
+                'error': str(e)
+            }), 500
     
     # Social links data
     social_links = [
@@ -66,25 +89,7 @@ def create_app():
         {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
         {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
     ]
-
-    @app.route('/')
-    def index():
-        return render_template('index.html', social_links=social_links)
-
-    from utils import retry_database_operation
-
-    @retry_database_operation(max_retries=3, initial_delay=0.5)
-    def save_link_click(link_name):
-        """Save link click with retry mechanism"""
-        try:
-            click = LinkClick(link_name=link_name)
-            db.session.add(click)
-            db.session.commit()
-            return click
-        except Exception as e:
-            db.session.rollback()
-            raise
-
+    
     @app.route('/track-click', methods=['POST'])
     def track_click():
         try:
@@ -94,31 +99,15 @@ def create_app():
             if not link_name:
                 return jsonify({'error': 'Link name is required'}), 400
                 
-            save_link_click(link_name)
+            click = LinkClick(link_name=link_name)
+            db.session.add(click)
+            db.session.commit()
             return jsonify({'message': 'Click tracked successfully'}), 200
         except Exception as e:
             logger.error(f"Error tracking click: {str(e)}")
-            return jsonify({'error': 'Internal server error'}), 500
-
-    @retry_database_operation(max_retries=2, initial_delay=0.5)
-    def check_database_health():
-        """Check database health with retry mechanism"""
-        try:
-            db.session.execute(text('SELECT 1'))
-            db.session.commit()
-        except Exception as e:
             db.session.rollback()
-            raise
-
-    @app.route('/health')
-    def health_check():
-        try:
-            check_database_health()
-            return jsonify({'status': 'healthy', 'database': 'connected'}), 200
-        except Exception as e:
-            logger.error(f"Health check failed: {str(e)}")
-            return jsonify({'status': 'unhealthy', 'error': str(e)}), 500
-
+            return jsonify({'error': 'Internal server error'}), 500
+    
     return app
 
 # Create the application instance
