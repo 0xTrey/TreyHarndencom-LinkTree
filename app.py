@@ -34,11 +34,29 @@ def create_app():
     # Import database models
     from models import db, init_db, LinkClick
     
-    # Initialize database with proper error handling
-    if not init_db(app):
-        logger.error("Failed to initialize database")
-        if os.environ.get('FLASK_ENV') == 'production':
-            raise RuntimeError("Database initialization failed in production")
+    # Set Flask environment
+    flask_env = os.environ.get('FLASK_ENV', 'production')
+    app.config['FLASK_ENV'] = flask_env
+    logger.info(f"Application environment: {flask_env}")
+
+    # Initialize database with proper error handling and logging
+    logger.info("Starting database initialization...")
+    try:
+        # Verify environment variables
+        logger.info("Checking DATABASE_URL environment variable...")
+        if 'DATABASE_URL' not in os.environ:
+            raise ValueError("DATABASE_URL environment variable is not set in the environment")
+            
+        if not init_db(app):
+            logger.error("Failed to initialize database")
+            if flask_env == 'production':
+                raise RuntimeError("Database initialization failed in production")
+    except Exception as e:
+        logger.error(f"Database initialization error: {str(e)}")
+        if flask_env == 'production':
+            logger.critical("Critical: Failed to initialize database in production")
+            raise
+        logger.warning("Continuing without database in development mode")
     
     # Social links data
     social_links = [
@@ -53,6 +71,20 @@ def create_app():
     def index():
         return render_template('index.html', social_links=social_links)
 
+    from utils import retry_database_operation
+
+    @retry_database_operation(max_retries=3, initial_delay=0.5)
+    def save_link_click(link_name):
+        """Save link click with retry mechanism"""
+        try:
+            click = LinkClick(link_name=link_name)
+            db.session.add(click)
+            db.session.commit()
+            return click
+        except Exception as e:
+            db.session.rollback()
+            raise
+
     @app.route('/track-click', methods=['POST'])
     def track_click():
         try:
@@ -62,21 +94,26 @@ def create_app():
             if not link_name:
                 return jsonify({'error': 'Link name is required'}), 400
                 
-            click = LinkClick(link_name=link_name)
-            db.session.add(click)
-            db.session.commit()
-            
+            save_link_click(link_name)
             return jsonify({'message': 'Click tracked successfully'}), 200
         except Exception as e:
             logger.error(f"Error tracking click: {str(e)}")
-            db.session.rollback()
             return jsonify({'error': 'Internal server error'}), 500
+
+    @retry_database_operation(max_retries=2, initial_delay=0.5)
+    def check_database_health():
+        """Check database health with retry mechanism"""
+        try:
+            db.session.execute(text('SELECT 1'))
+            db.session.commit()
+        except Exception as e:
+            db.session.rollback()
+            raise
 
     @app.route('/health')
     def health_check():
         try:
-            db.session.execute(text('SELECT 1'))
-            db.session.commit()
+            check_database_health()
             return jsonify({'status': 'healthy', 'database': 'connected'}), 200
         except Exception as e:
             logger.error(f"Health check failed: {str(e)}")
