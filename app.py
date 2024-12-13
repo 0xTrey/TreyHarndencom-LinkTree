@@ -15,8 +15,7 @@ logger = logging.getLogger(__name__)
 
 def create_app():
     """Create and configure the Flask application"""
-    # Initialize Flask app
-    app = Flask(__name__, static_folder='static', static_url_path='/static')
+    app = Flask(__name__)
     
     # Configure ProxyFix for proper header handling
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
@@ -33,43 +32,34 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
     
     # Import database models
-    from models import db, init_db, LinkClick
+    from models import db
     
-    # Set Flask environment
-    flask_env = os.environ.get('FLASK_ENV', 'production')
-    app.config['FLASK_ENV'] = flask_env
-    logger.info(f"Application environment: {flask_env}")
-    
-    # Initialize database during app creation
-    logger.info("Starting database initialization...")
-    
-    # Configure SQLAlchemy with environment variables
+    # Configure database
+    database_url = os.environ.get('DATABASE_URL')
+    if not database_url:
+        logger.critical("DATABASE_URL environment variable is not set")
+        raise ValueError("DATABASE_URL environment variable is not set")
+        
     app.config.update(
-        SQLALCHEMY_DATABASE_URI=os.environ['DATABASE_URL'],
+        SQLALCHEMY_DATABASE_URI=database_url,
         SQLALCHEMY_TRACK_MODIFICATIONS=False,
         SQLALCHEMY_ENGINE_OPTIONS={
             'pool_pre_ping': True,
-            'pool_size': 5,
-            'max_overflow': 10,
-            'pool_timeout': 30
         }
     )
     
-    # Initialize database
+    # Initialize Flask-SQLAlchemy
     db.init_app(app)
     
-    try:
-        with app.app_context():
-            # Test database connection
-            db.session.execute(text('SELECT 1'))
-            db.session.commit()
-            # Create tables
+    # Create tables
+    with app.app_context():
+        try:
             db.create_all()
             logger.info("Database initialized successfully")
-    except Exception as e:
-        error_msg = f"Database initialization error: {str(e)}"
-        logger.error(error_msg)
-        raise
+        except Exception as e:
+            logger.error(f"Failed to initialize database: {str(e)}")
+            if app.config.get('FLASK_ENV') == 'production':
+                raise
     
     # Define routes
     @app.route('/')
@@ -83,24 +73,20 @@ def create_app():
     @app.route('/health')
     def health_check():
         """Health check endpoint that verifies database connection"""
-        logger.info("Health check endpoint called")
         try:
-            logger.info("Testing database connection...")
             db.session.execute(text('SELECT 1'))
             db.session.commit()
-            logger.info("Database connection test successful")
             return jsonify({
                 'status': 'healthy',
                 'database': 'connected',
                 'timestamp': datetime.utcnow().isoformat()
             }), 200
         except Exception as e:
-            error_msg = f"Health check failed: {str(e)}"
-            logger.error(error_msg)
+            logger.error(f"Health check failed: {str(e)}")
             return jsonify({
                 'status': 'unhealthy',
                 'database': 'disconnected',
-                'error': error_msg,
+                'error': str(e),
                 'timestamp': datetime.utcnow().isoformat()
             }), 500
     
@@ -122,6 +108,7 @@ def create_app():
             if not link_name:
                 return jsonify({'error': 'Link name is required'}), 400
                 
+            from models import LinkClick
             click = LinkClick(link_name=link_name)
             db.session.add(click)
             db.session.commit()
