@@ -1,6 +1,6 @@
 import logging
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
@@ -27,41 +27,19 @@ app.config.update(
 )
 
 # Configure domain settings
-def validate_domain(domain):
-    """Validate and format domain string."""
-    if not domain:
-        return None
-    
-    domain = domain.strip().lower()
-    
-    # Remove protocol if present
-    if domain.startswith(('http://', 'https://')):
-        domain = domain.split('://', 1)[1]
-    
-    # Remove trailing slashes
-    domain = domain.rstrip('/')
-    
-    # Basic domain validation
-    if not all(c.isalnum() or c in '-._' for c in domain.replace('/', '')):
-        logger.warning(f"Invalid domain format: {domain}")
-        return None
-        
-    return domain
+PRIMARY_DOMAIN = os.environ.get('CUSTOM_DOMAIN', 'treyharnden.com')
+REPLIT_DOMAIN = f"{os.environ.get('REPL_SLUG', 'workspace')}.{os.environ.get('REPL_OWNER', 'harndentrey')}.repl.co"
 
 def setup_domains():
     """Configure allowed domains for the application."""
     logger.info("Setting up domain configuration...")
     allowed_origins = {
-        "https://treyharnden.com",
-        "https://www.treyharnden.com",
-        "http://treyharnden.com",
-        "http://www.treyharnden.com",
+        f"https://{PRIMARY_DOMAIN}",
+        f"https://www.{PRIMARY_DOMAIN}",
+        f"https://{REPLIT_DOMAIN}",
         "https://*.repl.co",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        f"https://{os.environ.get('REPL_SLUG')}.{os.environ.get('REPL_OWNER')}.repl.co"
+        "https://*.repl.dev"
     }
-    
     logger.info(f"Domain configuration: {allowed_origins}")
     return list(allowed_origins)
 
@@ -69,59 +47,60 @@ def setup_domains():
 ALLOWED_ORIGINS = setup_domains()
 
 # Configure CORS
-CORS(app, resources={r"/*": {"origins": ALLOWED_ORIGINS}})
-logger.info("CORS configuration applied")
+CORS(app, resources={
+    r"/*": {
+        "origins": ALLOWED_ORIGINS,
+        "supports_credentials": True
+    }
+})
 
-# Log configured domains
-logger.info(f"Configured domains: {', '.join(ALLOWED_ORIGINS)}")
+# Configure domain settings
+app.config.update(
+    PRIMARY_DOMAIN=PRIMARY_DOMAIN,
+    PREFERRED_URL_SCHEME='https'
+)
 
-# Don't set SERVER_NAME to allow both custom domain and Replit domain access
-app.config['SERVER_NAME'] = None
-# Ensure the application handles both www and non-www variants
-app.config['PREFERRED_URL_SCHEME'] = 'https'
+# Add domain redirect middleware
+@app.before_request
+def redirect_to_primary_domain():
+    """Handle domain redirects and protocol upgrades."""
+    if request.method == 'OPTIONS':
+        return None
+
+    host = request.headers.get('Host', '')
+    logger.info(f"Processing request for host: {host}")
+    
+    # Skip redirects for Replit domains and local development
+    if '.repl.co' in host or '.repl.dev' in host:
+        logger.debug(f"Skipping redirect for development domain: {host}")
+        return None
+        
+    # Force HTTPS
+    if request.headers.get('X-Forwarded-Proto', 'http') == 'http':
+        url = request.url.replace('http://', 'https://', 1)
+        logger.info(f"Redirecting HTTP to HTTPS: {url}")
+        return redirect(url, code=301)
+
+    # Handle www subdomain
+    if host.startswith('www.'):
+        target = request.url.replace('www.', '', 1)
+        logger.info(f"Redirecting www to non-www: {target}")
+        return redirect(target, code=301)
+
+    return None
 
 # Add security headers
 @app.after_request
 def add_security_headers(response):
-    try:
-        # Generate CSP with all allowed origins
-        connect_src = ["'self'"] + ALLOWED_ORIGINS
-        trusted_cdn_domains = [
-            "cdn.jsdelivr.net",
-            "cdnjs.cloudflare.com",
-            "cdn.replit.com"
-        ]
-        
-        csp_directives = [
-            "default-src 'self'",
-            f"connect-src {' '.join(connect_src)}",
-            f"img-src 'self' data: {' '.join(trusted_cdn_domains)}",
-            f"script-src 'self' 'unsafe-inline' {' '.join(trusted_cdn_domains)}",
-            f"style-src 'self' 'unsafe-inline' {' '.join(trusted_cdn_domains)}",
-            f"font-src 'self' {' '.join(trusted_cdn_domains)}",
-            "frame-ancestors 'none'",
-            "base-uri 'self'",
-            "form-action 'self'"
-        ]
-        
-        # Security headers with logging
-        headers = {
-            'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-            'X-Content-Type-Options': 'nosniff',
-            'X-Frame-Options': 'DENY',
-            'X-XSS-Protection': '1; mode=block',
-            'Referrer-Policy': 'strict-origin-when-cross-origin',
-            'Content-Security-Policy': '; '.join(csp_directives),
-            'Permissions-Policy': 'geolocation=(), camera=(), microphone=()',
-            'Cross-Origin-Opener-Policy': 'same-origin'
-        }
-        
-        response.headers.update(headers)
-        logger.debug(f"Security headers added successfully for path: {request.path}")
-        
-    except Exception as e:
-        logger.error(f"Error adding security headers: {str(e)}")
-        
+    """Add security headers to all responses."""
+    headers = {
+        'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+        'X-Content-Type-Options': 'nosniff',
+        'X-Frame-Options': 'DENY',
+        'X-XSS-Protection': '1; mode=block',
+        'Referrer-Policy': 'strict-origin-when-cross-origin'
+    }
+    response.headers.update(headers)
     return response
 
 # Database configuration
@@ -157,8 +136,6 @@ def index():
         host = request.headers.get('Host', '')
         protocol = request.headers.get('X-Forwarded-Proto', 'http')
         logger.info(f"Incoming request - Host: {host}, Protocol: {protocol}")
-        logger.info(f"Request headers: {dict(request.headers)}")
-        
         return render_template('index.html', social_links=social_links)
     except Exception as e:
         logger.error(f"Error rendering index page: {str(e)}")
