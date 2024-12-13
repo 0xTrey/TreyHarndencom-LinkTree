@@ -54,33 +54,54 @@ def setup_domains():
     allowed_origins = set()
     
     try:
-        # Get Replit domain
-        repl_slug = os.environ.get('REPL_SLUG', 'workspace')
-        repl_owner = os.environ.get('REPL_OWNER', 'harndentrey')
-        replit_domain = f"{repl_slug}.{repl_owner}.repl.co"
-        allowed_origins.add(f"https://{replit_domain}")
-        logger.info(f"Added Replit domain: {replit_domain}")
+        # Get environment variables with defaults
+        repl_id = os.environ.get('REPL_ID')
+        repl_slug = os.environ.get('REPL_SLUG')
+        repl_owner = os.environ.get('REPL_OWNER')
+        custom_domain = os.environ.get('CUSTOM_DOMAIN')
+        
+        # Add Replit domains if available
+        if all([repl_slug, repl_owner]):
+            replit_domain = f"{repl_slug}.{repl_owner}.repl.co"
+            allowed_origins.add(f"https://{replit_domain}")
+            logger.info(f"Added Replit domain: {replit_domain}")
+        
+        if repl_id:
+            replit_id_domain = f"{repl_id}.id.repl.co"
+            allowed_origins.add(f"https://{replit_id_domain}")
+            logger.info(f"Added Replit ID domain: {replit_id_domain}")
         
         # Add custom domain if specified
-        custom_domain = validate_domain(os.environ.get('CUSTOM_DOMAIN', ''))
         if custom_domain:
-            allowed_origins.add(f"https://{custom_domain}")
-            logger.info(f"Added custom domain: {custom_domain}")
+            custom_domain = validate_domain(custom_domain)
+            if custom_domain:
+                # Add both www and non-www versions
+                allowed_origins.add(f"https://{custom_domain}")
+                allowed_origins.add(f"https://www.{custom_domain}")
+                logger.info(f"Added custom domain: {custom_domain}")
+                logger.info(f"Added www subdomain: www.{custom_domain}")
+            else:
+                logger.warning(f"Invalid custom domain format: {custom_domain}")
         
-        # Add additional domains
-        additional_domains = os.environ.get('ADDITIONAL_DOMAINS', '').strip()
-        if additional_domains:
-            for domain in additional_domains.split(','):
-                domain = validate_domain(domain)
-                if domain:
-                    allowed_origins.add(f"https://{domain}")
-                    logger.info(f"Added additional domain: {domain}")
-    
+        # Always add development domains for testing
+        allowed_origins.add("http://localhost:3000")
+        allowed_origins.add("http://127.0.0.1:3000")
+        
+        # Ensure we have at least one domain
+        if not allowed_origins:
+            logger.warning("No domains configured, using default Replit domain")
+            allowed_origins = {"https://workspace.harndentrey.repl.co"}
+        
     except Exception as e:
         logger.error(f"Error setting up domains: {str(e)}")
-        # Fallback to Replit domain only
-        allowed_origins = {f"https://{repl_slug}.{repl_owner}.repl.co"}
+        # Fallback to a safe default that should always work
+        allowed_origins = {
+            "https://workspace.harndentrey.repl.co",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000"
+        }
     
+    logger.info(f"Final domain configuration: {allowed_origins}")
     return list(allowed_origins)
 
 # Set up allowed origins

@@ -42,5 +42,5 @@ task = "packager.installForAll"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "gunicorn app:app --bind 0.0.0.0:3000 --workers 4 --log-level info --timeout 120"
+args = "CUSTOM_DOMAIN=treyharnden.com gunicorn app:app --bind 0.0.0.0:3000 --workers 4 --log-level info --timeout 120"
 waitForPort = 3000
