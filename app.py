@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 from sqlalchemy import text
+from datetime import datetime
 
 # Configure logging
 logging.basicConfig(
@@ -42,23 +43,33 @@ def create_app():
     # Initialize database during app creation
     logger.info("Starting database initialization...")
     
-    # Check for DATABASE_URL before proceeding
-    if not os.environ.get('DATABASE_URL'):
-        error_msg = "DATABASE_URL environment variable is not set in the environment"
-        logger.critical(error_msg)
-        raise ValueError(error_msg)
-        
+    # Configure SQLAlchemy with environment variables
+    app.config.update(
+        SQLALCHEMY_DATABASE_URI=os.environ['DATABASE_URL'],
+        SQLALCHEMY_TRACK_MODIFICATIONS=False,
+        SQLALCHEMY_ENGINE_OPTIONS={
+            'pool_pre_ping': True,
+            'pool_size': 5,
+            'max_overflow': 10,
+            'pool_timeout': 30
+        }
+    )
+    
+    # Initialize database
+    db.init_app(app)
+    
     try:
-        if not init_db(app):
-            error_msg = "Failed to initialize database"
-            logger.error(error_msg)
-            raise RuntimeError(error_msg)
+        with app.app_context():
+            # Test database connection
+            db.session.execute(text('SELECT 1'))
+            db.session.commit()
+            # Create tables
+            db.create_all()
+            logger.info("Database initialized successfully")
     except Exception as e:
-        error_msg = f"Critical database initialization error: {str(e)}"
-        logger.critical(error_msg)
-        if flask_env == 'production':
-            raise
-        logger.warning("Database initialization failed")
+        error_msg = f"Database initialization error: {str(e)}"
+        logger.error(error_msg)
+        raise
     
     # Define routes
     @app.route('/')
@@ -72,16 +83,25 @@ def create_app():
     @app.route('/health')
     def health_check():
         """Health check endpoint that verifies database connection"""
+        logger.info("Health check endpoint called")
         try:
+            logger.info("Testing database connection...")
             db.session.execute(text('SELECT 1'))
             db.session.commit()
-            return jsonify({'status': 'healthy', 'database': 'connected'}), 200
+            logger.info("Database connection test successful")
+            return jsonify({
+                'status': 'healthy',
+                'database': 'connected',
+                'timestamp': datetime.utcnow().isoformat()
+            }), 200
         except Exception as e:
-            logger.error(f"Health check failed: {str(e)}")
+            error_msg = f"Health check failed: {str(e)}"
+            logger.error(error_msg)
             return jsonify({
                 'status': 'unhealthy',
                 'database': 'disconnected',
-                'error': str(e)
+                'error': error_msg,
+                'timestamp': datetime.utcnow().isoformat()
             }), 500
     
     # Social links data
