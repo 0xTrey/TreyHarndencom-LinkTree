@@ -23,7 +23,7 @@ if __name__ == "__main__":
             logger.error(f"Database initialization error: {e}")
             
     # Start with production configuration
-    port = int(os.environ.get('PORT', 80))
+    port = int(os.environ.get('PORT', 5000))
     workers = int(os.environ.get('GUNICORN_WORKERS', 4))
     
     cmd = [
