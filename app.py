@@ -38,21 +38,25 @@ def create_app():
     
     # Get database URL from environment with better error handling
     logger.info("Checking DATABASE_URL environment variable...")
-    database_url = os.environ.get('DATABASE_URL')
-    if not database_url:
-        error_msg = "DATABASE_URL environment variable is not set"
-        logger.critical(f"Critical: Failed to initialize database in {env}")
-        raise ValueError(error_msg)
+    try:
+        database_url = os.environ.get('DATABASE_URL')
+        if not database_url:
+            logger.warning("DATABASE_URL not set, application will run with limited functionality")
+            database_url = 'sqlite:///:memory:'  # Use in-memory SQLite as fallback
         
-    logger.info("Database URL found, configuring connection...")
-    
-    # Ensure the database URL starts with postgresql://
-    if database_url.startswith('postgres://'):
-        database_url = database_url.replace('postgres://', 'postgresql://', 1)
-        logger.info("Converted postgres:// to postgresql:// in database URL")
-    
-    # Configure SQLAlchemy with optimized settings
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+        logger.info("Configuring database connection...")
+        
+        # Ensure the database URL starts with postgresql://
+        if database_url.startswith('postgres://'):
+            database_url = database_url.replace('postgres://', 'postgresql://', 1)
+            logger.info("Converted postgres:// to postgresql:// in database URL")
+        
+        # Configure SQLAlchemy with optimized settings
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    except Exception as e:
+        logger.error(f"Error configuring database: {str(e)}")
+        database_url = 'sqlite:///:memory:'  # Fallback to SQLite
+        app.config['SQLALCHEMY_DATABASE_URI'] = database_url
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         'pool_pre_ping': True,
@@ -75,28 +79,35 @@ def create_app():
         try:
             # Verify database connection with retry
             retries = 3
+            connected = False
             for attempt in range(retries):
                 try:
                     db.session.execute(text('SELECT 1'))
                     db.session.commit()
                     logger.info("Database connection verified successfully")
+                    connected = True
                     break
                 except Exception as conn_error:
                     if attempt == retries - 1:
-                        logger.error(f"Failed to verify database connection after {retries} attempts: {str(conn_error)}")
-                        raise
-                    logger.warning(f"Database connection attempt {attempt + 1} failed, retrying...")
+                        logger.warning(f"Database connection not available after {retries} attempts: {str(conn_error)}")
+                    else:
+                        logger.warning(f"Database connection attempt {attempt + 1} failed, retrying...")
+                    db.session.rollback()
+                    
+            if connected:
+                try:
+                    # Create tables only if connection is successful
+                    db.create_all()
+                    db.session.commit()
+                    logger.info("Database tables initialized successfully")
+                except Exception as e:
+                    logger.warning(f"Failed to create database tables: {str(e)}")
                     db.session.rollback()
             
-            # Create tables
-            db.create_all()
-            db.session.commit()
-            logger.info("Database tables initialized successfully")
-            
         except Exception as e:
-            logger.error(f"Database initialization error: {str(e)}")
-            db.session.rollback()
-            raise
+            logger.warning(f"Database initialization warning: {str(e)}")
+            if 'db.session' in locals():
+                db.session.rollback()
 
     # Social links data
     app.config['social_links'] = [
