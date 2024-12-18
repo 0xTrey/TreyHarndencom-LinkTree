@@ -10,6 +10,10 @@ ignorePorts = false
 build = ["sh", "-c", "pip install -r requirements.txt"]
 
 [[ports]]
+localPort = 80
+externalPort = 3000
+
+[[ports]]
 localPort = 5000
 externalPort = 80
 
