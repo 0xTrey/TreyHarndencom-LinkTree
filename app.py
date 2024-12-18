@@ -166,6 +166,33 @@ def create_app():
                 'timestamp': datetime.utcnow().isoformat()
             }), 500
 
+    @app.route('/test_db')
+    def test_db():
+        """Test database connectivity and concurrent access"""
+        start_time = datetime.utcnow()
+        try:
+            # Test database connection with session handling
+            with db.session.begin():
+                # Execute simple query
+                result = db.session.execute(text('SELECT 1')).scalar()
+                end_time = datetime.utcnow()
+                response_time = (end_time - start_time).total_seconds()
+                
+                return jsonify({
+                    'status': 'success',
+                    'database': 'connected',
+                    'query_result': result,
+                    'response_time_seconds': response_time,
+                    'timestamp': end_time.isoformat(),
+                    'worker_pid': os.getpid()
+                }), 200
+        except Exception as e:
+            logger.error(f"Database test failed: {str(e)}")
+            return jsonify({
+                'status': 'error',
+                'message': str(e),
+                'timestamp': datetime.utcnow().isoformat()
+            }), 500
     logger.info("Application configured successfully with database connection")
     return app
 

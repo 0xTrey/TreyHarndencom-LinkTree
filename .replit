@@ -42,4 +42,4 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "PYTHONPATH=/home/runner/workspace FLASK_DEBUG=0 FLASK_ENV=production PYTHONUNBUFFERED=true python main.py"
-waitForPort = 80
+waitForPort = 5000
