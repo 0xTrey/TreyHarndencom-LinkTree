@@ -23,7 +23,7 @@ def create_app():
     
     # Security configurations
     app.config.update(
-        SECRET_KEY=os.environ.get('SECRET_KEY', os.urandom(24)),
+        SECRET_KEY=os.environ.get('FLASK_SECRET_KEY', os.urandom(24)),
         SESSION_COOKIE_SECURE=True,
         SESSION_COOKIE_HTTPONLY=True,
         PREFERRED_URL_SCHEME='https'
@@ -41,22 +41,45 @@ def create_app():
     try:
         database_url = os.environ.get('DATABASE_URL')
         if not database_url:
-            logger.warning("DATABASE_URL not set, application will run with limited functionality")
-            database_url = 'sqlite:///:memory:'  # Use in-memory SQLite as fallback
-        
+            logger.warning("DATABASE_URL not set, falling back to SQLite")
+            database_url = 'sqlite:///:memory:'
+            app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+                'pool_pre_ping': True,
+                'pool_recycle': 300
+            }
+        else:
+            logger.info("DATABASE_URL found in environment variables")
+            # Ensure the database URL starts with postgresql://
+            if database_url.startswith('postgres://'):
+                database_url = database_url.replace('postgres://', 'postgresql://', 1)
+                logger.info("Converted postgres:// to postgresql:// in database URL")
+            
+            # PostgreSQL-specific configuration
+            app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+                'pool_size': 5,
+                'max_overflow': 10,
+                'pool_timeout': 30,
+                'pool_pre_ping': True,
+                'pool_recycle': 300,
+                'connect_args': {
+                    'connect_timeout': 10,
+                    'application_name': 'flask_app'
+                }
+            }
+            
         logger.info("Configuring database connection...")
-        
-        # Ensure the database URL starts with postgresql://
-        if database_url.startswith('postgres://'):
-            database_url = database_url.replace('postgres://', 'postgresql://', 1)
-            logger.info("Converted postgres:// to postgresql:// in database URL")
-        
-        # Configure SQLAlchemy with optimized settings
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        
     except Exception as e:
         logger.error(f"Error configuring database: {str(e)}")
-        database_url = 'sqlite:///:memory:'  # Fallback to SQLite
+        logger.warning("Falling back to SQLite in-memory database")
+        database_url = 'sqlite:///:memory:'
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+        app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+            'pool_pre_ping': True,
+            'pool_recycle': 300
+        }
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
         'pool_pre_ping': True,
