@@ -42,18 +42,16 @@ def create_app():
         database_url = os.environ.get('DATABASE_URL')
         if not database_url:
             logger.warning("DATABASE_URL not set, falling back to SQLite")
-        else:
-            # Safely log DB connection info without exposing credentials
-            db_type = database_url.split('://')[0] if '://' in database_url else 'unknown'
-            db_host = database_url.split('@')[1].split('/')[0] if '@' in database_url else 'unknown'
-            logger.info(f"Database configuration: type={db_type}, host={db_host}")
             database_url = 'sqlite:///:memory:'
             app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
                 'pool_pre_ping': True,
                 'pool_recycle': 300
             }
         else:
-            logger.info("DATABASE_URL found in environment variables")
+            # Safely log DB connection info without exposing credentials
+            db_type = database_url.split('://')[0] if '://' in database_url else 'unknown'
+            db_host = database_url.split('@')[1].split('/')[0] if '@' in database_url else 'unknown'
+            logger.info(f"Database configuration: type={db_type}, host={db_host}")
             # Ensure the database URL starts with postgresql://
             if database_url.startswith('postgres://'):
                 database_url = database_url.replace('postgres://', 'postgresql://', 1)
