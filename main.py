@@ -10,7 +10,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-from app import app, db
+from app import app
+from models import db
 
 if __name__ == "__main__":
     # Initialize database with app context
