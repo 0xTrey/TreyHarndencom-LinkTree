@@ -134,7 +134,8 @@ def create_app():
         {'name': 'Book A Call', 'url': 'https://calendly.com/harnden', 'icon': ''},
         {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter'},
         {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
-        {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
+        {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'},
+        {'name': 'Meditation Timer', 'url': 'https://meditation-master-harndentrey.replit.app/', 'icon': ''}
     ]
 
     @app.route('/')
