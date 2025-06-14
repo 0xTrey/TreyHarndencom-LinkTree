@@ -17,10 +17,10 @@ def create_app():
     """Create and configure the Flask application"""
     app = Flask(__name__)
     logger.info("Flask application instance created")
-    
+
     # Configure ProxyFix for proper header handling
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
-    
+
     # Security configurations
     app.config.update(
         SECRET_KEY=os.environ.get('FLASK_SECRET_KEY', os.urandom(24)),
@@ -28,14 +28,14 @@ def create_app():
         SESSION_COOKIE_HTTPONLY=True,
         PREFERRED_URL_SCHEME='https'
     )
-    
+
     # Configure CORS
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
-    
+
     # Configure database
     env = os.environ.get('FLASK_ENV', 'development')
     logger.info(f"Application environment: {env}")
-    
+
     # Get database URL from environment with better error handling
     logger.info("Checking DATABASE_URL environment variable...")
     try:
@@ -56,7 +56,7 @@ def create_app():
             if database_url.startswith('postgres://'):
                 database_url = database_url.replace('postgres://', 'postgresql://', 1)
                 logger.info("Converted postgres:// to postgresql:// in database URL")
-            
+
             # PostgreSQL-specific configuration
             app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
                 'pool_size': 5,
@@ -69,11 +69,11 @@ def create_app():
                     'application_name': 'flask_app'
                 }
             }
-            
+
         logger.info("Configuring database connection...")
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-        
+
     except Exception as e:
         logger.error(f"Error configuring database: {str(e)}")
         logger.warning("Falling back to SQLite in-memory database")
@@ -88,11 +88,11 @@ def create_app():
         'pool_pre_ping': True,
         'pool_recycle': 300
     }
-    
+
     # Import and initialize database
     from models import db
     db.init_app(app)
-    
+
     # Initialize database tables within app context
     with app.app_context():
         try:
@@ -112,7 +112,7 @@ def create_app():
                     else:
                         logger.warning(f"Database connection attempt {attempt + 1} failed, retrying...")
                     db.session.rollback()
-                    
+
             if connected:
                 try:
                     # Create tables only if connection is successful
@@ -122,7 +122,7 @@ def create_app():
                 except Exception as e:
                     logger.warning(f"Failed to create database tables: {str(e)}")
                     db.session.rollback()
-            
+
         except Exception as e:
             logger.warning(f"Database initialization warning: {str(e)}")
             if 'db.session' in locals():
@@ -131,7 +131,7 @@ def create_app():
     # Social links data
     app.config['social_links'] = [
         {'name': 'Personal Website', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': ''},
-        {'name': 'Book A Call', 'url': 'https://calendly.com/harnden', 'icon': ''},
+        {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': ''},
         {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter'},
         {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
         {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
@@ -177,7 +177,7 @@ def create_app():
                 result = db.session.execute(text('SELECT 1')).scalar()
                 end_time = datetime.utcnow()
                 response_time = (end_time - start_time).total_seconds()
-                
+
                 return jsonify({
                     'status': 'success',
                     'database': 'connected',
