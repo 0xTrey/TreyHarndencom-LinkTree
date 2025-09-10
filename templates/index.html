@@ -4,7 +4,7 @@
 <div class="container py-5">
     <div class="row justify-content-between">
         <!-- Left column: Profile -->
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="profile-section">
                 <div class="profile-image-wrapper mb-4">
                     <img src="{{ url_for('static', filename='images/Trey Rainier Headshot.jpeg') }}" 
@@ -18,8 +18,8 @@
             </div>
         </div>
 
-        <!-- Middle column: Social Links -->
-        <div class="col-md-4">
+        <!-- Right column: Social Links -->
+        <div class="col-md-6">
             <h2 class="section-title mb-4">Socials</h2>
             <div class="links-section">
                 {% for link in social_links %}
@@ -33,30 +33,6 @@
                     {{ link.name }}
                 </a>
                 {% endfor %}
-            </div>
-        </div>
-        <!-- Right column: Replit Apps -->
-        <div class="col-md-4">
-            <h2 class="section-title mb-4">Replit Apps</h2>
-            <div class="links-section">
-                <a href="https://sobriety-tracker-harndentrey.replit.app/" 
-                   class="btn btn-link social-link"
-                   target="_blank">
-                    <i class="fas fa-calendar-check me-2"></i>
-                    Sobriety Tracker
-                </a>
-                <a href="https://fasting-tracker-harndentrey.replit.app/" 
-                   class="btn btn-link social-link"
-                   target="_blank">
-                    <i class="fas fa-stopwatch me-2"></i>
-                    Fasting Tracker
-                </a>
-                <a href="https://grocery-list-harndentrey.replit.app/" 
-                   class="btn btn-link social-link"
-                   target="_blank">
-                    <i class="fas fa-shopping-cart me-2"></i>
-                    Grocery List
-                </a>
             </div>
         </div>
     </div>
