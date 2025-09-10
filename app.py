@@ -3,7 +3,7 @@ import os
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
-from datetime import datetime
+from datetime import datetime, date
 from sqlalchemy import text
 
 # Configure logging
@@ -137,13 +137,47 @@ def create_app():
         {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
     ]
 
+    # Sobriety tracker milestone dates
+    app.config['milestones'] = {
+        'birth_date': date(1995, 10, 1),  # October 1, 1995
+        'alcohol_free_date': date(2023, 1, 21),  # January 21, 2023
+        'marijuana_free_date': date(2025, 6, 24)  # June 24, 2025
+    }
+
+    def calculate_days_since(start_date):
+        """Calculate days between start_date and today"""
+        today = date.today()
+        return (today - start_date).days
+
+    def get_sobriety_data():
+        """Get current sobriety tracking data"""
+        milestones = app.config['milestones']
+        return {
+            'days_of_life': calculate_days_since(milestones['birth_date']),
+            'days_alcohol_free': calculate_days_since(milestones['alcohol_free_date']),
+            'days_marijuana_free': calculate_days_since(milestones['marijuana_free_date'])
+        }
+
     @app.route('/')
     def index():
         try:
-            return render_template('index.html', social_links=app.config['social_links'])
+            sobriety_data = get_sobriety_data()
+            return render_template('index.html', 
+                                 social_links=app.config['social_links'],
+                                 sobriety_data=sobriety_data,
+                                 milestones=app.config['milestones'])
         except Exception as e:
             logger.error(f"Error rendering index page: {str(e)}")
             return "Internal Server Error", 500
+
+    @app.route('/api/sobriety_data')
+    def api_sobriety_data():
+        """API endpoint to get current sobriety data for real-time updates"""
+        try:
+            return jsonify(get_sobriety_data())
+        except Exception as e:
+            logger.error(f"Error getting sobriety data: {str(e)}")
+            return jsonify({'error': 'Failed to get sobriety data'}), 500
 
     @app.route('/health')
     def health_check():

@@ -14,22 +14,8 @@ from app import app
 from models import db
 
 if __name__ == "__main__":
-    import socket
     import sys
-    from contextlib import closing
     
-    def find_free_port(start_port, max_attempts=10):
-        """Find a free port starting from start_port"""
-        for port_num in range(start_port, start_port + max_attempts):
-            with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
-                try:
-                    sock.bind(('0.0.0.0', port_num))
-                    sock.listen(1)
-                    return port_num
-                except socket.error:
-                    continue
-        return None
-
     # Initialize database with app context (only in parent process)
     if os.environ.get('GUNICORN_WORKER_ID') != '1':
         with app.app_context():
@@ -40,13 +26,8 @@ if __name__ == "__main__":
                 logger.error(f"Database initialization error: {e}")
                 sys.exit(1)
     
-    # Find available port
-    preferred_port = int(os.environ.get('PORT', 5000))
-    port = find_free_port(preferred_port)
-    if port is None:
-        logger.error(f"Could not find a free port after trying {preferred_port} through {preferred_port + 9}")
-        sys.exit(1)
-    
+    # Always use port 5000 as required by system
+    port = 5000
     workers = int(os.environ.get('GUNICORN_WORKERS', 4))
     
     cmd = [

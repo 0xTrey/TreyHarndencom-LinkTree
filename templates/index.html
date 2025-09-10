@@ -36,5 +36,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Sobriety Tracker Section -->
+    <div class="sobriety-tracker">
+        <h2 class="section-title">Personal Milestones</h2>
+        <div class="metrics-grid">
+            <!-- Days of Life Counter -->
+            <div class="metric-card days-of-life">
+                <div class="metric-title">Days of Life</div>
+                <div class="metric-value" id="days-of-life">{{ sobriety_data.days_of_life | default(0) }}</div>
+                <div class="metric-description">Every day is a gift. Celebrating {{ sobriety_data.days_of_life | default(0) }} days since October 1, 1995.</div>
+            </div>
+
+            <!-- Days Alcohol Free Counter -->
+            <div class="metric-card days-alcohol-free">
+                <div class="metric-title">Days Alcohol Free</div>
+                <div class="metric-value" id="days-alcohol-free">{{ sobriety_data.days_alcohol_free | default(0) }}</div>
+                <div class="metric-description">Sobriety journey strong. {{ sobriety_data.days_alcohol_free | default(0) }} days since January 21, 2023.</div>
+            </div>
+
+            <!-- Days Marijuana Free Counter -->
+            <div class="metric-card days-marijuana-free">
+                <div class="metric-title">Days Marijuana Free</div>
+                <div class="metric-value" id="days-marijuana-free">{{ sobriety_data.days_marijuana_free | default(0) }}</div>
+                <div class="metric-description">Clear mind, clear path. {{ sobriety_data.days_marijuana_free | default(0) }} days since June 24, 2025.</div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
