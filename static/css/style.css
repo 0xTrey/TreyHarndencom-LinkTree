@@ -183,9 +183,9 @@ body {
 /* Gradient backgrounds for different metrics */
 .metric-card.days-of-life {
     background: linear-gradient(135deg, 
-        rgba(255, 154, 0, 0.9) 0%,
-        rgba(255, 206, 84, 0.8) 50%,
-        rgba(255, 238, 173, 0.7) 100%);
+        rgba(255, 191, 0, 0.9) 0%,
+        rgba(255, 191, 0, 0.8) 50%,
+        rgba(255, 191, 0, 0.7) 100%);
 }
 
 .metric-card.days-alcohol-free {
