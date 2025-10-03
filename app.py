@@ -140,14 +140,14 @@ def create_app():
     # Sobriety tracker milestone dates
     app.config['milestones'] = {
         'birth_date': date(1995, 10, 1),  # October 1, 1995
-        'alcohol_free_date': date(2025, 1, 22),  # January 22, 2025
+        'alcohol_free_date': date(2023, 1, 22),  # January 22, 2023
         'marijuana_free_date': date(2025, 6, 24)  # June 24, 2025
     }
 
     def calculate_days_since(start_date):
-        """Calculate days between start_date and today"""
+        """Calculate days between start_date and today (inclusive of current day)"""
         today = date.today()
-        return (today - start_date).days
+        return (today - start_date).days + 1
 
     def get_sobriety_data():
         """Get current sobriety tracking data"""
