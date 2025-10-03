@@ -140,7 +140,7 @@ def create_app():
     # Sobriety tracker milestone dates
     app.config['milestones'] = {
         'birth_date': date(1995, 10, 1),  # October 1, 1995
-        'alcohol_free_date': date(2023, 1, 21),  # January 21, 2023
+        'alcohol_free_date': date(2025, 1, 22),  # January 22, 2025
         'marijuana_free_date': date(2025, 6, 24)  # June 24, 2025
     }
 
