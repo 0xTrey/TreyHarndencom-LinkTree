@@ -152,9 +152,7 @@ def create_app():
     @app.route('/')
     def home():
         try:
-            sobriety_data = get_sobriety_data()
             return render_template('home.html',
-                                 sobriety_data=sobriety_data,
                                  page_title='Trey Harnden',
                                  meta_description='Ski mountaineer and technology enthusiast exploring AI, health, and intentional living.',
                                  active_nav='home')

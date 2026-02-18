@@ -22,22 +22,6 @@
             </a>
         </div>
 
-        <div class="stats-snapshot">
-            <a href="/stats" class="snapshot-row">
-                <div class="snapshot-item">
-                    <span class="snapshot-value">{{ sobriety_data.days_of_life | default(0) }}</span>
-                    <span class="snapshot-label">Days Alive</span>
-                </div>
-                <div class="snapshot-item">
-                    <span class="snapshot-value">{{ sobriety_data.days_alcohol_free | default(0) }}</span>
-                    <span class="snapshot-label">Alcohol Free</span>
-                </div>
-                <div class="snapshot-item">
-                    <span class="snapshot-value">{{ sobriety_data.days_marijuana_free | default(0) }}</span>
-                    <span class="snapshot-label">Cannabis Free</span>
-                </div>
-            </a>
-        </div>
     </div>
 </div>
 {% endblock %}
