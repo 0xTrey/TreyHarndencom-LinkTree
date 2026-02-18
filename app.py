@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 SITE_CONFIG = {
     'name': 'Trey Harnden',
-    'bio': 'Ski mountaineer and technology enthusiast exploring how AI can help people live healthier, more intentional lives. I journal daily and share my life very transparently on my Public Journal. Connect with me on any social platform or book a call if you want to chat about ABM, AI, or life in general.',
+    'bio': 'Sup, I\'m Trey. Huge fan of public parks, all things mountains, and make you sweat spicy food. I am a software newb using AI to build tools and agents for B2B sales and ABM. Generally a huge fan of building/learning in public, so check out my links page to see what I am building or where I am adventuring.',
     'avatar': 'images/Trey Rainier Headshot.jpeg',
     'github_url': 'https://github.com/treyharnden',
     'notion_embed_url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73',
