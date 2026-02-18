@@ -11,7 +11,9 @@
            class="btn btn-link social-link"
            data-link-name="{{ link.name }}"
            target="_blank">
-            {% if link.icon %}
+            {% if link.icon == 'x-logo' %}
+            <img src="{{ url_for('static', filename='images/x-logo-white.png') }}" alt="X" class="btn-icon me-2">
+            {% elif link.icon %}
             <i class="{{ link.icon }} me-2"></i>
             {% endif %}
             {{ link.name }}

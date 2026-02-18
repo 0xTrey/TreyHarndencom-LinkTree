@@ -279,6 +279,13 @@ main {
     margin: 0 auto;
 }
 
+.btn-icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
 .social-link {
     display: block;
     width: 100%;

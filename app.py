@@ -21,7 +21,7 @@ SITE_CONFIG = {
     'social_links': [
         {'name': 'Public Journal', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': 'fas fa-book-open', 'category': 'personal'},
         {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': 'fas fa-calendar-alt', 'category': 'professional'},
-        {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fab fa-x-twitter', 'category': 'social'},
+        {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'x-logo', 'category': 'social'},
         {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fab fa-linkedin', 'category': 'professional'},
         {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fab fa-strava', 'category': 'social'},
     ],
