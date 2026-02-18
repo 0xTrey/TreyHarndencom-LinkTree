@@ -27,7 +27,7 @@ SITE_CONFIG = {
     ],
     'work_links': [
         {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
-        {'name': 'ABM Playbook Generator', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': ''},
+        {'name': 'ABM Playbook Generator', 'url': 'https://abm-playbook.com/', 'icon': ''},
         {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': ''},
     ],
     'milestones': {
