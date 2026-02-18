@@ -3,11 +3,21 @@
 {% block content %}
 <div class="container py-5">
     <div class="home-hero">
-        <div class="profile-image-wrapper mb-4">
-            <img src="{{ url_for('static', filename=site.avatar) }}" 
-                 alt="Profile Picture" 
-                 class="profile-image">
+        <div class="dual-headshots">
+            <div class="headshot-card">
+                <img src="{{ url_for('static', filename=site.avatar) }}" 
+                     alt="Trey Harnden - Personal"
+                     class="headshot-square">
+                <span class="headshot-label">Personal</span>
+            </div>
+            <div class="headshot-card">
+                <img src="{{ url_for('static', filename='images/headshot-professional-v2.jpg') }}" 
+                     alt="Trey Harnden - Professional"
+                     class="headshot-square">
+                <span class="headshot-label">Professional</span>
+            </div>
         </div>
+
         <h1 class="profile-name mb-3">{{ site.name }}</h1>
         <p class="bio-text home-bio">{{ site.bio }}</p>
 
