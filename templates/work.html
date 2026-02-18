@@ -10,13 +10,14 @@
     <div class="row work-layout mt-4">
         <div class="col-md-6 mb-4">
             <div class="work-showcase">
-                <a href="https://abm-playbook.com/"
+                <a href="https://abm-playbook.com/?utm_source=treyharnden.com&utm_medium=personal_website&utm_campaign=work_page"
                    class="btn btn-link social-link work-feature-btn"
                    data-link-name="ABM Playbook Generator"
                    target="_blank">
+                    <i class="fas fa-rocket me-2"></i>
                     ABM Playbook Generator
                 </a>
-                <a href="https://abm-playbook.com/" target="_blank" class="abm-preview-link">
+                <a href="https://abm-playbook.com/?utm_source=treyharnden.com&utm_medium=personal_website&utm_campaign=work_page" target="_blank" class="abm-preview-link">
                     <img src="{{ url_for('static', filename='images/abm-playbook-preview.png') }}"
                          alt="ABM Playbook Generator Preview"
                          class="abm-preview-img">
@@ -30,13 +31,14 @@
                    class="btn btn-link social-link"
                    data-link-name="Book A Call"
                    target="_blank">
+                    <i class="fas fa-calendar-alt me-2"></i>
                     Book A Call
                 </a>
                 <a href="{{ site.work_links[0].url }}"
                    class="btn btn-link social-link"
                    data-link-name="LinkedIn"
                    target="_blank">
-                    <i class="fab fa-linkedin me-2"></i>
+                    <i class="{{ site.work_links[0].icon }} me-2"></i>
                     LinkedIn
                 </a>
                 <a href="{{ site.github_url }}"
