@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="page-heading mb-2">Personal Milestones</h1>
+    <p class="page-subtext mb-4">
+        Tracking the days that matter. Counts include the start day and today.
+    </p>
+
+    <div class="metrics-grid">
+        <div class="metric-card days-of-life">
+            <div class="metric-title">Days of Life</div>
+            <div class="metric-value" id="days-of-life">{{ sobriety_data.days_of_life | default(0) }}</div>
+            <div class="metric-description">Every day is a gift.<br>Since October 1, 1995</div>
+        </div>
+
+        <div class="metric-card days-alcohol-free">
+            <div class="metric-title">Days Alcohol Free</div>
+            <div class="metric-value" id="days-alcohol-free">{{ sobriety_data.days_alcohol_free | default(0) }}</div>
+            <div class="metric-description">One day at a time.<br>Since January 22, 2023</div>
+        </div>
+
+        <div class="metric-card days-marijuana-free">
+            <div class="metric-title">Days Cannabis Free</div>
+            <div class="metric-value" id="days-marijuana-free">{{ sobriety_data.days_marijuana_free | default(0) }}</div>
+            <div class="metric-description">Clear mind, clear path.<br>Since June 24, 2025</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

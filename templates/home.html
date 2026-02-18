@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="home-hero">
+        <div class="profile-image-wrapper mb-4">
+            <img src="{{ url_for('static', filename=site.avatar) }}" 
+                 alt="Profile Picture" 
+                 class="profile-image">
+        </div>
+        <h1 class="profile-name mb-3">{{ site.name }}</h1>
+        <p class="bio-text home-bio">{{ site.bio }}</p>
+
+        <div class="home-ctas">
+            <a href="/journal" class="btn btn-link social-link cta-link">
+                <i class="fas fa-book-open me-2"></i>
+                Read the Journal
+            </a>
+            <a href="/work" class="btn btn-link social-link cta-link">
+                <i class="fas fa-briefcase me-2"></i>
+                Work With Me
+            </a>
+        </div>
+
+        <div class="stats-snapshot">
+            <a href="/stats" class="snapshot-row">
+                <div class="snapshot-item">
+                    <span class="snapshot-value">{{ sobriety_data.days_of_life | default(0) }}</span>
+                    <span class="snapshot-label">Days Alive</span>
+                </div>
+                <div class="snapshot-item">
+                    <span class="snapshot-value">{{ sobriety_data.days_alcohol_free | default(0) }}</span>
+                    <span class="snapshot-label">Alcohol Free</span>
+                </div>
+                <div class="snapshot-item">
+                    <span class="snapshot-value">{{ sobriety_data.days_marijuana_free | default(0) }}</span>
+                    <span class="snapshot-label">Cannabis Free</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="page-heading mb-2">Work</h1>
+    <p class="page-subtext mb-4">
+        I help B2B teams build account-based marketing strategies and leverage AI to accelerate go-to-market execution. 
+        If you'd like to collaborate or learn more, reach out through any of the links below.
+    </p>
+
+    <div class="links-section centered-links">
+        {% for link in work_links %}
+        <a href="{{ link.url }}" 
+           class="btn btn-link social-link"
+           data-link-name="{{ link.name }}"
+           target="_blank">
+            {% if link.icon %}
+            <i class="fab {{ link.icon }} me-2"></i>
+            {% endif %}
+            {{ link.name }}
+        </a>
+        {% endfor %}
+
+        <a href="{{ site.github_url }}" 
+           class="btn btn-link social-link"
+           data-link-name="GitHub"
+           target="_blank">
+            <i class="fab fa-github me-2"></i>
+            GitHub
+        </a>
+    </div>
+</div>
+{% endblock %}

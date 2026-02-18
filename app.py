@@ -6,22 +6,58 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime, date
 from sqlalchemy import text
 
-# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
+SITE_CONFIG = {
+    'name': 'Trey Harnden',
+    'bio': 'Ski mountaineer and technology enthusiast exploring how AI can help people live healthier, more intentional lives. I journal daily and share my life very transparently on my Public Journal. Connect with me on any social platform or book a call if you want to chat about ABM, AI, or life in general.',
+    'avatar': 'images/Trey Rainier Headshot.jpeg',
+    'github_url': 'https://github.com/treyharnden',
+    'notion_embed_url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73',
+    'social_links': [
+        {'name': 'Public Journal', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': '', 'category': 'personal'},
+        {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': '', 'category': 'professional'},
+        {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter', 'category': 'social'},
+        {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin', 'category': 'professional'},
+        {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava', 'category': 'social'},
+    ],
+    'work_links': [
+        {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
+        {'name': 'ABM Playbook Generator', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': ''},
+        {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': ''},
+    ],
+    'milestones': {
+        'birth_date': date(1995, 10, 1),
+        'alcohol_free_date': date(2023, 1, 22),
+        'marijuana_free_date': date(2025, 6, 24),
+    },
+}
+
+
+def calculate_days_since(start_date):
+    today = date.today()
+    return (today - start_date).days + 1
+
+
+def get_sobriety_data():
+    milestones = SITE_CONFIG['milestones']
+    return {
+        'days_of_life': calculate_days_since(milestones['birth_date']),
+        'days_alcohol_free': calculate_days_since(milestones['alcohol_free_date']),
+        'days_marijuana_free': calculate_days_since(milestones['marijuana_free_date']),
+    }
+
+
 def create_app():
-    """Create and configure the Flask application"""
     app = Flask(__name__)
     logger.info("Flask application instance created")
 
-    # Configure ProxyFix for proper header handling
     app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_host=1)
 
-    # Security configurations
     app.config.update(
         SECRET_KEY=os.environ.get('FLASK_SECRET_KEY', os.urandom(24)),
         SESSION_COOKIE_SECURE=True,
@@ -29,14 +65,11 @@ def create_app():
         PREFERRED_URL_SCHEME='https'
     )
 
-    # Configure CORS
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-    # Configure database
     env = os.environ.get('FLASK_ENV', 'development')
     logger.info(f"Application environment: {env}")
 
-    # Get database URL from environment with better error handling
     logger.info("Checking DATABASE_URL environment variable...")
     try:
         database_url = os.environ.get('DATABASE_URL')
@@ -48,16 +81,12 @@ def create_app():
                 'pool_recycle': 300
             }
         else:
-            # Safely log DB connection info without exposing credentials
             db_type = database_url.split('://')[0] if '://' in database_url else 'unknown'
             db_host = database_url.split('@')[1].split('/')[0] if '@' in database_url else 'unknown'
             logger.info(f"Database configuration: type={db_type}, host={db_host}")
-            # Ensure the database URL starts with postgresql://
             if database_url.startswith('postgres://'):
                 database_url = database_url.replace('postgres://', 'postgresql://', 1)
-                logger.info("Converted postgres:// to postgresql:// in database URL")
 
-            # PostgreSQL-specific configuration
             app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
                 'pool_size': 5,
                 'max_overflow': 10,
@@ -70,33 +99,24 @@ def create_app():
                 }
             }
 
-        logger.info("Configuring database connection...")
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     except Exception as e:
         logger.error(f"Error configuring database: {str(e)}")
-        logger.warning("Falling back to SQLite in-memory database")
         database_url = 'sqlite:///:memory:'
         app.config['SQLALCHEMY_DATABASE_URI'] = database_url
         app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
             'pool_pre_ping': True,
             'pool_recycle': 300
         }
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-        'pool_pre_ping': True,
-        'pool_recycle': 300
-    }
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    # Import and initialize database
     from models import db
     db.init_app(app)
 
-    # Initialize database tables within app context
     with app.app_context():
         try:
-            # Verify database connection with retry
             retries = 3
             connected = False
             for attempt in range(retries):
@@ -115,7 +135,6 @@ def create_app():
 
             if connected:
                 try:
-                    # Create tables only if connection is successful
                     db.create_all()
                     db.session.commit()
                     logger.info("Database tables initialized successfully")
@@ -125,65 +144,101 @@ def create_app():
 
         except Exception as e:
             logger.warning(f"Database initialization warning: {str(e)}")
-            if 'db.session' in locals():
-                db.session.rollback()
 
-    # Social links data
-    app.config['social_links'] = [
-        {'name': 'Personal Website', 'url': 'https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73', 'icon': ''},
-        {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': ''},
-        {'name': 'X (Twitter)', 'url': 'https://x.com/Trey_Harnden', 'icon': 'fa-x-twitter'},
-        {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fa-linkedin'},
-        {'name': 'Strava', 'url': 'https://www.strava.com/athletes/34654738', 'icon': 'fa-strava'}
-    ]
-
-    # Sobriety tracker milestone dates
-    app.config['milestones'] = {
-        'birth_date': date(1995, 10, 1),  # October 1, 1995
-        'alcohol_free_date': date(2023, 1, 22),  # January 22, 2023
-        'marijuana_free_date': date(2025, 6, 24)  # June 24, 2025
-    }
-
-    def calculate_days_since(start_date):
-        """Calculate days between start_date and today (inclusive of current day)"""
-        today = date.today()
-        return (today - start_date).days + 1
-
-    def get_sobriety_data():
-        """Get current sobriety tracking data"""
-        milestones = app.config['milestones']
-        return {
-            'days_of_life': calculate_days_since(milestones['birth_date']),
-            'days_alcohol_free': calculate_days_since(milestones['alcohol_free_date']),
-            'days_marijuana_free': calculate_days_since(milestones['marijuana_free_date'])
-        }
+    @app.context_processor
+    def inject_config():
+        return {'site': SITE_CONFIG}
 
     @app.route('/')
-    def index():
+    def home():
         try:
             sobriety_data = get_sobriety_data()
-            return render_template('index.html', 
-                                 social_links=app.config['social_links'],
+            return render_template('home.html',
                                  sobriety_data=sobriety_data,
-                                 milestones=app.config['milestones'])
+                                 page_title='Trey Harnden',
+                                 meta_description='Ski mountaineer and technology enthusiast exploring AI, health, and intentional living.',
+                                 active_nav='home')
         except Exception as e:
-            logger.error(f"Error rendering index page: {str(e)}")
+            logger.error(f"Error rendering home page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/links')
+    def links():
+        try:
+            return render_template('links.html',
+                                 social_links=SITE_CONFIG['social_links'],
+                                 page_title='Links - Trey Harnden',
+                                 meta_description='Connect with Trey Harnden on social media, book a call, or explore his public journal.',
+                                 active_nav='links',
+                                 og_title='Trey Harnden - Links',
+                                 og_description='Connect with Trey Harnden on social media, book a call, or explore his public journal.',
+                                 og_type='profile')
+        except Exception as e:
+            logger.error(f"Error rendering links page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/journal')
+    def journal():
+        try:
+            return render_template('journal.html',
+                                 page_title='Journal - Trey Harnden',
+                                 meta_description='Trey Harnden\'s public journal — thoughts on AI, health, sobriety, and intentional living.',
+                                 active_nav='journal')
+        except Exception as e:
+            logger.error(f"Error rendering journal page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/work')
+    def work():
+        try:
+            return render_template('work.html',
+                                 work_links=SITE_CONFIG['work_links'],
+                                 page_title='Work - Trey Harnden',
+                                 meta_description='Professional links and resources from Trey Harnden — ABM, AI, and go-to-market strategy.',
+                                 active_nav='work')
+        except Exception as e:
+            logger.error(f"Error rendering work page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/stats')
+    def stats():
+        try:
+            sobriety_data = get_sobriety_data()
+            milestones = SITE_CONFIG['milestones']
+            return render_template('stats.html',
+                                 sobriety_data=sobriety_data,
+                                 milestones=milestones,
+                                 page_title='Stats - Trey Harnden',
+                                 meta_description='Personal milestone trackers — days of life, sobriety counters, and more.',
+                                 active_nav='stats')
+        except Exception as e:
+            logger.error(f"Error rendering stats page: {str(e)}")
             return "Internal Server Error", 500
 
     @app.route('/api/sobriety_data')
     def api_sobriety_data():
-        """API endpoint to get current sobriety data for real-time updates"""
         try:
             return jsonify(get_sobriety_data())
         except Exception as e:
             logger.error(f"Error getting sobriety data: {str(e)}")
             return jsonify({'error': 'Failed to get sobriety data'}), 500
 
+    @app.route('/track-click', methods=['POST'])
+    def track_click():
+        try:
+            data = request.get_json()
+            if not data or 'link_name' not in data:
+                return jsonify({'error': 'Missing link_name'}), 400
+            from models import LinkClick
+            LinkClick.add_click(data['link_name'])
+            return jsonify({'status': 'ok'}), 200
+        except Exception as e:
+            logger.error(f"Error tracking click: {str(e)}")
+            return jsonify({'error': 'Failed to track click'}), 500
+
     @app.route('/health')
     def health_check():
-        """Health check endpoint that verifies database connection"""
         try:
-            # Test database connection
             db.session.execute(text('SELECT 1'))
             db.session.commit()
             return jsonify({
@@ -200,37 +255,10 @@ def create_app():
                 'timestamp': datetime.utcnow().isoformat()
             }), 500
 
-    @app.route('/test_db')
-    def test_db():
-        """Test database connectivity and concurrent access"""
-        start_time = datetime.utcnow()
-        try:
-            # Test database connection with session handling
-            with db.session.begin():
-                # Execute simple query
-                result = db.session.execute(text('SELECT 1')).scalar()
-                end_time = datetime.utcnow()
-                response_time = (end_time - start_time).total_seconds()
-
-                return jsonify({
-                    'status': 'success',
-                    'database': 'connected',
-                    'query_result': result,
-                    'response_time_seconds': response_time,
-                    'timestamp': end_time.isoformat(),
-                    'worker_pid': os.getpid()
-                }), 200
-        except Exception as e:
-            logger.error(f"Database test failed: {str(e)}")
-            return jsonify({
-                'status': 'error',
-                'message': str(e),
-                'timestamp': datetime.utcnow().isoformat()
-            }), 500
     logger.info("Application configured successfully with database connection")
     return app
 
-# Create the application instance
+
 app = create_app()
 
 if __name__ == '__main__':

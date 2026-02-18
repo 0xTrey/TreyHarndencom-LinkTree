@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trey Harnden Link Tree</title>
-    <!-- Google tag (gtag.js) -->
+    <title>{{ page_title | default('Trey Harnden') }}</title>
+    <meta name="description" content="{{ meta_description | default('Trey Harnden — ski mountaineer, technology enthusiast, and public journal writer.') }}">
+    {% if og_title %}
+    <meta property="og:title" content="{{ og_title }}">
+    <meta property="og:description" content="{{ og_description | default(meta_description) }}">
+    <meta property="og:type" content="{{ og_type | default('website') }}">
+    {% endif %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0YPCYY8N"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -14,11 +19,42 @@
     </script>
     <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=2) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=3) }}">
 </head>
 <body>
-    {% block content %}{% endblock %}
+    <nav class="navbar navbar-expand-md sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">Trey Harnden</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_nav == 'home' %}active{% endif %}" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_nav == 'links' %}active{% endif %}" href="/links">Links</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_nav == 'journal' %}active{% endif %}" href="/journal">Journal</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_nav == 'work' %}active{% endif %}" href="/work">Work</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if active_nav == 'stats' %}active{% endif %}" href="/stats">Stats</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js', v=3) }}"></script>
 </body>
 </html>

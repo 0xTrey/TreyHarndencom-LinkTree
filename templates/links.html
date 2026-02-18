@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-between">
+        <div class="col-md-6">
+            <div class="profile-section">
+                <div class="profile-image-wrapper mb-4">
+                    <img src="{{ url_for('static', filename=site.avatar) }}" 
+                         alt="Profile Picture" 
+                         class="profile-image">
+                </div>
+                <h1 class="profile-name mb-3">{{ site.name }}</h1>
+                <p class="bio-text">{{ site.bio }}</p>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h2 class="section-title mb-4">Socials</h2>
+            <div class="links-section">
+                {% for link in social_links %}
+                <a href="{{ link.url }}" 
+                   class="btn btn-link social-link"
+                   data-link-name="{{ link.name }}"
+                   target="_blank">
+                    {% if link.icon %}
+                    <i class="fab {{ link.icon }} me-2"></i>
+                    {% endif %}
+                    {{ link.name }}
+                </a>
+                {% endfor %}
+
+                <a href="{{ site.github_url }}" 
+                   class="btn btn-link social-link"
+                   data-link-name="GitHub"
+                   target="_blank">
+                    <i class="fab fa-github me-2"></i>
+                    GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
