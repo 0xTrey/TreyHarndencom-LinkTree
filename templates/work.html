@@ -7,26 +7,47 @@
         For my 9-5, I do Biz Dev for Folloze aka enterprise sales and lead partnerships. I also have a consulting practice, Elevation Engine, where we help B2B marketers leverage AI to accelerate their ABM strategies.
     </p>
 
-    <div class="links-section centered-links">
-        {% for link in work_links %}
-        <a href="{{ link.url }}" 
-           class="btn btn-link social-link"
-           data-link-name="{{ link.name }}"
-           target="_blank">
-            {% if link.icon %}
-            <i class="fab {{ link.icon }} me-2"></i>
-            {% endif %}
-            {{ link.name }}
-        </a>
-        {% endfor %}
+    <div class="row work-layout mt-4">
+        <div class="col-md-6 mb-4">
+            <div class="work-showcase">
+                <a href="{{ site.work_links[1].url }}"
+                   class="btn btn-link social-link work-feature-btn"
+                   data-link-name="ABM Playbook Generator"
+                   target="_blank">
+                    ABM Playbook Generator
+                </a>
+                <a href="{{ site.work_links[1].url }}" target="_blank" class="abm-preview-link">
+                    <img src="{{ url_for('static', filename='images/abm-playbook-preview.png') }}"
+                         alt="ABM Playbook Generator Preview"
+                         class="abm-preview-img">
+                </a>
+            </div>
+        </div>
 
-        <a href="{{ site.github_url }}" 
-           class="btn btn-link social-link"
-           data-link-name="GitHub"
-           target="_blank">
-            <i class="fab fa-github me-2"></i>
-            GitHub
-        </a>
+        <div class="col-md-6 mb-4">
+            <div class="work-buttons">
+                <a href="{{ site.work_links[2].url }}"
+                   class="btn btn-link social-link"
+                   data-link-name="Book A Call"
+                   target="_blank">
+                    Book A Call
+                </a>
+                <a href="{{ site.work_links[0].url }}"
+                   class="btn btn-link social-link"
+                   data-link-name="LinkedIn"
+                   target="_blank">
+                    <i class="fab fa-linkedin me-2"></i>
+                    LinkedIn
+                </a>
+                <a href="{{ site.github_url }}"
+                   class="btn btn-link social-link"
+                   data-link-name="GitHub"
+                   target="_blank">
+                    <i class="fab fa-github me-2"></i>
+                    GitHub
+                </a>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
