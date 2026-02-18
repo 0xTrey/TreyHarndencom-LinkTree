@@ -101,7 +101,7 @@ main {
 
 .home-content-row {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     gap: 3rem;
     margin-top: 1.5rem;
 }
