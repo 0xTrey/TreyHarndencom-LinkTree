@@ -6,32 +6,32 @@
         <div class="dual-headshots">
             <div class="headshot-card">
                 <img src="{{ url_for('static', filename=site.avatar) }}" 
-                     alt="Trey Harnden - Personal"
+                     alt="Trey Harnden"
                      class="headshot-square">
-                <span class="headshot-label">Personal</span>
             </div>
             <div class="headshot-card">
                 <img src="{{ url_for('static', filename='images/headshot-professional-v2.jpg') }}" 
-                     alt="Trey Harnden - Professional"
+                     alt="Trey Harnden"
                      class="headshot-square">
-                <span class="headshot-label">Professional</span>
             </div>
         </div>
 
-        <h1 class="profile-name mb-3">{{ site.name }}</h1>
-        <p class="bio-text home-bio">{{ site.bio }}</p>
-
-        <div class="home-ctas">
-            <a href="{{ site.notion_embed_url }}" class="btn btn-link social-link cta-link" target="_blank" data-link-name="Public Journal">
-                <i class="fas fa-book-open me-2"></i>
-                Public Journal
-            </a>
-            <a href="/work" class="btn btn-link social-link cta-link">
-                <i class="fas fa-briefcase me-2"></i>
-                Work Projects
-            </a>
+        <div class="home-content-row">
+            <div class="home-text">
+                <h1 class="profile-name mb-3">{{ site.name }}</h1>
+                <p class="bio-text">{{ site.bio }}</p>
+            </div>
+            <div class="home-ctas">
+                <a href="{{ site.notion_embed_url }}" class="btn btn-link social-link cta-link" target="_blank" data-link-name="Public Journal">
+                    <i class="fas fa-book-open me-2"></i>
+                    Public Journal
+                </a>
+                <a href="/work" class="btn btn-link social-link cta-link">
+                    <i class="fas fa-briefcase me-2"></i>
+                    Work Projects
+                </a>
+            </div>
         </div>
-
     </div>
 </div>
 {% endblock %}

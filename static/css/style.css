@@ -94,13 +94,29 @@ main {
 /* Home Hero */
 .home-hero {
     text-align: center;
-    max-width: 700px;
+    max-width: 900px;
     margin: 0 auto;
     padding: 2rem 0;
 }
 
-.home-hero .profile-name {
-    margin-top: 1rem;
+.home-content-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    margin-top: 1.5rem;
+}
+
+.home-text {
+    flex: 1;
+    text-align: left;
+}
+
+.home-text .profile-name {
+    margin-top: 0;
+}
+
+.home-text .bio-text {
+    max-width: none;
 }
 
 /* Dual Headshots */
@@ -142,21 +158,18 @@ main {
     color: white;
 }
 
-.home-bio {
-    margin: 0 auto 2rem;
-    text-align: center;
-}
-
 .home-ctas {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    margin-bottom: 3rem;
+    flex-shrink: 0;
+    width: 280px;
 }
 
 .cta-link {
-    max-width: 320px;
+    max-width: 280px;
+    width: 100%;
 }
 
 /* Stats Snapshot on Home */
@@ -634,6 +647,21 @@ main {
     .headshot-square {
         width: 160px;
         height: 160px;
+    }
+
+    .home-content-row {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .home-text {
+        text-align: center;
+    }
+
+    .home-ctas {
+        width: 100%;
+        max-width: 320px;
     }
 
     .snapshot-row {
