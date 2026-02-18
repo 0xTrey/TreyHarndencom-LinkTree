@@ -40,7 +40,7 @@ SITE_CONFIG = {
 
 def calculate_days_since(start_date):
     today = date.today()
-    return (today - start_date).days + 1
+    return (today - start_date).days
 
 
 def get_sobriety_data():
