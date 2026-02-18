@@ -175,17 +175,6 @@ def create_app():
             logger.error(f"Error rendering links page: {str(e)}")
             return "Internal Server Error", 500
 
-    @app.route('/journal')
-    def journal():
-        try:
-            return render_template('journal.html',
-                                 page_title='Journal - Trey Harnden',
-                                 meta_description='Trey Harnden\'s public journal — thoughts on AI, health, sobriety, and intentional living.',
-                                 active_nav='journal')
-        except Exception as e:
-            logger.error(f"Error rendering journal page: {str(e)}")
-            return "Internal Server Error", 500
-
     @app.route('/work')
     def work():
         try:
