@@ -1,7 +1,6 @@
 import logging
 import os
 from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS
 from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime, date
 from sqlalchemy import text
@@ -37,6 +36,26 @@ SITE_CONFIG = {
     },
 }
 
+CSP_POLICY = (
+    "default-src 'self'; "
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://cdn.jsdelivr.net; "
+    "style-src 'self' 'unsafe-inline' https://cdn.replit.com https://cdnjs.cloudflare.com; "
+    "img-src 'self' data: https:; "
+    "font-src 'self' https://cdnjs.cloudflare.com data:; "
+    "connect-src 'self' https://www.google-analytics.com https://region1.google-analytics.com; "
+    "frame-src https://harnden.notion.site; "
+    "object-src 'none'; "
+    "base-uri 'self'; "
+    "form-action 'self'; "
+    "frame-ancestors 'none'; "
+    "upgrade-insecure-requests"
+)
+
+TRACKABLE_LINK_NAMES = {
+    link["name"] for link in SITE_CONFIG["social_links"] + SITE_CONFIG["work_links"] if link.get("name")
+}
+TRACKABLE_LINK_NAMES.add("GitHub")
+
 
 def calculate_days_since(start_date):
     today = date.today()
@@ -62,10 +81,9 @@ def create_app():
         SECRET_KEY=os.environ.get('FLASK_SECRET_KEY', os.urandom(24)),
         SESSION_COOKIE_SECURE=True,
         SESSION_COOKIE_HTTPONLY=True,
+        SESSION_COOKIE_SAMESITE='Lax',
         PREFERRED_URL_SCHEME='https'
     )
-
-    CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
     env = os.environ.get('FLASK_ENV', 'development')
     logger.info(f"Application environment: {env}")
@@ -149,6 +167,15 @@ def create_app():
     def inject_config():
         return {'site': SITE_CONFIG}
 
+    @app.after_request
+    def add_security_headers(response):
+        response.headers.setdefault('X-Content-Type-Options', 'nosniff')
+        response.headers.setdefault('X-Frame-Options', 'DENY')
+        response.headers.setdefault('Referrer-Policy', 'strict-origin-when-cross-origin')
+        response.headers.setdefault('Permissions-Policy', 'geolocation=(), microphone=(), camera=()')
+        response.headers.setdefault('Content-Security-Policy', CSP_POLICY)
+        return response
+
     @app.route('/')
     def home():
         try:
@@ -213,11 +240,16 @@ def create_app():
     @app.route('/track-click', methods=['POST'])
     def track_click():
         try:
-            data = request.get_json()
-            if not data or 'link_name' not in data:
+            data = request.get_json(silent=True) or {}
+            link_name = str(data.get('link_name', '')).strip()
+            if not link_name:
                 return jsonify({'error': 'Missing link_name'}), 400
+            if len(link_name) > 64:
+                return jsonify({'error': 'link_name is too long'}), 400
+            if link_name not in TRACKABLE_LINK_NAMES:
+                return jsonify({'error': 'Invalid link_name'}), 400
             from models import LinkClick
-            LinkClick.add_click(data['link_name'])
+            LinkClick.add_click(link_name)
             return jsonify({'status': 'ok'}), 200
         except Exception as e:
             logger.error(f"Error tracking click: {str(e)}")
@@ -238,7 +270,7 @@ def create_app():
             return jsonify({
                 'status': 'unhealthy',
                 'database': 'disconnected',
-                'error': str(e),
+                'error': 'Database check failed',
                 'timestamp': datetime.utcnow().isoformat()
             }), 500
 
