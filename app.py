@@ -3,6 +3,7 @@ import os
 from flask import Flask, render_template, request, jsonify
 from werkzeug.middleware.proxy_fix import ProxyFix
 from datetime import datetime, date
+from zoneinfo import ZoneInfo
 from sqlalchemy import text
 
 logging.basicConfig(
@@ -10,6 +11,7 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
+US_CENTRAL_TZ = ZoneInfo("America/Chicago")
 
 SITE_CONFIG = {
     'name': 'Trey Harnden',
@@ -28,6 +30,7 @@ SITE_CONFIG = {
         {'name': 'LinkedIn', 'url': 'https://www.linkedin.com/in/treyharnden/', 'icon': 'fab fa-linkedin'},
         {'name': 'ABM Playbook Generator', 'url': 'https://abm-playbook.com/?utm_source=treyharnden.com&utm_medium=personal_website&utm_campaign=work_page', 'icon': 'fas fa-rocket'},
         {'name': 'Book A Call', 'url': 'https://app.reclaim.ai/m/harnden', 'icon': 'fas fa-calendar-alt'},
+        {'name': 'Elevation Engine', 'url': 'https://www.elevationengine.co/', 'icon': 'fas fa-mountain'},
     ],
     'milestones': {
         'birth_date': date(1995, 10, 1),
@@ -58,7 +61,7 @@ TRACKABLE_LINK_NAMES.add("GitHub")
 
 
 def calculate_days_since(start_date):
-    today = date.today()
+    today = datetime.now(US_CENTRAL_TZ).date()
     return (today - start_date).days + 1
 
 
