@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 workouts-page">
+    <div class="workouts-intro">
+        <p class="terminal-line">operator@mountain:~/training$</p>
+        <h1 class="page-heading mb-2">Workouts</h1>
+        <p class="page-subtext mb-0">
+            Training snapshot from captured Strava screens while the public API and widget paths stay locked down.
+        </p>
+    </div>
+
+    <section class="workout-console">
+        <header class="workout-console-header">
+            <div>
+                <span class="terminal-panel-heading">source</span>
+                <h2>{{ workout_data.source }}</h2>
+                <p>{{ workout_data.source_note }}</p>
+            </div>
+            <a class="workout-source-link"
+               href="{{ workout_data.strava_profile_url }}"
+               target="_blank"
+               data-link-name="Strava">
+                <i class="fab fa-strava"></i>
+                Strava profile
+            </a>
+        </header>
+
+        <div class="workout-summary-grid">
+            <div class="workout-summary-item workout-summary-primary">
+                <span class="workout-summary-value">{{ workout_data.summary.lifetime_foot_miles }}</span>
+                <span class="workout-summary-label">on-foot miles</span>
+            </div>
+            <div class="workout-summary-item workout-summary-primary">
+                <span class="workout-summary-value">{{ workout_data.summary.lifetime_workouts }}</span>
+                <span class="workout-summary-label">lifetime workouts</span>
+            </div>
+            <div class="workout-summary-item">
+                <span class="workout-summary-value">{{ workout_data.summary.workouts_year }}</span>
+                <span class="workout-summary-label">workouts / {{ workout_data.year_label }}</span>
+            </div>
+            <div class="workout-summary-item">
+                <span class="workout-summary-value">{{ workout_data.summary.workouts_30 }}</span>
+                <span class="workout-summary-label">workouts / 30d</span>
+            </div>
+            <div class="workout-summary-item">
+                <span class="workout-summary-value">{{ workout_data.summary.distance_30 }}</span>
+                <span class="workout-summary-label">foot miles / 30d</span>
+            </div>
+            <div class="workout-summary-item">
+                <span class="workout-summary-value">{{ workout_data.summary.time_30 }}</span>
+                <span class="workout-summary-label">moving time / 30d</span>
+            </div>
+        </div>
+
+        {% if workout_data.stat_groups %}
+        <div class="workout-snapshot-layout">
+            <div class="workout-snapshot-main">
+                <div class="workout-panel-heading-row">
+                    <span class="terminal-panel-heading">snapshot stats</span>
+                    <span>{{ workout_data.year_label }}</span>
+                </div>
+                <div class="workout-stat-card-grid">
+                    {% for group in workout_data.stat_groups %}
+                    <article class="workout-stat-card">
+                        <header>
+                            <i class="{{ group.icon }}"></i>
+                            <h3>{{ group.name }}</h3>
+                        </header>
+                        <div class="workout-stat-section">
+                            <h4>Last 4 Weeks</h4>
+                            {% for row in group.recent %}
+                            <div class="workout-stat-line">
+                                <span>{{ row.label }}</span>
+                                <strong>{{ row.value }}</strong>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="workout-stat-section">
+                            <h4>{{ workout_data.year_label }}</h4>
+                            {% for row in group.year %}
+                            <div class="workout-stat-line">
+                                <span>{{ row.label }}</span>
+                                <strong>{{ row.value }}</strong>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="workout-stat-section">
+                            <h4>All-Time</h4>
+                            {% for row in group.all_time %}
+                            <div class="workout-stat-line">
+                                <span>{{ row.label }}</span>
+                                <strong>{{ row.value }}</strong>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <aside class="workout-efforts-panel">
+                <div class="workout-panel-heading-row">
+                    <span class="terminal-panel-heading">running prs</span>
+                    <span>All-Time</span>
+                </div>
+                <div class="workout-effort-list">
+                    {% for effort in workout_data.best_efforts %}
+                    <div class="workout-effort-line">
+                        <span>{{ effort.label }}</span>
+                        <strong>{{ effort.value }}</strong>
+                    </div>
+                    {% endfor %}
+                </div>
+            </aside>
+        </div>
+        {% endif %}
+
+        {% if workout_data.activities %}
+        <div class="workout-list">
+            {% for activity in workout_data.activities %}
+            <a class="workout-row"
+               href="{{ activity.url }}"
+               target="_blank"
+               data-link-name="Strava">
+                <span class="workout-date">{{ activity.date }}</span>
+                <span class="workout-main">
+                    <span class="workout-name">{{ activity.name }}</span>
+                    <span class="workout-meta">{{ activity.sport_type }}{% if activity.device %} / {{ activity.device }}{% endif %}</span>
+                </span>
+                <span class="workout-stat">{{ activity.distance }}</span>
+                <span class="workout-stat">{{ activity.duration }}</span>
+                <span class="workout-stat">{{ activity.elevation }}</span>
+            </a>
+            {% endfor %}
+        </div>
+        {% elif not workout_data.stat_groups %}
+        <div class="workout-empty-state">
+            <div class="node-icon"><i class="fas fa-person-running"></i></div>
+            <div>
+                <h2>Training display waiting for sync</h2>
+                <p>
+                    Backend Strava/Garmin sync will populate on-foot miles, lifetime workouts, {{ workout_data.year_label }} workouts, and recent sessions here.
+                </p>
+            </div>
+        </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

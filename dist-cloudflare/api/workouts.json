@@ -1,0 +1,334 @@
+{
+  "connected": true,
+  "snapshot": true,
+  "source": "Training snapshot",
+  "source_note": "Authenticated Strava training-log refresh captured on August 9, 2026. Recent activities, lifetime activity count, 2026 totals, and 30-day totals were refreshed from the live Strava activity log. All-time foot-mile totals, all-time run miles, all-time sport totals, and PRs remain the last verified fallback values because this pass stopped at the 2026 boundary instead of re-walking the full history.",
+  "connect_url": null,
+  "summary": {
+    "lifetime_foot_miles": "7,541.4 mi",
+    "lifetime_workouts": "3,663",
+    "lifetime_run_miles": "2,837.6 mi",
+    "workouts_year": "498",
+    "workouts_30": "67",
+    "distance_30": "141.1 mi",
+    "time_30": "49h 23m"
+  },
+  "year_label": "2026",
+  "activities": [
+    {
+      "date": "Aug 8",
+      "name": "Morning Walk",
+      "sport_type": "Walk",
+      "device": "",
+      "distance": "4.60 mi",
+      "duration": "1:30:20",
+      "elevation": "66 ft",
+      "url": "https://www.strava.com/activities/19655820449"
+    },
+    {
+      "date": "Aug 7",
+      "name": "Lunch Walk",
+      "sport_type": "Walk",
+      "device": "",
+      "distance": "1.25 mi",
+      "duration": "26:16",
+      "elevation": "16 ft",
+      "url": "https://www.strava.com/activities/19644192990"
+    },
+    {
+      "date": "Aug 7",
+      "name": "Morning Walk",
+      "sport_type": "Walk",
+      "device": "",
+      "distance": "3.17 mi",
+      "duration": "1:01:56",
+      "elevation": "46 ft",
+      "url": "https://www.strava.com/activities/19640235923"
+    },
+    {
+      "date": "Aug 6",
+      "name": "Afternoon Walk",
+      "sport_type": "Walk",
+      "device": "",
+      "distance": "0.74 mi",
+      "duration": "18:24",
+      "elevation": "7 ft",
+      "url": "https://www.strava.com/activities/19631627559"
+    },
+    {
+      "date": "Aug 6",
+      "name": "Lunch Run",
+      "sport_type": "Run",
+      "device": "",
+      "distance": "2.47 mi",
+      "duration": "26:14",
+      "elevation": "23 ft",
+      "url": "https://www.strava.com/activities/19629503761"
+    }
+  ],
+  "strava_profile_url": "https://www.strava.com/athletes/34654738",
+  "stat_groups": [
+    {
+      "name": "Running",
+      "icon": "fas fa-shoe-prints",
+      "recent": [
+        {
+          "label": "Activities / Week",
+          "value": "3.0"
+        },
+        {
+          "label": "Avg Distance / Week",
+          "value": "9.0 mi"
+        },
+        {
+          "label": "Avg Time / Week",
+          "value": "1h 31m"
+        },
+        {
+          "label": "Elev Gain / Week",
+          "value": "138 ft"
+        }
+      ],
+      "year": [
+        {
+          "label": "Activities",
+          "value": "82"
+        },
+        {
+          "label": "Distance",
+          "value": "282.4 mi"
+        },
+        {
+          "label": "Time",
+          "value": "48h 55m"
+        },
+        {
+          "label": "Elev Gain",
+          "value": "5,307 ft"
+        }
+      ],
+      "all_time": [
+        {
+          "label": "Activities",
+          "value": "577"
+        },
+        {
+          "label": "Distance",
+          "value": "2,837.6 mi"
+        },
+        {
+          "label": "Time",
+          "value": "487h 47m"
+        },
+        {
+          "label": "Elev Gain",
+          "value": "147,141 ft"
+        }
+      ]
+    },
+    {
+      "name": "Walking",
+      "icon": "fas fa-person-walking",
+      "recent": [
+        {
+          "label": "Activities / Week",
+          "value": "9.8"
+        },
+        {
+          "label": "Avg Distance / Week",
+          "value": "23.9 mi"
+        },
+        {
+          "label": "Avg Time / Week",
+          "value": "8h 8m"
+        },
+        {
+          "label": "Elev Gain / Week",
+          "value": "315 ft"
+        }
+      ],
+      "year": [
+        {
+          "label": "Activities",
+          "value": "300"
+        },
+        {
+          "label": "Distance",
+          "value": "468.6 mi"
+        },
+        {
+          "label": "Time",
+          "value": "170h 31m"
+        },
+        {
+          "label": "Elev Gain",
+          "value": "5,302 ft"
+        }
+      ],
+      "all_time": [
+        {
+          "label": "Activities",
+          "value": "1,959"
+        },
+        {
+          "label": "Distance",
+          "value": "4,703.8 mi"
+        },
+        {
+          "label": "Time",
+          "value": "1,597h 50m"
+        },
+        {
+          "label": "Elev Gain",
+          "value": "234,645 ft"
+        }
+      ]
+    },
+    {
+      "name": "Weight Training",
+      "icon": "fas fa-dumbbell",
+      "recent": [
+        {
+          "label": "Activities / Week",
+          "value": "2.6"
+        },
+        {
+          "label": "Avg Time / Week",
+          "value": "1h 49m"
+        }
+      ],
+      "year": [
+        {
+          "label": "Activities",
+          "value": "78"
+        },
+        {
+          "label": "Time",
+          "value": "64h 49m"
+        }
+      ],
+      "all_time": [
+        {
+          "label": "Activities",
+          "value": "555"
+        },
+        {
+          "label": "Time",
+          "value": "568h 59m"
+        }
+      ]
+    },
+    {
+      "name": "Ride",
+      "icon": "fas fa-bicycle",
+      "recent": [
+        {
+          "label": "Activities / Week",
+          "value": "0.2"
+        },
+        {
+          "label": "Avg Distance / Week",
+          "value": "0.3 mi"
+        },
+        {
+          "label": "Avg Time / Week",
+          "value": "1m 30s"
+        },
+        {
+          "label": "Elev Gain / Week",
+          "value": "5 ft"
+        }
+      ],
+      "year": [
+        {
+          "label": "Activities",
+          "value": "1"
+        },
+        {
+          "label": "Distance",
+          "value": "1.1 mi"
+        },
+        {
+          "label": "Time",
+          "value": "6m 26s"
+        },
+        {
+          "label": "Elev Gain",
+          "value": "20 ft"
+        }
+      ],
+      "all_time": [
+        {
+          "label": "Activities",
+          "value": "64"
+        },
+        {
+          "label": "Distance",
+          "value": "478.2 mi"
+        },
+        {
+          "label": "Time",
+          "value": "38h 42m"
+        },
+        {
+          "label": "Elev Gain",
+          "value": "6,072 ft"
+        }
+      ]
+    }
+  ],
+  "best_efforts": [
+    {
+      "label": "400m",
+      "value": "1:23"
+    },
+    {
+      "label": "1/2 mile",
+      "value": "3:28"
+    },
+    {
+      "label": "1K",
+      "value": "4:21"
+    },
+    {
+      "label": "1 mile",
+      "value": "7:07"
+    },
+    {
+      "label": "2 mile",
+      "value": "14:34"
+    },
+    {
+      "label": "5K",
+      "value": "23:01"
+    },
+    {
+      "label": "10K",
+      "value": "47:43"
+    },
+    {
+      "label": "15K",
+      "value": "1:16:27"
+    },
+    {
+      "label": "10 mile",
+      "value": "1:22:04"
+    },
+    {
+      "label": "20K",
+      "value": "1:43:07"
+    },
+    {
+      "label": "Half-Marathon",
+      "value": "1:49:11"
+    },
+    {
+      "label": "30K",
+      "value": "2:41:09"
+    },
+    {
+      "label": "Marathon",
+      "value": "3:48:06"
+    }
+  ]
+}

@@ -1,32 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-5">
-    <h1 class="page-heading mb-2 text-center">Find Me Everywhere</h1>
-    <p class="page-subtext mb-4 text-center mx-auto">All my profiles and platforms in one place.</p>
+<div class="links-terminal-shell">
+    <section class="links-terminal" aria-label="Profile links">
+        <div class="terminal-frame links-terminal-frame">
+            <header class="terminal-command-bar">
+                <div class="terminal-prompt">
+                    <span class="prompt-arrow">&gt;_</span>
+                    <span>links directory</span>
+                </div>
+                <div class="terminal-identity">// trey harnden</div>
+            </header>
 
-    <div class="links-section centered-links">
-        {% for link in social_links %}
-        <a href="{{ link.url }}" 
-           class="btn btn-link social-link"
-           data-link-name="{{ link.name }}"
-           target="_blank">
-            {% if link.icon == 'x-logo' %}
-            <img src="{{ url_for('static', filename='images/x-logo-white.png') }}" alt="X" class="btn-icon me-2">
-            {% elif link.icon %}
-            <i class="{{ link.icon }} me-2"></i>
-            {% endif %}
-            {{ link.name }}
-        </a>
-        {% endfor %}
+            <div class="links-terminal-content">
+                <div class="links-terminal-copy">
+                    <p class="terminal-line">operator@mountain:~/links$</p>
+                    <h1>Find Me Everywhere</h1>
+                    <p>All my profiles and platforms in one place.</p>
+                </div>
 
-        <a href="{{ site.github_url }}" 
-           class="btn btn-link social-link"
-           data-link-name="GitHub"
-           target="_blank">
-            <i class="fab fa-github me-2"></i>
-            GitHub
-        </a>
-    </div>
+                <div class="links-section centered-links links-terminal-list">
+                    {% for link in social_links %}
+                    <a href="{{ link.url }}"
+                       class="btn btn-link social-link"
+                       data-link-name="{{ link.name }}"
+                       target="_blank">
+                        {% if link.icon == 'x-logo' %}
+                        <img src="{{ url_for('static', filename='images/x-logo-white.png') }}" alt="X" class="btn-icon me-2">
+                        {% elif link.icon %}
+                        <i class="{{ link.icon }} me-2"></i>
+                        {% endif %}
+                        {{ link.name }}
+                    </a>
+                    {% endfor %}
+
+                    <a href="{{ site.github_url }}"
+                       class="btn btn-link social-link"
+                       data-link-name="GitHub"
+                       target="_blank">
+                        <i class="fab fa-github me-2"></i>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
 {% endblock %}

@@ -1,36 +1,118 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="home-hero">
-        <div class="dual-headshots">
-            <div class="headshot-card">
-                <img src="{{ url_for('static', filename=site.avatar) }}" 
-                     alt="Trey Harnden"
-                     class="headshot-square">
-            </div>
-            <div class="headshot-card">
-                <img src="{{ url_for('static', filename='images/headshot-professional-v2.jpg') }}" 
-                     alt="Trey Harnden"
-                     class="headshot-square">
-            </div>
-        </div>
+<div class="topo-terminal-shell">
+    <section class="topo-terminal" aria-label="Mountain Operator overview">
+        <div class="terminal-frame">
+            <header class="terminal-command-bar">
+                <div class="terminal-prompt">
+                    <span class="prompt-arrow">&gt;_</span>
+                    <span>mountain operator</span>
+                </div>
+                <div class="terminal-identity">// trey harnden</div>
+            </header>
 
-        <div class="home-content-row">
-            <div class="home-text">
-                <p class="bio-text">{{ site.bio }}</p>
+            <div class="operator-status-strip" aria-label="Current status">
+                {% for item in operator_home.status_items %}
+                <div class="operator-status-item">
+                    <span class="status-label">{{ item.label }}</span>
+                    <span class="status-value status-{{ item.tone }}">{{ item.value }}</span>
+                </div>
+                {% endfor %}
             </div>
-            <div class="home-ctas">
-                <a href="{{ site.notion_embed_url }}" class="btn btn-link social-link cta-link" target="_blank" data-link-name="Public Journal">
-                    <i class="fas fa-book-open me-2"></i>
-                    Public Journal
-                </a>
-                <a href="/work" class="btn btn-link social-link cta-link">
-                    <i class="fas fa-briefcase me-2"></i>
-                    Work Projects
-                </a>
+
+            <div class="topo-hero-grid">
+                <div class="operator-intro">
+                    <div class="coordinate-line">43.0389°N / 87.9065°W</div>
+                    <p class="terminal-line">operator@mountain:~$</p>
+                    <h1>Trey Harnden</h1>
+                    <p class="operator-subhead">
+                        AI-assisted GTM systems, public experiments, and mountain-minded operating notes.
+                    </p>
+                    <p class="operator-command">&gt; navigate the map to explore</p>
+                </div>
+
+                <div class="route-map" aria-label="Project route map">
+                    <svg class="route-map-lines" viewBox="0 0 620 520" role="presentation" aria-hidden="true">
+                        <path class="route-path route-path-primary" d="M120 245 C170 165 235 140 300 112 C360 140 405 188 485 238 C455 305 415 366 330 405 C245 398 182 344 120 245" />
+                        <path class="route-path route-path-secondary" d="M300 112 C272 214 246 292 330 405" />
+                        <path class="route-path route-path-secondary" d="M120 245 C232 236 360 236 485 238" />
+                        <circle cx="300" cy="112" r="5" />
+                        <circle cx="120" cy="245" r="5" />
+                        <circle cx="485" cy="238" r="5" />
+                        <circle cx="170" cy="365" r="5" />
+                        <circle cx="430" cy="365" r="5" />
+                        <circle cx="330" cy="405" r="5" />
+                    </svg>
+
+                    {% for node in operator_home.nodes %}
+                    <a class="route-node route-node-{{ node.key }}"
+                       href="{{ node.url }}"
+                       {% if node.url.startswith('http') %}target="_blank"{% endif %}
+                       data-link-name="{{ node.track_name }}">
+                        <span class="node-icon"><i class="{{ node.icon }}"></i></span>
+                        <span class="node-copy">
+                            <span class="node-name">{{ node.name }}</span>
+                            <span class="node-description">{{ node.description }}</span>
+                        </span>
+                    </a>
+                    {% endfor %}
+
+                    <span class="route-origin" aria-hidden="true">
+                        <i class="fas fa-campground"></i>
+                    </span>
+                </div>
             </div>
+
+            <div class="terminal-utility-grid">
+                <section class="terminal-panel latest-log">
+                    <div class="terminal-panel-heading">&gt; latest logs</div>
+                    <div class="log-list">
+                        {% for log in operator_home.logs %}
+                        <div class="log-entry">
+                            <span class="log-date">{{ log.date }}</span>
+                            <span>{{ log.text }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="terminal-input-line">&gt;_</div>
+                </section>
+
+                <section class="terminal-panel basecamp-panel">
+                    <div class="terminal-panel-heading">basecamp</div>
+                    <div class="basecamp-grid">
+                        <div>
+                            <span class="basecamp-value"
+                                  data-life-counter
+                                  data-start-date="{{ operator_home.milestone_data.life_start_date }}">{{ "{:,}".format(operator_home.milestone_data.days_of_life) }}</span>
+                            <span class="basecamp-label">days alive</span>
+                        </div>
+                        <div>
+                            <span class="basecamp-value">{{ "{:,}".format(operator_home.milestone_data.days_alcohol_free) }}</span>
+                            <span class="basecamp-label">alcohol-free</span>
+                        </div>
+                        <div>
+                            <span class="basecamp-value">{{ operator_home.workout_data.summary.lifetime_foot_miles }}</span>
+                            <span class="basecamp-label">on-foot miles</span>
+                        </div>
+                        <div>
+                            <span class="basecamp-value">{{ operator_home.workout_data.summary.workouts_year }}</span>
+                            <span class="basecamp-label">workouts / {{ operator_home.workout_data.year_label }}</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <nav class="terminal-bottom-nav" aria-label="Primary shortcuts">
+                <a href="/projects">Work</a>
+                <span aria-hidden="true">•</span>
+                <a href="{{ site.notion_embed_url }}" target="_blank" data-link-name="Public Journal">Journal</a>
+                <span aria-hidden="true">•</span>
+                <a href="/workouts" data-link-name="Workouts">Workouts</a>
+                <span aria-hidden="true">•</span>
+                <a href="/links">Links</a>
+            </nav>
         </div>
-    </div>
+    </section>
 </div>
 {% endblock %}

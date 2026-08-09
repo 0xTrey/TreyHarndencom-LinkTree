@@ -44,3 +44,38 @@ class LinkClick(db.Model):
             db.session.rollback()
             logger.error(f"Error recording link click: {str(e)}")
             raise
+
+
+class IntegrationToken(db.Model):
+    """Stores rotating OAuth tokens for connected services."""
+    __tablename__ = 'integration_tokens'
+
+    service = db.Column(db.String(32), primary_key=True)
+    access_token = db.Column(db.Text, nullable=True)
+    refresh_token = db.Column(db.Text, nullable=True)
+    expires_at = db.Column(db.Integer, nullable=True)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    @classmethod
+    def get_service(cls, service):
+        try:
+            return cls.query.filter_by(service=service).one_or_none()
+        except SQLAlchemyError as e:
+            logger.error(f"Error retrieving token for service {service}: {str(e)}")
+            raise
+
+    @classmethod
+    def upsert_service(cls, service, access_token=None, refresh_token=None, expires_at=None):
+        try:
+            token = cls.get_service(service) or cls(service=service)
+            token.access_token = access_token
+            token.refresh_token = refresh_token
+            token.expires_at = expires_at
+            db.session.add(token)
+            db.session.commit()
+            logger.info(f"Updated token for service: {service}")
+            return token
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            logger.error(f"Error updating token for service {service}: {str(e)}")
+            raise

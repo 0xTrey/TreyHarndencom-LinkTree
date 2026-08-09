@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="topo-terminal-shell projects-terminal-shell folloze-gtm-shell">
+    <section class="topo-terminal projects-terminal" aria-label="Folloze GTM systems">
+        <div class="terminal-frame projects-terminal-frame">
+            <header class="terminal-command-bar">
+                <div class="terminal-prompt">
+                    <span class="prompt-arrow">&gt;_</span>
+                    <span>folloze gtm systems</span>
+                </div>
+                <div class="terminal-identity">// trey harnden</div>
+            </header>
+
+            <div class="operator-status-strip projects-status-strip" aria-label="Folloze GTM categories">
+                <div class="operator-status-item">
+                    <span class="status-label">focus</span>
+                    <span class="status-value status-green">Folloze GTM</span>
+                </div>
+                <div class="operator-status-item">
+                    <span class="status-label">systems</span>
+                    <span class="status-value status-orange">{{ ai_gtm_projects|length }} builds</span>
+                </div>
+                <div class="operator-status-item">
+                    <span class="status-label">public repos</span>
+                    <span class="status-value status-amber">{{ ai_gtm_public_repo_count }} linked</span>
+                </div>
+                <div class="operator-status-item">
+                    <span class="status-label">outcome</span>
+                    <span class="status-value status-green">27% inbound lift</span>
+                </div>
+            </div>
+
+            <div class="projects-page projects-terminal-content folloze-gtm-content">
+                <div class="projects-intro projects-terminal-intro">
+                    <div class="coordinate-line">43.0389°N / 87.9065°W</div>
+                    <p class="terminal-line">operator@mountain:~/folloze-gtm$ open systems</p>
+                    <h1>Folloze GTM</h1>
+                    <p class="operator-subhead">
+                        AI-assisted go-to-market systems across content, AEO/GEO, outbound, digital deal rooms, demo environments, and seller operating workflows.
+                    </p>
+                </div>
+
+                <section class="ai-systems-section folloze-ai-systems-section" aria-label="AI and GTM systems portfolio">
+                    <div class="ai-systems-header">
+                        <div>
+                            <p class="terminal-line">operator@mountain:~/folloze-gtm$ cat ai-gtm-systems.json</p>
+                            <h2>AI GTM Systems</h2>
+                            <p class="ai-systems-lede">
+                                The main portfolio layer: real systems built to turn Folloze sales and marketing work into repeatable infrastructure with source ledgers, QA gates, approval boundaries, and deployable artifacts.
+                            </p>
+                        </div>
+
+                        <div class="ai-systems-proof" aria-label="Portfolio proof points">
+                            <div>
+                                <span class="proof-value">{{ ai_gtm_projects|length }}</span>
+                                <span class="proof-label">systems</span>
+                            </div>
+                            <div>
+                                <span class="proof-value">{{ ai_gtm_public_repo_count }}</span>
+                                <span class="proof-label">public repos</span>
+                            </div>
+                            <div>
+                                <span class="proof-value">27%</span>
+                                <span class="proof-label">H1 inbound lift</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ai-project-grid">
+                        {% for project in ai_gtm_projects %}
+                        <article class="ai-project-card">
+                            <div class="ai-project-topline">
+                                <span class="ai-project-number">{{ project.number }}</span>
+                                <span class="ai-project-icon" aria-hidden="true">
+                                    <i class="{{ project.icon }}"></i>
+                                </span>
+                            </div>
+
+                            <div class="ai-project-body">
+                                <p class="ai-project-category">{{ project.category }}</p>
+                                <h3>{{ project.name }}</h3>
+                                <p>{{ project.summary }}</p>
+                                <p>{{ project.impact }}</p>
+                            </div>
+
+                            <div class="ai-project-stack" aria-label="{{ project.name }} stack">
+                                {% for item in project.stack %}
+                                <span>{{ item }}</span>
+                                {% endfor %}
+                            </div>
+
+                            <div class="ai-project-footer">
+                                {% if project.repo_url %}
+                                <a href="{{ project.repo_url }}"
+                                   target="_blank"
+                                   rel="noopener"
+                                   data-link-name="{{ project.track_name }}">
+                                    <i class="fab fa-github" aria-hidden="true"></i>
+                                    {{ project.repo_label }}
+                                </a>
+                                {% else %}
+                                <span>
+                                    <i class="{{ project.repo_icon | default('fas fa-lock') }}" aria-hidden="true"></i>
+                                    {{ project.repo_label }}
+                                </span>
+                                {% endif %}
+                            </div>
+                        </article>
+                        {% endfor %}
+                    </div>
+                </section>
+
+                <section class="project-section project-section-card folloze-route-section">
+                    <div class="project-section-header">
+                        <span class="terminal-panel-heading">route 02</span>
+                        <h2 class="project-section-title">{{ folloze_section.title }}</h2>
+                        <p class="project-section-note">{{ folloze_section.description }}</p>
+                    </div>
+
+                    <div class="work-buttons folloze-route-buttons">
+                        {% for link in folloze_section.links %}
+                        <a href="{{ link.url }}"
+                           class="btn btn-link social-link"
+                           data-link-name="{{ link.name }}"
+                           {% if link.url.startswith('http') %}target="_blank"{% endif %}>
+                            <i class="{{ link.icon }} me-2"></i>
+                            {{ link.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </section>
+            </div>
+
+            <nav class="terminal-bottom-nav" aria-label="Primary shortcuts">
+                <a href="/">Home</a>
+                <span aria-hidden="true">•</span>
+                <a href="/projects">Side Projects</a>
+                <span aria-hidden="true">•</span>
+                <a href="/links">Links</a>
+                <span aria-hidden="true">•</span>
+                <a href="/workouts" data-link-name="Workouts">Workouts</a>
+            </nav>
+        </div>
+    </section>
+</div>
+{% endblock %}

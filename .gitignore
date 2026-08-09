@@ -28,3 +28,4 @@ Screenshot *.png
 Pasted-*.txt
 ~
 .vercel
+.wrangler/

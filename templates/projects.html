@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="topo-terminal-shell projects-terminal-shell">
+    <section class="topo-terminal projects-terminal" aria-label="Projects index">
+        <div class="terminal-frame projects-terminal-frame">
+            <header class="terminal-command-bar">
+                <div class="terminal-prompt">
+                    <span class="prompt-arrow">&gt;_</span>
+                    <span>project index</span>
+                </div>
+                <div class="terminal-identity">// trey harnden</div>
+            </header>
+
+            <div class="operator-status-strip projects-status-strip" aria-label="Project categories">
+                <div class="operator-status-item">
+                    <span class="status-label">client work</span>
+                    <span class="status-value status-green">Elevation Engine</span>
+                </div>
+                <div class="operator-status-item">
+                    <span class="status-label">side projects</span>
+                    <span class="status-value status-orange">experiments</span>
+                </div>
+                <div class="operator-status-item">
+                    <span class="status-label">folloze work</span>
+                    <span class="status-value status-amber">own tab</span>
+                </div>
+                <div class="operator-status-item">
+                    <span class="status-label">mode</span>
+                    <span class="status-value status-green">building</span>
+                </div>
+            </div>
+
+            <div class="projects-page projects-terminal-content">
+                <div class="projects-intro projects-terminal-intro">
+                    <div class="coordinate-line">43.0389°N / 87.9065°W</div>
+                    <p class="terminal-line">operator@mountain:~/projects$ ls</p>
+                    <h1>Side Projects</h1>
+                    <p class="operator-subhead">
+                        A running collection of client work, local business builds, personal experiments, and independent projects. Folloze GTM systems now live in their own tab.
+                    </p>
+                </div>
+
+                <div class="projects-layout">
+                    <section class="project-section project-section-card">
+                        <div class="project-section-header">
+                            <span class="terminal-panel-heading">route 01</span>
+                            <h2 class="project-section-title">{{ left_section.title }}</h2>
+                            <p class="project-section-note">{{ left_section.description }}</p>
+                        </div>
+
+                        <div class="work-buttons">
+                            {% for link in left_section.links %}
+                            <a href="{{ link.url }}"
+                               class="btn btn-link social-link"
+                               data-link-name="{{ link.name }}"
+                               target="_blank">
+                                <i class="{{ link.icon }} me-2"></i>
+                                {{ link.name }}
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </section>
+
+                    <div class="projects-column projects-column-stack">
+                        <section class="project-section project-section-card">
+                            <div class="project-section-header">
+                                <span class="terminal-panel-heading">route 02</span>
+                                <h2 class="project-section-title">{{ bottom_right_section.title }}</h2>
+                                <p class="project-section-note">{{ bottom_right_section.description }}</p>
+                            </div>
+
+                            <div class="work-buttons">
+                                {% for link in bottom_right_section.links %}
+                                <a href="{{ link.url }}"
+                                   class="btn btn-link social-link"
+                                   data-link-name="{{ link.name }}"
+                                   target="_blank">
+                                    <i class="{{ link.icon }} me-2"></i>
+                                    {{ link.name }}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </section>
+
+                        <section class="project-section project-section-card">
+                            <div class="project-section-header">
+                                <span class="terminal-panel-heading">route 03</span>
+                                <h2 class="project-section-title">Folloze GTM</h2>
+                                <p class="project-section-note">AI-assisted content, outbound, sales, and demo-environment systems live on the dedicated Folloze GTM page.</p>
+                            </div>
+
+                            <div class="work-buttons">
+                                <a href="/folloze-gtm"
+                                   class="btn btn-link social-link"
+                                   data-link-name="Folloze GTM">
+                                    <i class="fas fa-project-diagram me-2"></i>
+                                    Open Folloze GTM
+                                </a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+
+            <nav class="terminal-bottom-nav" aria-label="Primary shortcuts">
+                <a href="/">Home</a>
+                <span aria-hidden="true">•</span>
+                <a href="/links">Links</a>
+                <span aria-hidden="true">•</span>
+                <a href="/folloze-gtm">Folloze GTM</a>
+                <span aria-hidden="true">•</span>
+                <a href="/workouts" data-link-name="Workouts">Workouts</a>
+            </nav>
+        </div>
+    </section>
+</div>
+{% endblock %}
