@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Folloze Outbound Engine Visual</title>
+  <meta name="description" content="Simple sales-facing visual for the Folloze Outbound Engine and its ABM intent loop.">
+  <style>
+    :root {
+      --ink: #071428;
+      --muted: #4d6483;
+      --paper: #f3f9fd;
+      --panel: rgba(255, 255, 255, 0.9);
+      --line: rgba(7, 20, 40, 0.08);
+      --shadow: 0 26px 80px rgba(0, 75, 222, 0.1);
+      --primary-1: #00ccff;
+      --primary-2: #00a0ff;
+      --primary-3: #0077ff;
+      --primary-4: #004bde;
+      --secondary-1: #ff46ae;
+      --secondary-2: #7f45ff;
+      --secondary-3: #4414ad;
+      --neutral-0: #f3f9fd;
+      --neutral-2: #d8ecfa;
+      --neutral-3: #2c3d59;
+      --neutral-4: #1c293f;
+      --neutral-1000: #071428;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(0, 204, 255, 0.16), transparent 28%),
+        radial-gradient(circle at top right, rgba(127, 69, 255, 0.14), transparent 32%),
+        linear-gradient(180deg, #eef7ff 0%, #ffffff 48%, #f3f9fd 100%);
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.5;
+    }
+
+    .page {
+      width: min(1220px, calc(100vw - 40px));
+      margin: 24px auto 34px;
+    }
+
+    .hero,
+    .panel,
+    .closing-card {
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 34px 36px 30px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.98), rgba(216, 236, 250, 0.9));
+      box-shadow: 0 26px 80px rgba(0, 75, 222, 0.12);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-1), var(--primary-3) 45%, var(--secondary-2) 100%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -72px;
+      top: -72px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 75, 222, 0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 10px;
+    }
+
+    .brand-logo {
+      width: clamp(180px, 22vw, 270px);
+      height: auto;
+      display: block;
+      flex: 0 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--primary-4);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      max-width: 920px;
+      font-size: clamp(2.8rem, 4vw, 4.6rem);
+      line-height: 0.95;
+      margin-bottom: 14px;
+      color: var(--neutral-1000);
+    }
+
+    .lede {
+      max-width: 860px;
+      margin: 0;
+      color: var(--neutral-3);
+      font-size: 1.05rem;
+    }
+
+    .hero-pills {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .pill {
+      padding: 16px 16px 14px;
+      min-height: 112px;
+      border-radius: 22px;
+      border: 1px solid rgba(0, 75, 222, 0.09);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(243, 249, 253, 0.96));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+    }
+
+    .pill strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .pill-signal strong { color: var(--primary-2); }
+    .pill-board strong { color: var(--primary-4); }
+    .pill-loop strong { color: var(--secondary-2); }
+
+    .pill span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.45;
+    }
+
+    .panel {
+      margin-top: 22px;
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(243, 249, 253, 0.86));
+    }
+
+    .panel-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .panel-head p {
+      margin: 6px 0 0;
+      max-width: 720px;
+      color: var(--muted);
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+
+    .dot-signal { background: var(--primary-1); }
+    .dot-outreach { background: var(--primary-3); }
+    .dot-board { background: var(--secondary-1); }
+    .dot-data { background: var(--secondary-2); }
+    .dot-loop { background: var(--secondary-3); }
+
+    .flow {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      padding: 6px 0 0;
+    }
+
+    .flow::before {
+      content: "";
+      position: absolute;
+      left: 36px;
+      top: 26px;
+      bottom: 110px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(0, 160, 255, 0.16), rgba(0, 75, 222, 0.72), rgba(127, 69, 255, 0.26));
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .stage-rail {
+      position: relative;
+      padding: 24px 18px 22px 58px;
+      border-radius: 24px;
+      border: 1px solid rgba(0, 119, 255, 0.14);
+      background: linear-gradient(180deg, rgba(216, 236, 250, 0.86), rgba(255, 255, 255, 0.96));
+      box-shadow: 0 16px 42px rgba(0, 75, 222, 0.08);
+    }
+
+    .stage-rail::before {
+      content: "";
+      position: absolute;
+      left: 18px;
+      top: 20px;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: var(--primary-3);
+      box-shadow: 0 0 0 8px rgba(216, 236, 250, 0.96);
+    }
+
+    .stage-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(0, 75, 222, 0.08);
+      color: var(--primary-4);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .stage-rail h2 {
+      margin-top: 10px;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--neutral-1000);
+    }
+
+    .stage-rail p {
+      margin: 10px 0 0;
+      color: var(--neutral-3);
+      font-size: 0.96rem;
+    }
+
+    .stage-body {
+      padding: 18px;
+      border-radius: 24px;
+      border: 1px solid rgba(0, 75, 222, 0.08);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(243, 249, 253, 0.9));
+      box-shadow: 0 18px 48px rgba(0, 75, 222, 0.08);
+    }
+
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      padding: 16px 16px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 75, 222, 0.08);
+      background: rgba(255, 255, 255, 0.86);
+      box-shadow: 0 10px 24px rgba(0, 75, 222, 0.04);
+    }
+
+    .card h3 {
+      font-size: 1.12rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .signal h3 { color: var(--primary-2); }
+    .outreach h3 { color: var(--primary-4); }
+    .board h3 { color: var(--secondary-1); }
+    .data h3 { color: var(--secondary-2); }
+    .loop h3 { color: var(--secondary-3); }
+
+    ul.clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    ul.clean li {
+      position: relative;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.45;
+    }
+
+    ul.clean li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.62em;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: currentColor;
+      opacity: 0.38;
+      transform: translateY(-50%);
+    }
+
+    .intent-panel {
+      margin-top: 14px;
+      padding: 15px 16px;
+      border-radius: 18px;
+      border: 1px dashed rgba(127, 69, 255, 0.24);
+      background: rgba(127, 69, 255, 0.06);
+    }
+
+    .intent-panel strong {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--secondary-2);
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .intent-panel p {
+      margin: 0;
+      color: var(--neutral-3);
+      font-size: 0.94rem;
+    }
+
+    .loop-band {
+      position: relative;
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 18px;
+      border: 1px solid rgba(127, 69, 255, 0.18);
+      background: linear-gradient(180deg, rgba(127, 69, 255, 0.1), rgba(255, 255, 255, 0.74));
+    }
+
+    .loop-band::after {
+      content: "feeds back into targeting, outreach, and next-board decisions";
+      position: absolute;
+      right: 16px;
+      bottom: -16px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(127, 69, 255, 0.14);
+      color: var(--secondary-3);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .loop-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .loop-chip {
+      padding: 13px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(127, 69, 255, 0.14);
+      background: rgba(255, 255, 255, 0.72);
+    }
+
+    .loop-chip strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--secondary-3);
+      font-size: 0.94rem;
+    }
+
+    .loop-chip span {
+      display: block;
+      color: var(--neutral-3);
+      font-size: 0.89rem;
+      line-height: 1.4;
+    }
+
+    .closing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .closing-card {
+      padding: 18px 18px 16px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(243, 249, 253, 0.92));
+      border-top: 4px solid var(--primary-3);
+    }
+
+    .closing-card:nth-child(2) {
+      border-top-color: var(--secondary-1);
+    }
+
+    .closing-card:nth-child(3) {
+      border-top-color: var(--secondary-2);
+    }
+
+    .closing-card h3 {
+      margin-bottom: 8px;
+      font-size: 1.16rem;
+    }
+
+    .closing-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-pills,
+      .closing-grid,
+      .loop-actions,
+      .stage-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-top {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .stage {
+        grid-template-columns: 1fr;
+      }
+
+      .flow::before {
+        display: none;
+      }
+
+      .stage-rail {
+        padding-left: 26px;
+      }
+
+      .stage-rail::before {
+        display: none;
+      }
+
+      .loop-band::after {
+        position: static;
+        display: inline-flex;
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <p class="eyebrow">Folloze Sales Reference</p>
+        <img class="brand-logo" src="/static/projects/folloze-outbound-engine/folloze-logo-secondary.png" alt="Folloze logo">
+      </div>
+      <h1>How the Folloze Outbound Engine Creates an Intent Loop</h1>
+      <p class="lede">A simple model for turning targeted outbound into Folloze board traffic, first-party engagement signals, and stronger ABM follow-up.</p>
+      <div class="hero-pills">
+        <div class="pill pill-signal">
+          <strong>Targeted outbound</strong>
+          <span>Start with the right accounts, the right contacts, and the right timing signals instead of generic list-based outreach.</span>
+        </div>
+        <div class="pill pill-board">
+          <strong>Board-centered experience</strong>
+          <span>Use outbound to move buyers into a richer Folloze experience instead of asking them to respond to a plain-text email alone.</span>
+        </div>
+        <div class="pill pill-loop">
+          <strong>ABM feedback loop</strong>
+          <span>Turn visits, clicks, and replies into usable account intent that can shape the next follow-up, board, or campaign motion.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Workflow View</h2>
+          <p>The engine is not just about sending outbound. It is about using outbound to create signal, then using that signal to run smarter account-based follow-up.</p>
+        </div>
+        <ul class="legend">
+          <li><span><i class="dot dot-signal"></i>Signal and targeting</span></li>
+          <li><span><i class="dot dot-outreach"></i>Outbound motion</span></li>
+          <li><span><i class="dot dot-board"></i>Folloze board experience</span></li>
+          <li><span><i class="dot dot-data"></i>Engagement and intent data</span></li>
+          <li><span><i class="dot dot-loop"></i>ABM loop</span></li>
+        </ul>
+      </div>
+
+      <div class="flow">
+        <div class="stage">
+          <div class="stage-rail">
+            <div class="stage-number">01</div>
+            <h2>Signal Layer</h2>
+            <p>Start with who to target and why now.</p>
+          </div>
+          <div class="stage-body">
+            <div class="stage-grid">
+              <div class="card signal">
+                <h3>What goes in</h3>
+                <ul class="clean">
+                  <li>ICP account list</li>
+                  <li>Buying committee contacts</li>
+                  <li>Company fit and timing signals</li>
+                  <li>Persona and role context</li>
+                </ul>
+              </div>
+              <div class="card signal">
+                <h3>What comes out</h3>
+                <p>A cleaner list of accounts and contacts that are actually worth reaching with a relevant message.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-rail">
+            <div class="stage-number">02</div>
+            <h2>Outbound Motion</h2>
+            <p>Use personalized outbound to earn the next click.</p>
+          </div>
+          <div class="stage-body">
+            <div class="stage-grid">
+              <div class="card outreach">
+                <h3>Workflow</h3>
+                <ul class="clean">
+                  <li>AI SDR email or sequence touch</li>
+                  <li>Relevant messaging by persona and trigger</li>
+                  <li>Proof point matched to the account story</li>
+                  <li>CTA that points to a more useful destination</li>
+                </ul>
+              </div>
+              <div class="card outreach">
+                <h3>Why it matters</h3>
+                <p>The outreach is not the finish line. Its job is to move a buyer into a richer experience where Folloze can tell a stronger story and capture better data.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-rail">
+            <div class="stage-number">03</div>
+            <h2>Board Experience</h2>
+            <p>The buyer lands on a Folloze board, not a dead-end page.</p>
+          </div>
+          <div class="stage-body">
+            <div class="stage-grid">
+              <div class="card board">
+                <h3>What the board can hold</h3>
+                <ul class="clean">
+                  <li>Account-relevant messaging</li>
+                  <li>Proof, case studies, and use cases</li>
+                  <li>Persona-relevant resources and CTAs</li>
+                  <li>A clearer next step for the buying team</li>
+                </ul>
+              </div>
+              <div class="card board">
+                <h3>Strategic role</h3>
+                <p>The board becomes the experience layer between outreach and pipeline. It is where attention turns into measurable engagement.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-rail">
+            <div class="stage-number">04</div>
+            <h2>Data Captured</h2>
+            <p>Every interaction becomes more useful account signal.</p>
+          </div>
+          <div class="stage-body">
+            <div class="stage-grid">
+              <div class="card data">
+                <h3>What data we collect</h3>
+                <ul class="clean">
+                  <li>Account, company, and role identity</li>
+                  <li>Source, campaign, and message attribution</li>
+                  <li>Board visits and repeat visits</li>
+                  <li>Content clicks and CTA engagement</li>
+                  <li>Email replies and response intent</li>
+                  <li>Multi-stakeholder account activity</li>
+                </ul>
+              </div>
+              <div class="card data">
+                <h3>What that data tells us</h3>
+                <ul class="clean">
+                  <li>Which accounts are actually warming up</li>
+                  <li>Which stakeholders are engaging inside the account</li>
+                  <li>Which message or asset is creating movement</li>
+                  <li>Where follow-up should go next</li>
+                </ul>
+              </div>
+            </div>
+            <div class="intent-panel">
+              <strong>First-Party Intent Signal</strong>
+              <p>Instead of guessing who is in market, the team can use real engagement from outbound and board activity to identify which accounts are worth deeper ABM attention.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage">
+          <div class="stage-rail">
+            <div class="stage-number">05</div>
+            <h2>ABM Loop</h2>
+            <p>Feed the new signal back into follow-up and orchestration.</p>
+          </div>
+          <div class="stage-body">
+            <div class="loop-band">
+              <div class="card loop">
+                <h3>How the loop works</h3>
+                <p>Once the board and response data show interest, the motion stops being one-time outbound and starts acting like an account-based operating loop.</p>
+              </div>
+              <div class="loop-actions">
+                <div class="loop-chip">
+                  <strong>Prioritize</strong>
+                  <span>Push warmer accounts to the top of the queue instead of treating every account the same.</span>
+                </div>
+                <div class="loop-chip">
+                  <strong>Personalize</strong>
+                  <span>Adjust message angles, content, and board paths based on what each account responds to.</span>
+                </div>
+                <div class="loop-chip">
+                  <strong>Orchestrate</strong>
+                  <span>Trigger the right next touch for sales and marketing around accounts showing real movement.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing-grid">
+      <article class="closing-card">
+        <h3>Simple sales story</h3>
+        <p>We use outbound to drive the right buyers into a Folloze board, then use the resulting engagement to create a stronger next move.</p>
+      </article>
+      <article class="closing-card">
+        <h3>What makes it different</h3>
+        <p>It is not just outbound volume. It is outbound that creates first-party account intent and a better foundation for ABM execution.</p>
+      </article>
+      <article class="closing-card">
+        <h3>What it enables</h3>
+        <p>Better prioritization, smarter follow-up, clearer account visibility, and a tighter connection between outreach and pipeline motion.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

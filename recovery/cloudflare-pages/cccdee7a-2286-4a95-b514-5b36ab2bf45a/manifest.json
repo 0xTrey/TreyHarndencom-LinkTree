@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "purpose": "Immutable recovery of the publicly accessible static surface only.",
+  "deployment": {
+    "id": "cccdee7a-2286-4a95-b514-5b36ab2bf45a",
+    "project": "treyharndencom-linktree",
+    "environment": "production",
+    "origin": "https://cccdee7a.treyharndencom-linktree.pages.dev",
+    "created_on": "2026-06-30T00:15:58.708462Z",
+    "source_type": "ad_hoc",
+    "source_commit": "119ce645d587968bbba36ff01d3a9e8c039340c6",
+    "source_dirty": true,
+    "uses_functions": false
+  },
+  "routes": {
+    "canonical_trailing_slash": ["/links/", "/projects/", "/folloze-gtm/", "/workouts/"],
+    "redirects": {"/work": {"status": 301, "location": "/projects"}},
+    "rewrites": {"/api/workouts": "/api/workouts.json"},
+    "fallback": "/* -> /index.html (404 rule; Pages returned the static fallback with HTTP 200)"
+  },
+  "files": [
+    {"path":"api/workouts.json","sha256":"2b79d2ec9e289373849e620a845286179de0382ea5629cc78f55d4bebf095cc8","platform_file_id":"c996e1865df44ac21fdaab81c667488b"},
+    {"path":"folloze-gtm/index.html","sha256":"ba08ba4fa82b19e996d31f9dffaf862e23c68ef1c4b90a7eaf275d86fac3cf23","platform_file_id":"24d8c2e39af124a582c8dbecec41b78e"},
+    {"path":"index.html","sha256":"ba0fff413b5cb3dd1c4f8738e408d3e89fc016067b0602cf01e4fc880fd14df5","platform_file_id":"1532d213697ccb41e297fc5125546746"},
+    {"path":"links/index.html","sha256":"6b298f112f100b30d5ff690f7ae52ac276e483f73bcc6ae7ca1ce2fddfdcc4a0","platform_file_id":"a27eba4047752cd7fa4a9f60b4bc5f86"},
+    {"path":"projects/folloze-outbound-intent-loop/folloze-logo-secondary.png","sha256":"d86460c6269f86d8af570f0ec17e8f6d50018e840fe1b1843b8badc4fbefae47","platform_file_id":"8fbee9a92997662e31ce301395371a50"},
+    {"path":"projects/folloze-outbound-intent-loop/index.html","sha256":"eb6a6b7a1daaedb7081dba0833865cbeef2bc1599d942f13e63317684f8ba12a","platform_file_id":"e790e539b2a0bc2381c53d291d9bbca2"},
+    {"path":"projects/index.html","sha256":"7e4359ae358b2d989cf4eaab4235a0f9ec0ee7fc2f02a23fe8f0d0a7d53f04a9","platform_file_id":"f549b06c60a865b461d9d52bc86d477f"},
+    {"path":"static/css/style.css","sha256":"0184c8f766a2c5990c51805eac52e44aeae3f94651b2b8dc9ca070e0cd8967e9","platform_file_id":"a19eb1ea9f074696402f0d1ef9712bfa"},
+    {"path":"static/images/abm-playbook-preview.png","sha256":"7077c32ae9768d6b79719038f402b92ed7f00f0ef7fd933266fa40274d5f1977","platform_file_id":"f8fda297afaba7836da04c183ec43005"},
+    {"path":"static/images/headshot-professional-v1.jpg","sha256":"da3e13b0ecd82d1974bbf7ea26acbb1706a98231701a8e90b5bad8c69fc97909","platform_file_id":"bc18252290dc7d0f5103587aa13ecf27"},
+    {"path":"static/images/headshot-professional-v2.jpg","sha256":"fd4793f387c7a69437b9b2a6485b769fa59225857b58313032d4af4721c33820","platform_file_id":"b203a4b049231fc6fbcba47c5f7647a0"},
+    {"path":"static/images/trey-rainier-headshot.jpeg","sha256":"b04b2872785cbb0deb31c52c9038a1837b431403707659cfbea582486f2a9ac1","platform_file_id":"a855be696e78c747e496ea3c67d9b945"},
+    {"path":"static/images/x-logo-white.png","sha256":"432bdd47255b48366843ec21d209e774f93b807e1fd0894fc983aad0dc7bd03b","platform_file_id":"91b42615d6e24c79fb3c1a5370a69bdd"},
+    {"path":"static/js/main.js","sha256":"7edbccd1db545de32dbd22908c51ae4006b90153b89e1932946ee7e6849a1764","platform_file_id":"1c83e5971728fd3578b49cd8a750e631"},
+    {"path":"static/projects/folloze-outbound-engine/folloze-logo-secondary.png","sha256":"d86460c6269f86d8af570f0ec17e8f6d50018e840fe1b1843b8badc4fbefae47","platform_file_id":"8fbee9a92997662e31ce301395371a50"},
+    {"path":"static/projects/folloze-outbound-engine/index.html","sha256":"eb6a6b7a1daaedb7081dba0833865cbeef2bc1599d942f13e63317684f8ba12a","platform_file_id":"e790e539b2a0bc2381c53d291d9bbca2"},
+    {"path":"workouts/index.html","sha256":"025f90dfa45014c285258a06614a1639d1de20c55f278cdb41fcbeba7686479f","platform_file_id":"aee9ee5993849b9305e485208c21a14e"}
+  ]
+}
