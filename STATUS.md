@@ -1,6 +1,18 @@
 # Current Status
 
-Last updated: 2026-08-09
+Last updated: 2026-08-12
+
+## Local V2 Rebuild
+
+- Branch: `codex/house-of-growth-v2`
+- Local preview: `http://127.0.0.1:5005/`
+- Design direction: Field Systems, translated from the validated House of Growth
+  brand harvests in `research/brand-harvest/`.
+- Scope: Home, Systems, Projects, Training, Links, shared navigation/footer, and
+  Cloudflare static export.
+- Publication state: local only. This branch has not been deployed, and no DNS,
+  Cloudflare Pages project, `treyharnden.com`, or `www.treyharnden.com` setting was
+  changed.
 
 ## Live State
 

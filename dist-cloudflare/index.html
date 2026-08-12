@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trey Harnden</title>
     <meta name="description" content="Trey Harnden builds AI-assisted GTM systems, public experiments, and mountain-minded operating notes.">
-    
+    <meta name="theme-color" content="#11110f">
+
+    <script>document.documentElement.classList.add('js');</script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0YPCYY8N"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -13,233 +15,239 @@
         gtag('js', new Date());
         gtag('config', 'G-FT0YPCYY8N');
     </script>
-    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="preload" href="/static/fonts/black-ops-one-latin-400.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css?v=3">
+    <link rel="stylesheet" href="/static/css/style.css?v=5">
 </head>
-<body>
-    <nav class="navbar navbar-expand-md sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Trey Harnden</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+<body class="page-home">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="site-brand" href="/" aria-label="Trey Harnden home">
+                <span class="brand-sigil">TH</span>
+                <span class="brand-copy">
+                    <strong>Trey Harnden</strong>
+                    <small>Field systems / Milwaukee</small>
+                </span>
+            </a>
+
+            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" title="Open navigation">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                <span class="sr-only">Open navigation</span>
             </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/links">Links</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/folloze-gtm">Folloze GTM</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="/workouts">Workouts</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <main>
-        
-<div class="topo-terminal-shell">
-    <section class="topo-terminal" aria-label="Mountain Operator overview">
-        <div class="terminal-frame">
-            <header class="terminal-command-bar">
-                <div class="terminal-prompt">
-                    <span class="prompt-arrow">&gt;_</span>
-                    <span>mountain operator</span>
-                </div>
-                <div class="terminal-identity">// trey harnden</div>
-            </header>
-
-            <div class="operator-status-strip" aria-label="Current status">
-                
-                <div class="operator-status-item">
-                    <span class="status-label">Shipping</span>
-                    <span class="status-value status-green">12 public projects</span>
-                </div>
-                
-                <div class="operator-status-item">
-                    <span class="status-label">Learning</span>
-                    <span class="status-value status-amber">AI + GTM systems</span>
-                </div>
-                
-                <div class="operator-status-item">
-                    <span class="status-label">Training</span>
-                    <span class="status-value status-orange">498 workouts / 2026</span>
-                </div>
-                
-                <div class="operator-status-item">
-                    <span class="status-label">Exploring</span>
-                    <span class="status-value status-green">public parks + mountains</span>
-                </div>
-                
-            </div>
-
-            <div class="topo-hero-grid">
-                <div class="operator-intro">
-                    <div class="coordinate-line">43.0389°N / 87.9065°W</div>
-                    <p class="terminal-line">operator@mountain:~$</p>
-                    <h1>Trey Harnden</h1>
-                    <p class="operator-subhead">
-                        AI-assisted GTM systems, public experiments, and mountain-minded operating notes.
-                    </p>
-                    <p class="operator-command">&gt; navigate the map to explore</p>
-                </div>
-
-                <div class="route-map" aria-label="Project route map">
-                    <svg class="route-map-lines" viewBox="0 0 620 520" role="presentation" aria-hidden="true">
-                        <path class="route-path route-path-primary" d="M120 245 C170 165 235 140 300 112 C360 140 405 188 485 238 C455 305 415 366 330 405 C245 398 182 344 120 245" />
-                        <path class="route-path route-path-secondary" d="M300 112 C272 214 246 292 330 405" />
-                        <path class="route-path route-path-secondary" d="M120 245 C232 236 360 236 485 238" />
-                        <circle cx="300" cy="112" r="5" />
-                        <circle cx="120" cy="245" r="5" />
-                        <circle cx="485" cy="238" r="5" />
-                        <circle cx="170" cy="365" r="5" />
-                        <circle cx="430" cy="365" r="5" />
-                        <circle cx="330" cy="405" r="5" />
-                    </svg>
-
-                    
-                    <a class="route-node route-node-folloze-gtm"
-                       href="/folloze-gtm"
-                       
-                       data-link-name="Folloze GTM">
-                        <span class="node-icon"><i class="fas fa-diagram-project"></i></span>
-                        <span class="node-copy">
-                            <span class="node-name">Folloze GTM Engineering</span>
-                            <span class="node-description">AI-assisted content, outbound, demo, and seller systems.</span>
-                        </span>
-                    </a>
-                    
-                    <a class="route-node route-node-side-projects"
-                       href="/projects"
-                       
-                       data-link-name="Side Projects">
-                        <span class="node-icon"><i class="fas fa-compass-drafting"></i></span>
-                        <span class="node-copy">
-                            <span class="node-name">Side Projects</span>
-                            <span class="node-description">Client builds, experiments, and independent projects.</span>
-                        </span>
-                    </a>
-                    
-                    <a class="route-node route-node-elevation-engine"
-                       href="https://www.elevationengine.co/"
-                       target="_blank"
-                       data-link-name="Elevation Engine">
-                        <span class="node-icon"><i class="fas fa-mountain"></i></span>
-                        <span class="node-copy">
-                            <span class="node-name">Elevation Engine</span>
-                            <span class="node-description">Client sites, demos, and AI-assisted delivery work.</span>
-                        </span>
-                    </a>
-                    
-                    <a class="route-node route-node-public-journal"
-                       href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73"
-                       target="_blank"
-                       data-link-name="Public Journal">
-                        <span class="node-icon"><i class="fas fa-book-open"></i></span>
-                        <span class="node-copy">
-                            <span class="node-name">Public Journal</span>
-                            <span class="node-description">Notes, experiments, lessons learned, and field logs.</span>
-                        </span>
-                    </a>
-                    
-                    <a class="route-node route-node-workouts"
-                       href="/workouts"
-                       
-                       data-link-name="Workouts">
-                        <span class="node-icon"><i class="fas fa-person-running"></i></span>
-                        <span class="node-copy">
-                            <span class="node-name">Workouts</span>
-                            <span class="node-description">Training snapshot, PRs, and public activity widgets.</span>
-                        </span>
-                    </a>
-                    
-
-                    <span class="route-origin" aria-hidden="true">
-                        <i class="fas fa-campground"></i>
-                    </span>
-                </div>
-            </div>
-
-            <div class="terminal-utility-grid">
-                <section class="terminal-panel latest-log">
-                    <div class="terminal-panel-heading">&gt; latest logs</div>
-                    <div class="log-list">
-                        
-                        <div class="log-entry">
-                            <span class="log-date">active</span>
-                            <span>Building AI-assisted Folloze GTM systems and public experiments.</span>
-                        </div>
-                        
-                        <div class="log-entry">
-                            <span class="log-date">projects</span>
-                            <span>Folloze GTM, Elevation Engine work, and side projects stay easy to reach.</span>
-                        </div>
-                        
-                        <div class="log-entry">
-                            <span class="log-date">journal</span>
-                            <span>Operating notes live in the public second brain.</span>
-                        </div>
-                        
-                        <div class="log-entry">
-                            <span class="log-date">training</span>
-                            <span>Authenticated Strava training-log refresh captured on August 9, 2026. Recent activities, lifetime activity count, 2026 totals, and 30-day totals were refreshed from the live Strava activity log. All-time foot-mile totals, all-time run miles, all-time sport totals, and PRs remain the last verified fallback values because this pass stopped at the 2026 boundary instead of re-walking the full history.</span>
-                        </div>
-                        
-                    </div>
-                    <div class="terminal-input-line">&gt;_</div>
-                </section>
-
-                <section class="terminal-panel basecamp-panel">
-                    <div class="terminal-panel-heading">basecamp</div>
-                    <div class="basecamp-grid">
-                        <div>
-                            <span class="basecamp-value"
-                                  data-life-counter
-                                  data-start-date="1995-10-01">11,271</span>
-                            <span class="basecamp-label">days alive</span>
-                        </div>
-                        <div>
-                            <span class="basecamp-value">1,296</span>
-                            <span class="basecamp-label">alcohol-free</span>
-                        </div>
-                        <div>
-                            <span class="basecamp-value">7,541.4 mi</span>
-                            <span class="basecamp-label">on-foot miles</span>
-                        </div>
-                        <div>
-                            <span class="basecamp-value">498</span>
-                            <span class="basecamp-label">workouts / 2026</span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <nav class="terminal-bottom-nav" aria-label="Primary shortcuts">
-                <a href="/projects">Work</a>
-                <span aria-hidden="true">•</span>
-                <a href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" data-link-name="Public Journal">Journal</a>
-                <span aria-hidden="true">•</span>
-                <a href="/workouts" data-link-name="Workouts">Workouts</a>
-                <span aria-hidden="true">•</span>
-                <a href="/links">Links</a>
+            <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+                <a class="active" href="/">Home</a>
+                <a class="" href="/folloze-gtm">Systems</a>
+                <a class="" href="/projects">Projects</a>
+                <a class="" href="/workouts">Training</a>
+                <a class="" href="/links">Links</a>
             </nav>
         </div>
-    </section>
-</div>
+    </header>
+
+    <main id="main-content">
+
+<section class="home-hero" aria-labelledby="home-title">
+    <img class="home-hero-image" src="/static/images/headshot-professional-v1.jpg" alt="Trey Harnden in Milwaukee">
+    <div class="hero-scanlines" aria-hidden="true"></div>
+    <div class="page-wrap home-hero-inner">
+        <div class="hero-copy" data-reveal>
+            <p class="eyebrow"><span>01</span> GTM systems / field notes / mountain miles</p>
+            <h1 id="home-title">Trey<br><span>Harnden</span></h1>
+            <p class="hero-lede">I build practical AI systems for go-to-market teams, turn side-project ideas into working software, and keep a public record of what I learn along the way.</p>
+            <div class="button-row">
+                <a class="button button-rust" href="/folloze-gtm">Explore the systems <span aria-hidden="true">↗</span></a>
+                <a class="button button-light" href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">Open field journal <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+        <div class="hero-coordinate" aria-hidden="true">
+            <span>43.0389° N</span>
+            <span>87.9065° W</span>
+        </div>
+    </div>
+</section>
+
+<section class="signal-strip" aria-label="Current signals">
+    <div class="signal-strip-inner">
+        <div class="signal-item">
+            <span class="signal-label">Now shipping</span>
+            <strong>12 public projects</strong>
+        </div>
+        <div class="signal-item">
+            <span class="signal-label">Days alive</span>
+            <strong data-life-counter data-start-date="1995-10-01">11,274</strong>
+        </div>
+        <div class="signal-item signal-item-mint">
+            <span class="signal-label">On-foot miles</span>
+            <strong>7,541.4 mi</strong>
+        </div>
+        <div class="signal-item signal-item-rust">
+            <span class="signal-label">Workouts / 2026</span>
+            <strong>498</strong>
+        </div>
+    </div>
+</section>
+
+<section class="section-band band-ink" id="systems">
+    <div class="page-wrap">
+        <div class="section-heading-grid" data-reveal>
+            <p class="chapter-label">02 / The work</p>
+            <div>
+                <h2 class="display-heading">Systems should<br>move real work.</h2>
+                <p class="section-lede">The through-line is simple: take a messy, repetitive process and turn it into something useful, inspectable, and easier to run again.</p>
+            </div>
+        </div>
+
+        <div class="system-directory" data-reveal>
+
+            <a class="system-row" href="/folloze-gtm"  data-link-name="Folloze GTM">
+                <span class="system-index">01</span>
+                <span class="system-title"><i class="fas fa-diagram-project" aria-hidden="true"></i>Folloze GTM Engineering</span>
+                <span class="system-description">AI-assisted content, outbound, demo, and seller systems.</span>
+                <span class="system-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="system-row" href="/projects"  data-link-name="Side Projects">
+                <span class="system-index">02</span>
+                <span class="system-title"><i class="fas fa-compass-drafting" aria-hidden="true"></i>Side Projects</span>
+                <span class="system-description">Client builds, experiments, and independent projects.</span>
+                <span class="system-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="system-row" href="https://www.elevationengine.co/" target="_blank" rel="noopener" data-link-name="Elevation Engine">
+                <span class="system-index">03</span>
+                <span class="system-title"><i class="fas fa-mountain" aria-hidden="true"></i>Elevation Engine</span>
+                <span class="system-description">Client sites, demos, and AI-assisted delivery work.</span>
+                <span class="system-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="system-row" href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">
+                <span class="system-index">04</span>
+                <span class="system-title"><i class="fas fa-book-open" aria-hidden="true"></i>Public Journal</span>
+                <span class="system-description">Notes, experiments, lessons learned, and field logs.</span>
+                <span class="system-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="system-row" href="/workouts"  data-link-name="Workouts">
+                <span class="system-index">05</span>
+                <span class="system-title"><i class="fas fa-person-running" aria-hidden="true"></i>Workouts</span>
+                <span class="system-description">Training snapshot, PRs, and public activity widgets.</span>
+                <span class="system-arrow" aria-hidden="true">↗</span>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<section class="section-band band-paper">
+    <div class="page-wrap">
+        <div class="section-heading-grid" data-reveal>
+            <p class="chapter-label chapter-label-dark">03 / The miles</p>
+            <div>
+                <h2 class="display-heading display-heading-dark">Track the work.<br>Track the life.</h2>
+                <p class="section-lede section-lede-dark">Training is the longest-running system here: consistent inputs, honest outputs, and enough miles to make the trend visible.</p>
+            </div>
+        </div>
+
+        <div class="training-metrics" data-reveal>
+            <div>
+                <strong>7,541.4 mi</strong>
+                <span>Lifetime run, walk, and hike miles</span>
+            </div>
+            <div>
+                <strong>3,663</strong>
+                <span>Lifetime workouts logged</span>
+            </div>
+            <div>
+                <strong>67</strong>
+                <span>Workouts in the last 30 days</span>
+            </div>
+            <div>
+                <strong>141.1 mi</strong>
+                <span>On foot in the last 30 days</span>
+            </div>
+        </div>
+
+        <div class="field-story" data-reveal>
+            <figure class="field-image">
+                <img src="/static/images/trey-rainier-headshot.jpeg" alt="Trey Harnden on Mount Rainier">
+                <figcaption>Mount Rainier / field log</figcaption>
+            </figure>
+            <div class="field-story-copy">
+                <p class="mono-kicker">TRAINING LOG / LIVE SNAPSHOT</p>
+                <h3>Movement is part of the operating system.</h3>
+                <p>The public training page keeps lifetime totals, recent activity, weekly volume, and running PRs in one place. Garmin records flow through the snapshot when available.</p>
+                <a class="text-link" href="/workouts" data-link-name="Workouts">Open training log <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-band band-charcoal">
+    <div class="page-wrap">
+        <div class="section-heading-grid" data-reveal>
+            <p class="chapter-label">04 / Field notes</p>
+            <div>
+                <h2 class="display-heading">Build in public.<br>Leave a trail.</h2>
+                <p class="section-lede">The journal and project pages are the index: what is active, what changed, and what was learned before the next pass.</p>
+            </div>
+        </div>
+
+        <div class="field-log" data-reveal>
+
+            <div class="field-log-row">
+                <span>active</span>
+                <p>Building AI-assisted Folloze GTM systems and public experiments.</p>
+            </div>
+
+            <div class="field-log-row">
+                <span>projects</span>
+                <p>Folloze GTM, Elevation Engine work, and side projects stay easy to reach.</p>
+            </div>
+
+            <div class="field-log-row">
+                <span>journal</span>
+                <p>Operating notes live in the public second brain.</p>
+            </div>
+
+            <div class="field-log-row">
+                <span>training</span>
+                <p>Authenticated Strava training-log refresh captured on August 9, 2026. Recent activities, lifetime activity count, 2026 totals, and 30-day totals were refreshed from the live Strava activity log. All-time foot-mile totals, all-time run miles, all-time sport totals, and PRs remain the last verified fallback values because this pass stopped at the 2026 boundary instead of re-walking the full history.</p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="contact-band">
+    <div class="page-wrap contact-band-inner" data-reveal>
+        <div>
+            <p class="chapter-label chapter-label-dark">05 / Make contact</p>
+            <h2>Have a good problem?</h2>
+        </div>
+        <a class="button button-dark" href="https://app.reclaim.ai/m/harnden" target="_blank" rel="noopener" data-link-name="Book A Call">Book a working session <span aria-hidden="true">↗</span></a>
+    </div>
+</section>
 
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/static/js/main.js?v=4"></script>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <span class="footer-mark">TH / 95</span>
+                <p>Building systems. Logging the miles. Sharing the field notes.</p>
+            </div>
+            <nav aria-label="Footer navigation">
+                <a href="https://github.com/0xTrey" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
+                <a href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
+                <a href="/links">Contact</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js?v=5"></script>
 </body>
 </html>

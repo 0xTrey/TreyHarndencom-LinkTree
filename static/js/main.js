@@ -1,27 +1,3 @@
-function initJournalEmbed() {
-    const iframe = document.getElementById('journal-iframe');
-    const loading = document.getElementById('journal-loading');
-    const fallback = document.getElementById('journal-fallback');
-
-    if (!iframe) return;
-
-    let loaded = false;
-
-    iframe.addEventListener('load', () => {
-        loaded = true;
-        if (loading) loading.style.display = 'none';
-        iframe.style.display = 'block';
-    });
-
-    setTimeout(() => {
-        if (!loaded) {
-            if (loading) loading.style.display = 'none';
-            if (fallback) fallback.style.display = 'block';
-            iframe.style.display = 'none';
-        }
-    }, 8000);
-}
-
 function getCentralDate() {
     const parts = new Intl.DateTimeFormat('en-US', {
         timeZone: 'America/Chicago',
@@ -50,8 +26,7 @@ function calculateInclusiveDaysSince(startDateValue) {
 }
 
 function initLifeCounter() {
-    const counters = document.querySelectorAll('[data-life-counter][data-start-date]');
-    counters.forEach(counter => {
+    document.querySelectorAll('[data-life-counter][data-start-date]').forEach(counter => {
         const days = calculateInclusiveDaysSince(counter.dataset.startDate);
         if (!days) return;
 
@@ -60,32 +35,97 @@ function initLifeCounter() {
     });
 }
 
-function scheduleLifeCounterUpdates() {
-    setInterval(initLifeCounter, 60 * 60 * 1000);
-    document.addEventListener('visibilitychange', () => {
-        if (!document.hidden) initLifeCounter();
+function initNavigation() {
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.getElementById('site-nav');
+    if (!toggle || !nav) return;
+
+    const closeNavigation = () => {
+        nav.classList.remove('is-open');
+        document.body.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('title', 'Open navigation');
+        toggle.querySelector('i')?.classList.replace('fa-xmark', 'fa-bars');
+        const label = toggle.querySelector('.sr-only');
+        if (label) label.textContent = 'Open navigation';
+    };
+
+    toggle.addEventListener('click', () => {
+        const willOpen = !nav.classList.contains('is-open');
+        nav.classList.toggle('is-open', willOpen);
+        document.body.classList.toggle('nav-open', willOpen);
+        toggle.setAttribute('aria-expanded', String(willOpen));
+        toggle.setAttribute('title', willOpen ? 'Close navigation' : 'Open navigation');
+        toggle.querySelector('i')?.classList.replace(willOpen ? 'fa-bars' : 'fa-xmark', willOpen ? 'fa-xmark' : 'fa-bars');
+        const label = toggle.querySelector('.sr-only');
+        if (label) label.textContent = willOpen ? 'Close navigation' : 'Open navigation';
+    });
+
+    nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeNavigation));
+
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape' && nav.classList.contains('is-open')) {
+            closeNavigation();
+            toggle.focus();
+        }
+    });
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 900) closeNavigation();
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    const socialLinks = document.querySelectorAll('a[data-link-name]');
-    socialLinks.forEach(link => {
-        link.addEventListener('click', async function(e) {
+function initRevealAnimations() {
+    const targets = document.querySelectorAll('[data-reveal]');
+    if (!targets.length) return;
+
+    if (!('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        targets.forEach(target => target.classList.add('is-visible'));
+        return;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+        });
+    }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -36px 0px',
+    });
+
+    targets.forEach(target => observer.observe(target));
+}
+
+function initLinkTracking() {
+    document.querySelectorAll('a[data-link-name]').forEach(link => {
+        link.addEventListener('click', async function() {
             const linkName = this.getAttribute('data-link-name');
             if (!linkName) return;
+
             try {
                 await fetch('/track-click', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ link_name: linkName })
+                    body: JSON.stringify({ link_name: linkName }),
+                    keepalive: true,
                 });
             } catch (error) {
-                console.error('Error tracking click:', error);
+                // Static exports intentionally have no click-tracking endpoint.
             }
         });
     });
+}
 
+document.addEventListener('DOMContentLoaded', () => {
+    initNavigation();
+    initRevealAnimations();
+    initLinkTracking();
     initLifeCounter();
-    scheduleLifeCounterUpdates();
-    initJournalEmbed();
+
+    setInterval(initLifeCounter, 60 * 60 * 1000);
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) initLifeCounter();
+    });
 });

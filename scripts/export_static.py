@@ -33,6 +33,11 @@ def write_text(path: Path, content: str) -> None:
     write_bytes(path, content.encode("utf-8"))
 
 
+def normalize_html(content: bytes) -> bytes:
+    text = content.decode("utf-8")
+    return ("\n".join(line.rstrip() for line in text.splitlines()) + "\n").encode("utf-8")
+
+
 def export_static(output_dir: Path) -> None:
     if output_dir.exists():
         shutil.rmtree(output_dir)
@@ -45,7 +50,7 @@ def export_static(output_dir: Path) -> None:
             response = client.get(route)
             if response.status_code != 200:
                 raise RuntimeError(f"{route} returned {response.status_code}")
-            write_bytes(output_dir / relative_path, response.data)
+            write_bytes(output_dir / relative_path, normalize_html(response.data))
 
     outbound_source = ROOT / "static" / "projects" / "folloze-outbound-engine"
     outbound_target = output_dir / "projects" / "folloze-outbound-intent-loop"

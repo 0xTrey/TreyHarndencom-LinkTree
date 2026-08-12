@@ -1,49 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="links-terminal-shell">
-    <section class="links-terminal" aria-label="Profile links">
-        <div class="terminal-frame links-terminal-frame">
-            <header class="terminal-command-bar">
-                <div class="terminal-prompt">
-                    <span class="prompt-arrow">&gt;_</span>
-                    <span>links directory</span>
-                </div>
-                <div class="terminal-identity">// trey harnden</div>
-            </header>
-
-            <div class="links-terminal-content">
-                <div class="links-terminal-copy">
-                    <p class="terminal-line">operator@mountain:~/links$</p>
-                    <h1>Find Me Everywhere</h1>
-                    <p>All my profiles and platforms in one place.</p>
-                </div>
-
-                <div class="links-section centered-links links-terminal-list">
-                    {% for link in social_links %}
-                    <a href="{{ link.url }}"
-                       class="btn btn-link social-link"
-                       data-link-name="{{ link.name }}"
-                       target="_blank">
-                        {% if link.icon == 'x-logo' %}
-                        <img src="{{ url_for('static', filename='images/x-logo-white.png') }}" alt="X" class="btn-icon me-2">
-                        {% elif link.icon %}
-                        <i class="{{ link.icon }} me-2"></i>
-                        {% endif %}
-                        {{ link.name }}
-                    </a>
-                    {% endfor %}
-
-                    <a href="{{ site.github_url }}"
-                       class="btn btn-link social-link"
-                       data-link-name="GitHub"
-                       target="_blank">
-                        <i class="fab fa-github me-2"></i>
-                        GitHub
-                    </a>
-                </div>
-            </div>
+<header class="page-masthead page-masthead-compact">
+    <div class="page-wrap page-masthead-grid" data-reveal>
+        <p class="chapter-label">OPEN CHANNELS / SELECT ONE</p>
+        <div>
+            <h1>Find me<br><span>everywhere.</span></h1>
+            <p>Public notes, active profiles, and the quickest ways to start a conversation.</p>
         </div>
-    </section>
-</div>
+    </div>
+</header>
+
+<section class="section-band band-paper links-band">
+    <div class="page-wrap" data-reveal>
+        <div class="link-directory link-directory-dark link-directory-large">
+            {% for link in social_links %}
+            <a class="directory-row" href="{{ link.url }}" target="_blank" rel="noopener" data-link-name="{{ link.name }}">
+                <span class="directory-number">{{ "%02d"|format(loop.index) }}</span>
+                <span class="directory-name">
+                    {% if link.icon == 'x-logo' %}
+                    <img class="directory-icon-image" src="{{ url_for('static', filename='images/x-logo-white.png') }}" alt="">
+                    {% else %}
+                    <i class="{{ link.icon }}" aria-hidden="true"></i>
+                    {% endif %}
+                    {{ link.name }}
+                </span>
+                <span class="directory-meta">{{ link.category }}</span>
+                <span aria-hidden="true">↗</span>
+            </a>
+            {% endfor %}
+
+            <a class="directory-row" href="{{ site.github_url }}" target="_blank" rel="noopener" data-link-name="GitHub">
+                <span class="directory-number">{{ "%02d"|format(social_links|length + 1) }}</span>
+                <span class="directory-name"><i class="fab fa-github" aria-hidden="true"></i>GitHub</span>
+                <span class="directory-meta">code</span>
+                <span aria-hidden="true">↗</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="contact-band">
+    <div class="page-wrap contact-band-inner" data-reveal>
+        <div>
+            <p class="chapter-label chapter-label-dark">DIRECT LINE</p>
+            <h2>Start with a real conversation.</h2>
+        </div>
+        <a class="button button-dark" href="https://app.reclaim.ai/m/harnden" target="_blank" rel="noopener" data-link-name="Book A Call">Book a call <span aria-hidden="true">↗</span></a>
+    </div>
+</section>
 {% endblock %}

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_title | default('Trey Harnden') }}</title>
-    <meta name="description" content="{{ meta_description | default('Trey Harnden — ski mountaineer, technology enthusiast, and public journal writer.') }}">
+    <meta name="description" content="{{ meta_description | default('Trey Harnden builds AI-assisted GTM systems and documents the work, training, and lessons along the way.') }}">
+    <meta name="theme-color" content="#11110f">
     {% if og_title %}
     <meta property="og:title" content="{{ og_title }}">
     <meta property="og:description" content="{{ og_description | default(meta_description) }}">
     <meta property="og:type" content="{{ og_type | default('website') }}">
     {% endif %}
+    <script>document.documentElement.classList.add('js');</script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0YPCYY8N"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -17,44 +19,57 @@
         gtag('js', new Date());
         gtag('config', 'G-FT0YPCYY8N');
     </script>
-    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="preload" href="{{ url_for('static', filename='fonts/black-ops-one-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="{{ url_for('static', filename='fonts/ibm-plex-mono-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=3) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=5) }}">
 </head>
-<body>
-    <nav class="navbar navbar-expand-md sticky-top">
-        <div class="container">
-            <a class="navbar-brand" href="/">Trey Harnden</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link {% if active_nav == 'home' %}active{% endif %}" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if active_nav == 'links' %}active{% endif %}" href="/links">Links</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if active_nav == 'projects' %}active{% endif %}" href="/projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if active_nav == 'folloze-gtm' %}active{% endif %}" href="/folloze-gtm">Folloze GTM</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if active_nav == 'workouts' %}active{% endif %}" href="/workouts">Workouts</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body class="page-{{ active_nav | default('default') }}">
+    <a class="skip-link" href="#main-content">Skip to content</a>
 
-    <main>
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="site-brand" href="/" aria-label="Trey Harnden home">
+                <span class="brand-sigil">TH</span>
+                <span class="brand-copy">
+                    <strong>Trey Harnden</strong>
+                    <small>Field systems / Milwaukee</small>
+                </span>
+            </a>
+
+            <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" title="Open navigation">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                <span class="sr-only">Open navigation</span>
+            </button>
+
+            <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+                <a class="{% if active_nav == 'home' %}active{% endif %}" href="/">Home</a>
+                <a class="{% if active_nav == 'folloze-gtm' %}active{% endif %}" href="/folloze-gtm">Systems</a>
+                <a class="{% if active_nav == 'projects' %}active{% endif %}" href="/projects">Projects</a>
+                <a class="{% if active_nav == 'workouts' %}active{% endif %}" href="/workouts">Training</a>
+                <a class="{% if active_nav == 'links' %}active{% endif %}" href="/links">Links</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-content">
         {% block content %}{% endblock %}
     </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url_for('static', filename='js/main.js', v=4) }}"></script>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <div>
+                <span class="footer-mark">TH / 95</span>
+                <p>Building systems. Logging the miles. Sharing the field notes.</p>
+            </div>
+            <nav aria-label="Footer navigation">
+                <a href="{{ site.github_url }}" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
+                <a href="{{ site.notion_embed_url }}" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
+                <a href="/links">Contact</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js', v=5) }}"></script>
 </body>
 </html>

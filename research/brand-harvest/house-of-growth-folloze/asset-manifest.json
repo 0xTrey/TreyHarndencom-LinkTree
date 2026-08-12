@@ -1,0 +1,179 @@
+{
+  "logos": [
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "brand-mark",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 58,
+        "y": 20,
+        "width": 38,
+        "height": 38
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6464087fdf877a12a8bd4cd6/6464087fdf877a12a8bd4d26_folloze-logo.svg",
+      "alt": "Folloze",
+      "className": "folloze-logo",
+      "width": 99,
+      "height": 24,
+      "rect": {
+        "x": 1310,
+        "y": 25,
+        "width": 72,
+        "height": 28
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 58,
+        "y": 7904,
+        "width": 28,
+        "height": 28
+      }
+    }
+  ],
+  "images": [
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "brand-mark",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 58,
+        "y": 20,
+        "width": 38,
+        "height": 38
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/6464087fdf877a12a8bd4cd6/6464087fdf877a12a8bd4d26_folloze-logo.svg",
+      "alt": "Folloze",
+      "className": "folloze-logo",
+      "width": 99,
+      "height": 24,
+      "rect": {
+        "x": 1310,
+        "y": 25,
+        "width": 72,
+        "height": 28
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f50019_desktophero-1-960x1024.png",
+      "alt": "Retro computer displaying a monochrome virtual environment",
+      "className": "computer-art",
+      "width": 960,
+      "height": 1024,
+      "rect": {
+        "x": 901,
+        "y": 251,
+        "width": 640,
+        "height": 683
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f50019_desktophero-1-960x1024.png",
+      "alt": "",
+      "className": "resource-media",
+      "width": 960,
+      "height": 1024,
+      "rect": {
+        "x": 59,
+        "y": 6047,
+        "width": 760,
+        "height": 857
+      }
+    },
+    {
+      "src": "https://i.ytimg.com/vi/sk0k00eVeCM/hqdefault.jpg",
+      "alt": "",
+      "className": "resource-media",
+      "width": 480,
+      "height": 360,
+      "rect": {
+        "x": 820,
+        "y": 6047,
+        "width": 562,
+        "height": 285
+      }
+    },
+    {
+      "src": "https://i.ytimg.com/vi/uUTbkZKdjm0/hqdefault.jpg",
+      "alt": "",
+      "className": "resource-media",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 820,
+        "y": 6333,
+        "width": 562,
+        "height": 285
+      }
+    },
+    {
+      "src": "https://i.ytimg.com/vi/R8TLtATXjcw/hqdefault.jpg",
+      "alt": "",
+      "className": "resource-media",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 820,
+        "y": 6619,
+        "width": 562,
+        "height": 285
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae500fa3efb03f4510ae_john%20ozuysal.png",
+      "alt": "John Ozuysal, founder of House of Growth",
+      "className": "",
+      "width": 656,
+      "height": 656,
+      "rect": {
+        "x": 59,
+        "y": 7166,
+        "width": 463,
+        "height": 706
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 58,
+        "y": 7904,
+        "width": 28,
+        "height": 28
+      }
+    }
+  ],
+  "background_images": [],
+  "brandfetch_logos": [],
+  "screenshots": {
+    "desktop_full": {
+      "path": "research/brand-harvest/house-of-growth-folloze/screenshots/homepage-desktop-full.png",
+      "width": 1440,
+      "height": 7963,
+      "clipped": false
+    },
+    "mobile_full": {
+      "path": "research/brand-harvest/house-of-growth-folloze/screenshots/homepage-mobile-full.png",
+      "width": 390,
+      "height": 12271,
+      "clipped": false
+    }
+  },
+  "manual_screenshots": []
+}

@@ -1,0 +1,13 @@
+:root {
+  --brand-primary: #08DFAD;
+  --brand-accent: #DF4008;
+  --brand-text: #111827;
+  --brand-surface: #FFFFFF;
+  --brand-font-display: "Amazing Views", Arial, sans-serif;
+  --brand-font-body: Kodemono, Arial, sans-serif;
+  --brand-button-radius: 0px;
+  --brand-button-padding: 10px;
+  --brand-button-font-weight: 300;
+  --brand-card-radius: 0px;
+  --brand-card-shadow: none;
+}

@@ -1,118 +1,142 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="topo-terminal-shell">
-    <section class="topo-terminal" aria-label="Mountain Operator overview">
-        <div class="terminal-frame">
-            <header class="terminal-command-bar">
-                <div class="terminal-prompt">
-                    <span class="prompt-arrow">&gt;_</span>
-                    <span>mountain operator</span>
-                </div>
-                <div class="terminal-identity">// trey harnden</div>
-            </header>
-
-            <div class="operator-status-strip" aria-label="Current status">
-                {% for item in operator_home.status_items %}
-                <div class="operator-status-item">
-                    <span class="status-label">{{ item.label }}</span>
-                    <span class="status-value status-{{ item.tone }}">{{ item.value }}</span>
-                </div>
-                {% endfor %}
+<section class="home-hero" aria-labelledby="home-title">
+    <img class="home-hero-image" src="{{ url_for('static', filename='images/headshot-professional-v1.jpg') }}" alt="Trey Harnden in Milwaukee">
+    <div class="hero-scanlines" aria-hidden="true"></div>
+    <div class="page-wrap home-hero-inner">
+        <div class="hero-copy" data-reveal>
+            <p class="eyebrow"><span>01</span> GTM systems / field notes / mountain miles</p>
+            <h1 id="home-title">Trey<br><span>Harnden</span></h1>
+            <p class="hero-lede">I build practical AI systems for go-to-market teams, turn side-project ideas into working software, and keep a public record of what I learn along the way.</p>
+            <div class="button-row">
+                <a class="button button-rust" href="/folloze-gtm">Explore the systems <span aria-hidden="true">↗</span></a>
+                <a class="button button-light" href="{{ site.notion_embed_url }}" target="_blank" rel="noopener" data-link-name="Public Journal">Open field journal <span aria-hidden="true">→</span></a>
             </div>
-
-            <div class="topo-hero-grid">
-                <div class="operator-intro">
-                    <div class="coordinate-line">43.0389°N / 87.9065°W</div>
-                    <p class="terminal-line">operator@mountain:~$</p>
-                    <h1>Trey Harnden</h1>
-                    <p class="operator-subhead">
-                        AI-assisted GTM systems, public experiments, and mountain-minded operating notes.
-                    </p>
-                    <p class="operator-command">&gt; navigate the map to explore</p>
-                </div>
-
-                <div class="route-map" aria-label="Project route map">
-                    <svg class="route-map-lines" viewBox="0 0 620 520" role="presentation" aria-hidden="true">
-                        <path class="route-path route-path-primary" d="M120 245 C170 165 235 140 300 112 C360 140 405 188 485 238 C455 305 415 366 330 405 C245 398 182 344 120 245" />
-                        <path class="route-path route-path-secondary" d="M300 112 C272 214 246 292 330 405" />
-                        <path class="route-path route-path-secondary" d="M120 245 C232 236 360 236 485 238" />
-                        <circle cx="300" cy="112" r="5" />
-                        <circle cx="120" cy="245" r="5" />
-                        <circle cx="485" cy="238" r="5" />
-                        <circle cx="170" cy="365" r="5" />
-                        <circle cx="430" cy="365" r="5" />
-                        <circle cx="330" cy="405" r="5" />
-                    </svg>
-
-                    {% for node in operator_home.nodes %}
-                    <a class="route-node route-node-{{ node.key }}"
-                       href="{{ node.url }}"
-                       {% if node.url.startswith('http') %}target="_blank"{% endif %}
-                       data-link-name="{{ node.track_name }}">
-                        <span class="node-icon"><i class="{{ node.icon }}"></i></span>
-                        <span class="node-copy">
-                            <span class="node-name">{{ node.name }}</span>
-                            <span class="node-description">{{ node.description }}</span>
-                        </span>
-                    </a>
-                    {% endfor %}
-
-                    <span class="route-origin" aria-hidden="true">
-                        <i class="fas fa-campground"></i>
-                    </span>
-                </div>
-            </div>
-
-            <div class="terminal-utility-grid">
-                <section class="terminal-panel latest-log">
-                    <div class="terminal-panel-heading">&gt; latest logs</div>
-                    <div class="log-list">
-                        {% for log in operator_home.logs %}
-                        <div class="log-entry">
-                            <span class="log-date">{{ log.date }}</span>
-                            <span>{{ log.text }}</span>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    <div class="terminal-input-line">&gt;_</div>
-                </section>
-
-                <section class="terminal-panel basecamp-panel">
-                    <div class="terminal-panel-heading">basecamp</div>
-                    <div class="basecamp-grid">
-                        <div>
-                            <span class="basecamp-value"
-                                  data-life-counter
-                                  data-start-date="{{ operator_home.milestone_data.life_start_date }}">{{ "{:,}".format(operator_home.milestone_data.days_of_life) }}</span>
-                            <span class="basecamp-label">days alive</span>
-                        </div>
-                        <div>
-                            <span class="basecamp-value">{{ "{:,}".format(operator_home.milestone_data.days_alcohol_free) }}</span>
-                            <span class="basecamp-label">alcohol-free</span>
-                        </div>
-                        <div>
-                            <span class="basecamp-value">{{ operator_home.workout_data.summary.lifetime_foot_miles }}</span>
-                            <span class="basecamp-label">on-foot miles</span>
-                        </div>
-                        <div>
-                            <span class="basecamp-value">{{ operator_home.workout_data.summary.workouts_year }}</span>
-                            <span class="basecamp-label">workouts / {{ operator_home.workout_data.year_label }}</span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-            <nav class="terminal-bottom-nav" aria-label="Primary shortcuts">
-                <a href="/projects">Work</a>
-                <span aria-hidden="true">•</span>
-                <a href="{{ site.notion_embed_url }}" target="_blank" data-link-name="Public Journal">Journal</a>
-                <span aria-hidden="true">•</span>
-                <a href="/workouts" data-link-name="Workouts">Workouts</a>
-                <span aria-hidden="true">•</span>
-                <a href="/links">Links</a>
-            </nav>
         </div>
-    </section>
-</div>
+        <div class="hero-coordinate" aria-hidden="true">
+            <span>43.0389° N</span>
+            <span>87.9065° W</span>
+        </div>
+    </div>
+</section>
+
+<section class="signal-strip" aria-label="Current signals">
+    <div class="signal-strip-inner">
+        <div class="signal-item">
+            <span class="signal-label">Now shipping</span>
+            <strong>{{ operator_home.status_items[0].value }}</strong>
+        </div>
+        <div class="signal-item">
+            <span class="signal-label">Days alive</span>
+            <strong data-life-counter data-start-date="{{ operator_home.milestone_data.life_start_date }}">{{ "{:,}".format(operator_home.milestone_data.days_of_life) }}</strong>
+        </div>
+        <div class="signal-item signal-item-mint">
+            <span class="signal-label">On-foot miles</span>
+            <strong>{{ operator_home.workout_data.summary.lifetime_foot_miles }}</strong>
+        </div>
+        <div class="signal-item signal-item-rust">
+            <span class="signal-label">Workouts / {{ operator_home.workout_data.year_label }}</span>
+            <strong>{{ operator_home.workout_data.summary.workouts_year }}</strong>
+        </div>
+    </div>
+</section>
+
+<section class="section-band band-ink" id="systems">
+    <div class="page-wrap">
+        <div class="section-heading-grid" data-reveal>
+            <p class="chapter-label">02 / The work</p>
+            <div>
+                <h2 class="display-heading">Systems should<br>move real work.</h2>
+                <p class="section-lede">The through-line is simple: take a messy, repetitive process and turn it into something useful, inspectable, and easier to run again.</p>
+            </div>
+        </div>
+
+        <div class="system-directory" data-reveal>
+            {% for node in operator_home.nodes %}
+            <a class="system-row" href="{{ node.url }}" {% if node.url.startswith('http') %}target="_blank" rel="noopener"{% endif %} data-link-name="{{ node.track_name }}">
+                <span class="system-index">{{ "%02d"|format(loop.index) }}</span>
+                <span class="system-title"><i class="{{ node.icon }}" aria-hidden="true"></i>{{ node.name }}</span>
+                <span class="system-description">{{ node.description }}</span>
+                <span class="system-arrow" aria-hidden="true">↗</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="section-band band-paper">
+    <div class="page-wrap">
+        <div class="section-heading-grid" data-reveal>
+            <p class="chapter-label chapter-label-dark">03 / The miles</p>
+            <div>
+                <h2 class="display-heading display-heading-dark">Track the work.<br>Track the life.</h2>
+                <p class="section-lede section-lede-dark">Training is the longest-running system here: consistent inputs, honest outputs, and enough miles to make the trend visible.</p>
+            </div>
+        </div>
+
+        <div class="training-metrics" data-reveal>
+            <div>
+                <strong>{{ operator_home.workout_data.summary.lifetime_foot_miles }}</strong>
+                <span>Lifetime run, walk, and hike miles</span>
+            </div>
+            <div>
+                <strong>{{ operator_home.workout_data.summary.lifetime_workouts }}</strong>
+                <span>Lifetime workouts logged</span>
+            </div>
+            <div>
+                <strong>{{ operator_home.workout_data.summary.workouts_30 }}</strong>
+                <span>Workouts in the last 30 days</span>
+            </div>
+            <div>
+                <strong>{{ operator_home.workout_data.summary.distance_30 }}</strong>
+                <span>On foot in the last 30 days</span>
+            </div>
+        </div>
+
+        <div class="field-story" data-reveal>
+            <figure class="field-image">
+                <img src="{{ url_for('static', filename='images/trey-rainier-headshot.jpeg') }}" alt="Trey Harnden on Mount Rainier">
+                <figcaption>Mount Rainier / field log</figcaption>
+            </figure>
+            <div class="field-story-copy">
+                <p class="mono-kicker">TRAINING LOG / LIVE SNAPSHOT</p>
+                <h3>Movement is part of the operating system.</h3>
+                <p>The public training page keeps lifetime totals, recent activity, weekly volume, and running PRs in one place. Garmin records flow through the snapshot when available.</p>
+                <a class="text-link" href="/workouts" data-link-name="Workouts">Open training log <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-band band-charcoal">
+    <div class="page-wrap">
+        <div class="section-heading-grid" data-reveal>
+            <p class="chapter-label">04 / Field notes</p>
+            <div>
+                <h2 class="display-heading">Build in public.<br>Leave a trail.</h2>
+                <p class="section-lede">The journal and project pages are the index: what is active, what changed, and what was learned before the next pass.</p>
+            </div>
+        </div>
+
+        <div class="field-log" data-reveal>
+            {% for log in operator_home.logs %}
+            <div class="field-log-row">
+                <span>{{ log.date }}</span>
+                <p>{{ log.text }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="contact-band">
+    <div class="page-wrap contact-band-inner" data-reveal>
+        <div>
+            <p class="chapter-label chapter-label-dark">05 / Make contact</p>
+            <h2>Have a good problem?</h2>
+        </div>
+        <a class="button button-dark" href="https://app.reclaim.ai/m/harnden" target="_blank" rel="noopener" data-link-name="Book A Call">Book a working session <span aria-hidden="true">↗</span></a>
+    </div>
+</section>
 {% endblock %}

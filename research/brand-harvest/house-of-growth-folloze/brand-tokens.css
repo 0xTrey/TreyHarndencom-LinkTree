@@ -1,0 +1,13 @@
+:root {
+  --brand-primary: #08DFAD;
+  --brand-accent: #DF4008;
+  --brand-text: #111827;
+  --brand-surface: #FFFFFF;
+  --brand-font-display: "Amazing Views", Impact, sans-serif;
+  --brand-font-body: "Kode Mono", "Courier New", monospace;
+  --brand-button-radius: 0px;
+  --brand-button-padding: 10px 14px;
+  --brand-button-font-weight: 400;
+  --brand-card-radius: 0px;
+  --brand-card-shadow: none;
+}

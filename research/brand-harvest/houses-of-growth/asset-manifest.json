@@ -1,0 +1,439 @@
+{
+  "logos": [
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "image-9",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 11,
+        "y": 83,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da7761c7f1c8df155a05c_red-logo.png",
+      "alt": "",
+      "className": "image-6",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 1099,
+        "y": 1458,
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "image-19",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 66,
+        "y": 8934,
+        "width": 100,
+        "height": 100
+      }
+    }
+  ],
+  "images": [
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "image-9",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 11,
+        "y": 83,
+        "width": 40,
+        "height": 40
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f50015_Founders_PP_CTA.png",
+      "alt": "",
+      "className": "",
+      "width": 36,
+      "height": 36,
+      "rect": {
+        "x": 175,
+        "y": 529,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f50019_desktophero-1-960x1024.png",
+      "alt": "",
+      "className": "image-8",
+      "width": 1440,
+      "height": 1536,
+      "rect": {
+        "x": 782,
+        "y": 134,
+        "width": 606,
+        "height": 647
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da794919440ea47b9f6ff_SmartSuite-full.svg",
+      "alt": "",
+      "className": "image-8",
+      "width": 300,
+      "height": 47,
+      "rect": {
+        "x": 98,
+        "y": 1070,
+        "width": 168,
+        "height": 27
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da794919440ea47b9f700_jamie.svg",
+      "alt": "",
+      "className": "image-8",
+      "width": 300,
+      "height": 77,
+      "rect": {
+        "x": 296,
+        "y": 1061,
+        "width": 168,
+        "height": 43
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da794919440ea47b9f701_team-gpt.svg",
+      "alt": "",
+      "className": "image-8",
+      "width": 300,
+      "height": 112,
+      "rect": {
+        "x": 494,
+        "y": 1052,
+        "width": 168,
+        "height": 63
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da794919440ea47b9f702_image-removebg-preview.png",
+      "alt": "",
+      "className": "image-8",
+      "width": 177,
+      "height": 38,
+      "rect": {
+        "x": 693,
+        "y": 1065,
+        "width": 168,
+        "height": 36
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da794919440ea47b9f704_rows.svg",
+      "alt": "",
+      "className": "image-8",
+      "width": 300,
+      "height": 83,
+      "rect": {
+        "x": 891,
+        "y": 1060,
+        "width": 168,
+        "height": 47
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da794919440ea47b9f706_arrows.png",
+      "alt": "",
+      "className": "image-8",
+      "width": 640,
+      "height": 192,
+      "rect": {
+        "x": 1089,
+        "y": 1058,
+        "width": 168,
+        "height": 50
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697da7761c7f1c8df155a05c_red-logo.png",
+      "alt": "",
+      "className": "image-6",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 1099,
+        "y": 1458,
+        "width": 24,
+        "height": 24
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd83_1742290224972.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": -1080,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd85_1647327651872.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": -492,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd87_1769111324225.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 96,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/696158a879fb85bfbfcf1f62/697103730d8e17385cb959a7_65e0b8565a23a41945c78c7f_Ellipse%20194.png",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 684,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/696158a879fb85bfbfcf1f62/697106f4ef63324b062b9f16_65e5a6afbc45b33f2d76a9c0_Ellipse%20194.png",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 1272,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/696158a879fb85bfbfcf1f62/697108ead56abbf241178fb5_65e0b8565a23a41945c78c7e_Property%201%3DVariant2.png",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 1860,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd79_1673378907213.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 2448,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd7b_1733411355810.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 3036,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd7d_1681506751178.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 3624,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd7f_1625605708073.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 4212,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd89_1718272340926.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 4800,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd8b_1738614121018.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 5388,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd8d_1659305924660.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 5976,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd8f_1676996610013.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 6564,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd91_1517427520362.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 7152,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697dae56f756de3c5c58dd93_1767970616622.jpg",
+      "alt": "",
+      "className": "testimonial-author-image",
+      "width": 0,
+      "height": 0,
+      "rect": {
+        "x": 7740,
+        "y": 7603,
+        "width": 72,
+        "height": 72
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f50015_Founders_PP_CTA.png",
+      "alt": "",
+      "className": "",
+      "width": 36,
+      "height": 36,
+      "rect": {
+        "x": 766,
+        "y": 8642,
+        "width": 36,
+        "height": 36
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f5001d_logo.png",
+      "alt": "",
+      "className": "image-19",
+      "width": 100,
+      "height": 100,
+      "rect": {
+        "x": 66,
+        "y": 8934,
+        "width": 100,
+        "height": 100
+      }
+    },
+    {
+      "src": "https://cdn.prod.website-files.com/65e0b8565a23a41945c78c1a/697d99a5480d445d23f50015_Founders_PP_CTA.png",
+      "alt": "",
+      "className": "image-18",
+      "width": 36,
+      "height": 36,
+      "rect": {
+        "x": 311,
+        "y": 926,
+        "width": 36,
+        "height": 36
+      }
+    }
+  ],
+  "background_images": [],
+  "brandfetch_logos": [],
+  "screenshots": {
+    "desktop_full": {
+      "path": "research/brand-harvest/houses-of-growth/screenshots/homepage-desktop-full.png",
+      "width": 1440,
+      "height": 9361,
+      "clipped": false
+    },
+    "mobile_full": {
+      "path": "research/brand-harvest/houses-of-growth/screenshots/homepage-mobile-full.png",
+      "width": 390,
+      "height": 10866,
+      "clipped": false
+    }
+  },
+  "manual_screenshots": []
+}
