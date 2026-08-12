@@ -1,0 +1,15 @@
+name: Verify recovered Pages artifact
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - codex/pages-public-artifact-recovery
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/verify_pages_public_artifact.py
