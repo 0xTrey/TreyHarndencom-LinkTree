@@ -2,11 +2,8 @@
 
 {% block content %}
 <section class="home-hero" aria-labelledby="home-title">
-    <img class="home-hero-image" src="{{ url_for('static', filename='images/headshot-professional-v1.jpg') }}" alt="Trey Harnden in Milwaukee">
-    <div class="hero-scanlines" aria-hidden="true"></div>
-    <div class="page-wrap home-hero-inner">
+    <div class="home-hero-copy-panel">
         <div class="hero-copy" data-reveal>
-            <p class="eyebrow"><span>01</span> GTM systems / field notes / mountain miles</p>
             <h1 id="home-title">Trey<br><span>Harnden</span></h1>
             <p class="hero-lede">I build practical AI systems for go-to-market teams, turn side-project ideas into working software, and keep a public record of what I learn along the way.</p>
             <div class="button-row">
@@ -15,10 +12,13 @@
             </div>
         </div>
         <div class="hero-coordinate" aria-hidden="true">
-            <span>43.0389° N</span>
-            <span>87.9065° W</span>
+            <span>Milwaukee, WI</span>
+            <span>43.0389° N / 87.9065° W</span>
         </div>
     </div>
+    <figure class="home-hero-portrait" data-reveal>
+        <img class="home-hero-image" src="{{ url_for('static', filename='images/headshot-professional-v1-web.jpg') }}" alt="Trey Harnden in Milwaukee" width="1863" height="2800" fetchpriority="high">
+    </figure>
 </section>
 
 <section class="signal-strip" aria-label="Current signals">
