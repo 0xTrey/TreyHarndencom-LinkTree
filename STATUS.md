@@ -1,25 +1,26 @@
 # Current Status
 
-Last updated: 2026-08-12
+Last updated: 2026-08-27
 
 ## Field Systems V2
 
 - Branch: `codex/house-of-growth-v2`
-- Source commit: `3b23524322c5c087a912cb9c07481b1756dc46f9`
+- Source commit: `9e9a5ece6b97937993d03e2f8273715fd91caf29`
 - Local preview: `http://127.0.0.1:5005/`
 - Design direction: Field Systems, translated from the validated House of Growth
   brand harvests in `research/brand-harvest/`.
 - Scope: Home, Systems, Projects, Training, Links, shared navigation/footer, and
   Cloudflare static export.
-- Publication state: deployed to the existing Cloudflare Pages production project on
-  2026-08-12. No DNS or custom-domain configuration was changed.
+- Publication state: the split-screen portrait hero was deployed to the existing
+  Cloudflare Pages production project on 2026-08-27. No DNS or custom-domain
+  configuration was changed.
 
 ## Live State
 
 - Production domain: `https://treyharnden.com`
-- Production deployment: `f10b09c0-e590-4651-9102-ea19dd690923`
+- Production deployment: `d6204cc2-d628-4f9f-becd-4da0be756029`
 - Immutable deployment URL:
-  `https://f10b09c0.treyharndencom-linktree.pages.dev`
+  `https://d6204cc2.treyharndencom-linktree.pages.dev`
 - Canonical project route: `https://treyharnden.com/projects`
 - Legacy `/work` redirects to `/projects`
 - Apex and `www` are proxied Cloudflare CNAME records targeting
@@ -45,12 +46,12 @@ history.
 
 ## Verification
 
-- `uv run python scripts/export_static.py` passed on 2026-08-12.
+- `uv run python scripts/export_static.py` passed on 2026-08-27.
 - `uv run python -m compileall -q app.py models.py utils.py scripts` passed.
 - Redacted Gitleaks scans of reachable Git history and the current worktree reported
   zero findings.
-- The apex domain, `www`, and immutable Pages URL returned identical homepage HTML and
-  stylesheet checksums after deployment.
+- The apex domain, `www`, and immutable Pages URL returned identical homepage HTML,
+  stylesheet, and optimized portrait checksums after deployment.
 - `/`, `/links`, `/projects`, `/folloze-gtm`, `/workouts`, and `/api/workouts` returned
   HTTP 200 from all three production hosts.
 
@@ -69,13 +70,13 @@ project:
 npx wrangler pages deploy dist-cloudflare --project-name treyharndencom-linktree
 ```
 
-The 2026-08-12 production deployment used the existing project and production branch:
+The 2026-08-27 production deployment used the existing project and production branch:
 
 ```bash
 npx wrangler pages deploy dist-cloudflare \
   --project-name treyharndencom-linktree \
   --branch main \
-  --commit-hash 3b23524322c5c087a912cb9c07481b1756dc46f9
+  --commit-hash 9e9a5ece6b97937993d03e2f8273715fd91caf29
 ```
 
 ## Good Next Checks
