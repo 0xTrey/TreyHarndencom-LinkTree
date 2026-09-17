@@ -11,10 +11,14 @@ Last updated: 2026-09-17
 - The `/friends` page links back to SlashFriends and PersonalWebsites.org. The
   `/now` page credits Derek Sivers' now-page movement.
 - Published to the existing Cloudflare Pages production project on 2026-09-17.
-- Directory state: the PersonalWebsites.org, SlashFriends, and NowNowNow
-  submissions are prepared but not submitted. The final form and message actions
-  require confirmation before transmitting Trey's email and contacting the
-  directory owners.
+- PersonalWebsites.org submission completed on 2026-09-17. The confirmation page
+  and email receipt both report that `treyharnden.com` is pending manual review.
+- SlashFriends submission completed on 2026-09-17. The directory immediately
+  listed `https://treyharnden.com/friends/`, and a live check confirmed its card
+  appears with Featured status because the page links back to SlashFriends.
+- NowNowNow submission completed on 2026-09-17 by replying to Derek Sivers with
+  `https://treyharnden.com/now`. Gmail confirmed the message was sent. The public
+  listing remains pending Derek's manual addition and any profile follow-up.
 
 ## Field Systems V2
 
@@ -101,9 +105,9 @@ npx wrangler pages deploy dist-cloudflare \
 
 ## Good Next Checks
 
-- After confirmation, submit the live site to PersonalWebsites.org and
-  SlashFriends, then send the `/now` page listing request to Derek Sivers. Record
-  each success, review, or pending receipt separately.
+- Monitor PersonalWebsites.org for approval and Derek Sivers for the NowNowNow
+  listing or profile questions. Record either listing as public only after a live
+  directory check.
 - Review and merge this branch into `main` so the default Git branch matches the live
   production deployment.
 - Remove obsolete Vercel verification/fallback state only after confirming it is no
