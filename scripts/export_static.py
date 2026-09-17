@@ -18,6 +18,8 @@ from app import CSP_POLICY, WORKOUTS_PAGE_ACTIVITY_LIMIT, app, get_workout_data 
 HTML_ROUTES = {
     "/": "index.html",
     "/links": "links/index.html",
+    "/now": "now/index.html",
+    "/friends": "friends/index.html",
     "/projects": "projects/index.html",
     "/folloze-gtm": "folloze-gtm/index.html",
     "/workouts": "workouts/index.html",
