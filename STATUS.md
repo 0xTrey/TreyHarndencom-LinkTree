@@ -1,6 +1,20 @@
 # Current Status
 
-Last updated: 2026-08-27
+Last updated: 2026-09-17
+
+## Personal Directory Credibility Pages
+
+- Branch: `codex/personal-web-directories`
+- Source commit: `03e6a3958fdaf22d1d2a263359f4f31a31ea1739`
+- Added public `/now` and `/friends` routes, matching static-export artifacts,
+  footer discovery links, and responsive page styles.
+- The `/friends` page links back to SlashFriends and PersonalWebsites.org. The
+  `/now` page credits Derek Sivers' now-page movement.
+- Published to the existing Cloudflare Pages production project on 2026-09-17.
+- Directory state: the PersonalWebsites.org, SlashFriends, and NowNowNow
+  submissions are prepared but not submitted. The final form and message actions
+  require confirmation before transmitting Trey's email and contacting the
+  directory owners.
 
 ## Field Systems V2
 
@@ -18,9 +32,9 @@ Last updated: 2026-08-27
 ## Live State
 
 - Production domain: `https://treyharnden.com`
-- Production deployment: `d6204cc2-d628-4f9f-becd-4da0be756029`
+- Production deployment: `4ce0f0d0-a093-4fbc-ac54-af85ee71e9e9`
 - Immutable deployment URL:
-  `https://d6204cc2.treyharndencom-linktree.pages.dev`
+  `https://4ce0f0d0.treyharndencom-linktree.pages.dev`
 - Canonical project route: `https://treyharnden.com/projects`
 - Legacy `/work` redirects to `/projects`
 - Apex and `www` are proxied Cloudflare CNAME records targeting
@@ -54,6 +68,12 @@ history.
   stylesheet, and optimized portrait checksums after deployment.
 - `/`, `/links`, `/projects`, `/folloze-gtm`, `/workouts`, and `/api/workouts` returned
   HTTP 200 from all three production hosts.
+- On 2026-09-17, `/now` and `/friends` returned HTTP 200 with matching HTML
+  checksums from the immutable deployment, apex domain, and `www`.
+- Desktop and mobile browser QA confirmed the new pages are readable, responsive,
+  and expose the intended outbound links.
+- Every person and directory URL linked from `/friends` returned HTTP 200 before
+  publication.
 
 ## Deploy Workflow
 
@@ -81,6 +101,9 @@ npx wrangler pages deploy dist-cloudflare \
 
 ## Good Next Checks
 
+- After confirmation, submit the live site to PersonalWebsites.org and
+  SlashFriends, then send the `/now` page listing request to Derek Sivers. Record
+  each success, review, or pending receipt separately.
 - Review and merge this branch into `main` so the default Git branch matches the live
   production deployment.
 - Remove obsolete Vercel verification/fallback state only after confirming it is no
