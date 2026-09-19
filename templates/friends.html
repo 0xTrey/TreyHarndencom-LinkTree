@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<header class="page-masthead page-masthead-compact slash-page-masthead">
+    <div class="page-wrap" data-reveal>
+        <h1>People worth<br><span>your time.</span></h1>
+    </div>
+</header>
+
+<section class="section-band band-paper slash-page-band">
+    <div class="page-wrap slash-page-layout">
+        <aside class="slash-page-stamp" data-reveal>
+            <strong>A small blogroll</strong>
+            <span>People I read</span>
+            <span>Builders I learn from</span>
+        </aside>
+
+        <article class="slash-page-copy" data-reveal>
+            <p class="slash-page-lead">These are people whose work I read, borrow from, or keep returning to. This is a starting list, not a ranking.</p>
+
+            <div class="friend-list">
+                <a class="friend-card" href="https://tobi.lutke.com/" target="_blank" rel="noopener">
+                    <span class="friend-name">Tobi Lütke</span>
+                    <span class="friend-url">tobi.lutke.com ↗</span>
+                    <p>A builder and operator whose human-plus-machine framing keeps showing up in how I think about AI.</p>
+                </a>
+
+                <a class="friend-card" href="https://www.gregisenberg.com/" target="_blank" rel="noopener">
+                    <span class="friend-name">Greg Isenberg</span>
+                    <span class="friend-url">gregisenberg.com ↗</span>
+                    <p>His marketing engineer framing helped turn vague AI potential into a practical operating model.</p>
+                </a>
+
+                <a class="friend-card" href="https://simonwillison.net/" target="_blank" rel="noopener">
+                    <span class="friend-name">Simon Willison</span>
+                    <span class="friend-url">simonwillison.net ↗</span>
+                    <p>One of the clearest public notebooks on what modern language models can and cannot do.</p>
+                </a>
+
+                <a class="friend-card" href="https://sive.rs/" target="_blank" rel="noopener">
+                    <span class="friend-name">Derek Sivers</span>
+                    <span class="friend-url">sive.rs ↗</span>
+                    <p>Writes with uncommon clarity about decisions, focus, and building a life on purpose.</p>
+                </a>
+
+                <a class="friend-card" href="https://nickgray.net/" target="_blank" rel="noopener">
+                    <span class="friend-name">Nick Gray</span>
+                    <span class="friend-url">nickgray.net ↗</span>
+                    <p>Makes the independent web feel social again. He created SlashFriends and PersonalWebsites.org.</p>
+                </a>
+            </div>
+
+            <div class="indie-web-note">
+                <p>This is a <code>/friends</code> page, inspired by <a href="https://slashfriends.org/" target="_blank" rel="noopener">slashfriends.org</a> and <a href="https://nickgray.net/" target="_blank" rel="noopener">Nick Gray</a>.</p>
+                <p>Find more independent sites at <a href="https://personalwebsites.org/" target="_blank" rel="noopener">PersonalWebsites.org</a>.</p>
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}

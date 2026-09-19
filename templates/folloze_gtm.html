@@ -45,7 +45,7 @@
         <div class="case-directory">
             {% for project in ai_gtm_projects %}
             <article class="case-row" data-reveal>
-                <div class="case-index">{{ project.number }}</div>
+                <div class="case-index">{{ loop.index }}</div>
                 <div class="case-heading">
                     <p>{{ project.category }}</p>
                     <h3>{{ project.name }}</h3>

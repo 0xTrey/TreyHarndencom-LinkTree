@@ -1259,3 +1259,177 @@ main,
         transform: none;
     }
 }
+
+/* The two personal slash pages joined the live site after this concept began. */
+.slash-page-masthead {
+    padding: 18px 0 0;
+}
+
+.slash-page-masthead > .page-wrap {
+    display: flex;
+    align-items: center;
+    min-height: clamp(430px, 58svh, 640px);
+    padding: clamp(42px, 7vw, 96px);
+    border: 1px solid var(--line);
+    border-radius: 28px;
+    background: var(--glass);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.055), var(--shadow);
+    backdrop-filter: blur(18px) saturate(120%);
+    -webkit-backdrop-filter: blur(18px) saturate(120%);
+}
+
+.slash-page-masthead h1 {
+    max-width: 1060px;
+    color: var(--white);
+    font-family: var(--display);
+    font-size: clamp(4.6rem, 9.4vw, 9.8rem);
+    font-weight: 500;
+    line-height: 0.82;
+    letter-spacing: -0.065em;
+    text-transform: none;
+}
+
+.slash-page-masthead h1 span {
+    color: var(--white);
+}
+
+.slash-page-band {
+    min-height: 0;
+}
+
+.slash-page-layout {
+    gap: clamp(36px, 6vw, 86px);
+}
+
+.slash-page-stamp,
+.slash-page-stamp strong {
+    color: rgba(221, 239, 235, 0.54);
+}
+
+.slash-page-stamp::before {
+    height: 2px;
+    background: var(--mint);
+    box-shadow: 0 0 16px rgba(119, 223, 221, 0.5);
+}
+
+.slash-page-lead {
+    color: var(--white);
+    font-family: var(--display);
+    font-size: clamp(1.7rem, 3.2vw, 2.8rem);
+    line-height: 1.22;
+    letter-spacing: -0.035em;
+}
+
+.focus-list {
+    border-color: var(--line);
+}
+
+.focus-list section {
+    border-color: var(--line);
+}
+
+.focus-list h2 {
+    color: var(--white);
+    font-family: var(--display);
+    font-size: clamp(1.65rem, 2.4vw, 2.3rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    text-transform: none;
+}
+
+.focus-list p,
+.slash-page-note,
+.indie-web-note {
+    color: var(--muted);
+}
+
+.slash-page-note a,
+.indie-web-note a {
+    color: var(--mint);
+}
+
+.friend-list {
+    gap: 12px;
+    border: 0;
+}
+
+.friend-card,
+.friend-card:last-child:nth-child(odd) {
+    min-height: 230px;
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    color: var(--white);
+    background: rgba(2, 27, 38, 0.34);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.friend-card:hover {
+    color: var(--white);
+    border-color: rgba(119, 223, 221, 0.42);
+    background: rgba(14, 75, 88, 0.56);
+}
+
+.friend-name {
+    color: var(--white);
+    font-family: var(--display);
+    font-size: clamp(1.55rem, 2.3vw, 2.1rem);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    text-transform: none;
+}
+
+.friend-url,
+.friend-card:hover .friend-url {
+    color: var(--mint);
+}
+
+.friend-card p,
+.friend-card:hover p {
+    color: var(--muted);
+}
+
+.indie-web-note code {
+    color: var(--white);
+}
+
+@media (max-width: 900px) {
+    .slash-page-masthead > .page-wrap {
+        min-height: 480px;
+        padding: 54px 42px;
+    }
+}
+
+@media (max-width: 720px) {
+    .slash-page-masthead > .page-wrap {
+        min-height: 440px;
+        padding: 42px 26px;
+        border-radius: 22px;
+    }
+
+    .slash-page-masthead h1 {
+        font-size: clamp(4rem, 18vw, 6.4rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .slash-page-masthead {
+        padding-top: 10px;
+    }
+
+    .slash-page-masthead > .page-wrap {
+        min-height: 400px;
+        padding: 36px 22px;
+        border-radius: 18px;
+    }
+
+    .slash-page-masthead h1 {
+        font-size: clamp(3.55rem, 18vw, 5.1rem);
+    }
+
+    .friend-card,
+    .friend-card:last-child:nth-child(odd) {
+        min-height: 0;
+    }
+}

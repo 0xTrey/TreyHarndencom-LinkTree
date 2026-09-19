@@ -1112,6 +1112,34 @@ def create_app():
             logger.error(f"Error rendering links page: {str(e)}")
             return "Internal Server Error", 500
 
+    @app.route('/now')
+    def now():
+        try:
+            return render_template('now.html',
+                                 page_title='Now - Trey Harnden',
+                                 meta_description='What Trey Harnden is focused on now: practical AI systems, independent projects, consistent training, and more time outside.',
+                                 active_nav='now',
+                                 og_title='What Trey Harnden Is Doing Now',
+                                 og_description='Current work, projects, training, and priorities from Trey Harnden.',
+                                 og_type='profile')
+        except Exception as e:
+            logger.error(f"Error rendering now page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/friends')
+    def friends():
+        try:
+            return render_template('friends.html',
+                                 page_title='Friends - Trey Harnden',
+                                 meta_description='People whose independent websites and public work Trey Harnden keeps returning to.',
+                                 active_nav='friends',
+                                 og_title='People Worth Your Time - Trey Harnden',
+                                 og_description='A small, honest list of builders and writers worth following around the independent web.',
+                                 og_type='profile')
+        except Exception as e:
+            logger.error(f"Error rendering friends page: {str(e)}")
+            return "Internal Server Error", 500
+
     @app.route('/projects')
     def projects():
         try:
