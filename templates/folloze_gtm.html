@@ -35,7 +35,7 @@
 <section class="section-band band-ink systems-intro-band">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label">01 / System map</p>
+            <p class="chapter-label">1 / System map</p>
             <div>
                 <h2 class="display-heading">Make the work<br>repeatable.</h2>
                 <p class="section-lede">Each system starts with a real operating constraint and ends with an inspectable workflow, an approval boundary, or a deployable artifact.</p>
@@ -71,7 +71,7 @@
 <section class="section-band band-paper">
     <div class="page-wrap directory-section" data-reveal>
         <div class="directory-heading">
-            <p class="chapter-label chapter-label-dark">02 / Public surfaces</p>
+            <p class="chapter-label chapter-label-dark">2 / Public surfaces</p>
             <div>
                 <h2>{{ folloze_section.title }}</h2>
                 <p>{{ folloze_section.description }}</p>
@@ -81,7 +81,7 @@
         <div class="link-directory link-directory-dark">
             {% for link in folloze_section.links %}
             <a class="directory-row" href="{{ link.url }}" {% if link.url.startswith('http') %}target="_blank" rel="noopener"{% endif %} data-link-name="{{ link.name }}">
-                <span class="directory-number">{{ "%02d"|format(loop.index) }}</span>
+                <span class="directory-number">{{ loop.index }}</span>
                 <span class="directory-name"><i class="{{ link.icon }}" aria-hidden="true"></i>{{ link.name }}</span>
                 <span class="directory-meta">Folloze project</span>
                 <span aria-hidden="true">↗</span>

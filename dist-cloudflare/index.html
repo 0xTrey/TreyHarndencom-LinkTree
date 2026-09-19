@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trey Harnden</title>
     <meta name="description" content="Trey Harnden builds AI-assisted GTM systems, public experiments, and mountain-minded operating notes.">
-    <meta name="theme-color" content="#11110f">
+    <meta name="theme-color" content="#031822">
 
     <script>document.documentElement.classList.add('js');</script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0YPCYY8N"></script>
@@ -18,9 +18,16 @@
     <link rel="preload" href="/static/fonts/black-ops-one-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/static/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css?v=5">
+    <link rel="stylesheet" href="/static/css/style.css?v=6">
+    <link rel="stylesheet" href="/static/css/liquid-field.css?v=1">
 </head>
 <body class="page-home">
+    <div class="liquid-field" data-liquid-field aria-hidden="true">
+        <div class="liquid-field-fallback"></div>
+        <canvas class="liquid-field-canvas"></canvas>
+        <div class="liquid-field-vignette"></div>
+        <div class="liquid-field-grain"></div>
+    </div>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
@@ -29,7 +36,7 @@
                 <span class="brand-sigil">TH</span>
                 <span class="brand-copy">
                     <strong>Trey Harnden</strong>
-                    <small>Field systems / Milwaukee</small>
+                    <small>Systems, miles, field notes</small>
                 </span>
             </a>
 
@@ -51,11 +58,8 @@
     <main id="main-content">
 
 <section class="home-hero" aria-labelledby="home-title">
-    <img class="home-hero-image" src="/static/images/headshot-professional-v1.jpg" alt="Trey Harnden in Milwaukee">
-    <div class="hero-scanlines" aria-hidden="true"></div>
-    <div class="page-wrap home-hero-inner">
+    <div class="home-hero-copy-panel">
         <div class="hero-copy" data-reveal>
-            <p class="eyebrow"><span>01</span> GTM systems / field notes / mountain miles</p>
             <h1 id="home-title">Trey<br><span>Harnden</span></h1>
             <p class="hero-lede">I build practical AI systems for go-to-market teams, turn side-project ideas into working software, and keep a public record of what I learn along the way.</p>
             <div class="button-row">
@@ -64,10 +68,13 @@
             </div>
         </div>
         <div class="hero-coordinate" aria-hidden="true">
-            <span>43.0389° N</span>
-            <span>87.9065° W</span>
+            <span>Milwaukee, WI</span>
+            <span>43.0389° N / 87.9065° W</span>
         </div>
     </div>
+    <figure class="home-hero-portrait" data-reveal>
+        <img class="home-hero-image" src="/static/images/headshot-professional-v1-web.jpg" alt="Trey Harnden in Milwaukee" width="1863" height="2800" fetchpriority="high">
+    </figure>
 </section>
 
 <section class="signal-strip" aria-label="Current signals">
@@ -78,7 +85,7 @@
         </div>
         <div class="signal-item">
             <span class="signal-label">Days alive</span>
-            <strong data-life-counter data-start-date="1995-10-01">11,274</strong>
+            <strong data-life-counter data-start-date="1995-10-01">11,311</strong>
         </div>
         <div class="signal-item signal-item-mint">
             <span class="signal-label">On-foot miles</span>
@@ -94,7 +101,7 @@
 <section class="section-band band-ink" id="systems">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label">02 / The work</p>
+            <p class="chapter-label">2 / The work</p>
             <div>
                 <h2 class="display-heading">Systems should<br>move real work.</h2>
                 <p class="section-lede">The through-line is simple: take a messy, repetitive process and turn it into something useful, inspectable, and easier to run again.</p>
@@ -104,35 +111,35 @@
         <div class="system-directory" data-reveal>
 
             <a class="system-row" href="/folloze-gtm"  data-link-name="Folloze GTM">
-                <span class="system-index">01</span>
+                <span class="system-index">1</span>
                 <span class="system-title"><i class="fas fa-diagram-project" aria-hidden="true"></i>Folloze GTM Engineering</span>
                 <span class="system-description">AI-assisted content, outbound, demo, and seller systems.</span>
                 <span class="system-arrow" aria-hidden="true">↗</span>
             </a>
 
             <a class="system-row" href="/projects"  data-link-name="Side Projects">
-                <span class="system-index">02</span>
+                <span class="system-index">2</span>
                 <span class="system-title"><i class="fas fa-compass-drafting" aria-hidden="true"></i>Side Projects</span>
                 <span class="system-description">Client builds, experiments, and independent projects.</span>
                 <span class="system-arrow" aria-hidden="true">↗</span>
             </a>
 
             <a class="system-row" href="https://www.elevationengine.co/" target="_blank" rel="noopener" data-link-name="Elevation Engine">
-                <span class="system-index">03</span>
+                <span class="system-index">3</span>
                 <span class="system-title"><i class="fas fa-mountain" aria-hidden="true"></i>Elevation Engine</span>
                 <span class="system-description">Client sites, demos, and AI-assisted delivery work.</span>
                 <span class="system-arrow" aria-hidden="true">↗</span>
             </a>
 
             <a class="system-row" href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">
-                <span class="system-index">04</span>
+                <span class="system-index">4</span>
                 <span class="system-title"><i class="fas fa-book-open" aria-hidden="true"></i>Public Journal</span>
                 <span class="system-description">Notes, experiments, lessons learned, and field logs.</span>
                 <span class="system-arrow" aria-hidden="true">↗</span>
             </a>
 
             <a class="system-row" href="/workouts"  data-link-name="Workouts">
-                <span class="system-index">05</span>
+                <span class="system-index">5</span>
                 <span class="system-title"><i class="fas fa-person-running" aria-hidden="true"></i>Workouts</span>
                 <span class="system-description">Training snapshot, PRs, and public activity widgets.</span>
                 <span class="system-arrow" aria-hidden="true">↗</span>
@@ -145,7 +152,7 @@
 <section class="section-band band-paper">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label chapter-label-dark">03 / The miles</p>
+            <p class="chapter-label chapter-label-dark">3 / The miles</p>
             <div>
                 <h2 class="display-heading display-heading-dark">Track the work.<br>Track the life.</h2>
                 <p class="section-lede section-lede-dark">Training is the longest-running system here: consistent inputs, honest outputs, and enough miles to make the trend visible.</p>
@@ -189,7 +196,7 @@
 <section class="section-band band-charcoal">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label">04 / Field notes</p>
+            <p class="chapter-label">4 / Field notes</p>
             <div>
                 <h2 class="display-heading">Build in public.<br>Leave a trail.</h2>
                 <p class="section-lede">The journal and project pages are the index: what is active, what changed, and what was learned before the next pass.</p>
@@ -225,7 +232,7 @@
 <section class="contact-band">
     <div class="page-wrap contact-band-inner" data-reveal>
         <div>
-            <p class="chapter-label chapter-label-dark">05 / Make contact</p>
+            <p class="chapter-label chapter-label-dark">5 / Make contact</p>
             <h2>Have a good problem?</h2>
         </div>
         <a class="button button-dark" href="https://app.reclaim.ai/m/harnden" target="_blank" rel="noopener" data-link-name="Book A Call">Book a working session <span aria-hidden="true">↗</span></a>
@@ -241,6 +248,9 @@
                 <p>Building systems. Logging the miles. Sharing the field notes.</p>
             </div>
             <nav aria-label="Footer navigation">
+                <button class="liquid-motion-toggle" type="button" aria-pressed="false" data-liquid-toggle>
+                    <span aria-hidden="true"></span> Pause field
+                </button>
                 <a href="https://github.com/0xTrey" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
                 <a href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
                 <a href="/links">Contact</a>
@@ -249,5 +259,6 @@
     </footer>
 
     <script src="/static/js/main.js?v=5"></script>
+    <script src="/static/js/liquid-field.js?v=1"></script>
 </body>
 </html>

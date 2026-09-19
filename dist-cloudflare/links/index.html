@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Links - Trey Harnden</title>
     <meta name="description" content="Connect with Trey Harnden on social media, book a call, or explore his public journal.">
-    <meta name="theme-color" content="#11110f">
+    <meta name="theme-color" content="#031822">
 
     <meta property="og:title" content="Trey Harnden - Links">
     <meta property="og:description" content="Connect with Trey Harnden on social media, book a call, or explore his public journal.">
@@ -22,9 +22,16 @@
     <link rel="preload" href="/static/fonts/black-ops-one-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/static/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css?v=5">
+    <link rel="stylesheet" href="/static/css/style.css?v=6">
+    <link rel="stylesheet" href="/static/css/liquid-field.css?v=1">
 </head>
 <body class="page-links">
+    <div class="liquid-field" data-liquid-field aria-hidden="true">
+        <div class="liquid-field-fallback"></div>
+        <canvas class="liquid-field-canvas"></canvas>
+        <div class="liquid-field-vignette"></div>
+        <div class="liquid-field-grain"></div>
+    </div>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
@@ -33,7 +40,7 @@
                 <span class="brand-sigil">TH</span>
                 <span class="brand-copy">
                     <strong>Trey Harnden</strong>
-                    <small>Field systems / Milwaukee</small>
+                    <small>Systems, miles, field notes</small>
                 </span>
             </a>
 
@@ -69,7 +76,7 @@
         <div class="link-directory link-directory-dark link-directory-large">
 
             <a class="directory-row" href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">
-                <span class="directory-number">01</span>
+                <span class="directory-number">1</span>
                 <span class="directory-name">
 
                     <i class="fas fa-book-open" aria-hidden="true"></i>
@@ -81,7 +88,7 @@
             </a>
 
             <a class="directory-row" href="https://app.reclaim.ai/m/harnden" target="_blank" rel="noopener" data-link-name="Book A Call">
-                <span class="directory-number">02</span>
+                <span class="directory-number">2</span>
                 <span class="directory-name">
 
                     <i class="fas fa-calendar-alt" aria-hidden="true"></i>
@@ -93,7 +100,7 @@
             </a>
 
             <a class="directory-row" href="https://x.com/Trey_Harnden" target="_blank" rel="noopener" data-link-name="X (Twitter)">
-                <span class="directory-number">03</span>
+                <span class="directory-number">3</span>
                 <span class="directory-name">
 
                     <img class="directory-icon-image" src="/static/images/x-logo-white.png" alt="">
@@ -105,7 +112,7 @@
             </a>
 
             <a class="directory-row" href="https://www.linkedin.com/in/treyharnden/" target="_blank" rel="noopener" data-link-name="LinkedIn">
-                <span class="directory-number">04</span>
+                <span class="directory-number">4</span>
                 <span class="directory-name">
 
                     <i class="fab fa-linkedin" aria-hidden="true"></i>
@@ -117,7 +124,7 @@
             </a>
 
             <a class="directory-row" href="https://www.strava.com/athletes/34654738" target="_blank" rel="noopener" data-link-name="Strava">
-                <span class="directory-number">05</span>
+                <span class="directory-number">5</span>
                 <span class="directory-name">
 
                     <i class="fab fa-strava" aria-hidden="true"></i>
@@ -130,7 +137,7 @@
 
 
             <a class="directory-row" href="https://github.com/0xTrey" target="_blank" rel="noopener" data-link-name="GitHub">
-                <span class="directory-number">06</span>
+                <span class="directory-number">6</span>
                 <span class="directory-name"><i class="fab fa-github" aria-hidden="true"></i>GitHub</span>
                 <span class="directory-meta">code</span>
                 <span aria-hidden="true">↗</span>
@@ -158,6 +165,9 @@
                 <p>Building systems. Logging the miles. Sharing the field notes.</p>
             </div>
             <nav aria-label="Footer navigation">
+                <button class="liquid-motion-toggle" type="button" aria-pressed="false" data-liquid-toggle>
+                    <span aria-hidden="true"></span> Pause field
+                </button>
                 <a href="https://github.com/0xTrey" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
                 <a href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
                 <a href="/links">Contact</a>
@@ -166,5 +176,6 @@
     </footer>
 
     <script src="/static/js/main.js?v=5"></script>
+    <script src="/static/js/liquid-field.js?v=1"></script>
 </body>
 </html>

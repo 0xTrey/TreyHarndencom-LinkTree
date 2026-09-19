@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ page_title | default('Trey Harnden') }}</title>
     <meta name="description" content="{{ meta_description | default('Trey Harnden builds AI-assisted GTM systems and documents the work, training, and lessons along the way.') }}">
-    <meta name="theme-color" content="#11110f">
+    <meta name="theme-color" content="#031822">
     {% if og_title %}
     <meta property="og:title" content="{{ og_title }}">
     <meta property="og:description" content="{{ og_description | default(meta_description) }}">
@@ -23,8 +23,15 @@
     <link rel="preload" href="{{ url_for('static', filename='fonts/ibm-plex-mono-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=6) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/liquid-field.css', v=1) }}">
 </head>
 <body class="page-{{ active_nav | default('default') }}">
+    <div class="liquid-field" data-liquid-field aria-hidden="true">
+        <div class="liquid-field-fallback"></div>
+        <canvas class="liquid-field-canvas"></canvas>
+        <div class="liquid-field-vignette"></div>
+        <div class="liquid-field-grain"></div>
+    </div>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
@@ -33,7 +40,7 @@
                 <span class="brand-sigil">TH</span>
                 <span class="brand-copy">
                     <strong>Trey Harnden</strong>
-                    <small>Field systems / Milwaukee</small>
+                    <small>Systems, miles, field notes</small>
                 </span>
             </a>
 
@@ -63,6 +70,9 @@
                 <p>Building systems. Logging the miles. Sharing the field notes.</p>
             </div>
             <nav aria-label="Footer navigation">
+                <button class="liquid-motion-toggle" type="button" aria-pressed="false" data-liquid-toggle>
+                    <span aria-hidden="true"></span> Pause field
+                </button>
                 <a href="{{ site.github_url }}" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
                 <a href="{{ site.notion_embed_url }}" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
                 <a href="/links">Contact</a>
@@ -71,5 +81,6 @@
     </footer>
 
     <script src="{{ url_for('static', filename='js/main.js', v=5) }}"></script>
+    <script src="{{ url_for('static', filename='js/liquid-field.js', v=1) }}"></script>
 </body>
 </html>

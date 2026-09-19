@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Folloze GTM - Trey Harnden</title>
     <meta name="description" content="Folloze GTM systems from Trey Harnden, including AI content engines, outbound systems, demo builders, and seller automation workflows.">
-    <meta name="theme-color" content="#11110f">
+    <meta name="theme-color" content="#031822">
 
     <script>document.documentElement.classList.add('js');</script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FT0YPCYY8N"></script>
@@ -18,9 +18,16 @@
     <link rel="preload" href="/static/fonts/black-ops-one-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="/static/fonts/ibm-plex-mono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css?v=5">
+    <link rel="stylesheet" href="/static/css/style.css?v=6">
+    <link rel="stylesheet" href="/static/css/liquid-field.css?v=1">
 </head>
 <body class="page-folloze-gtm">
+    <div class="liquid-field" data-liquid-field aria-hidden="true">
+        <div class="liquid-field-fallback"></div>
+        <canvas class="liquid-field-canvas"></canvas>
+        <div class="liquid-field-vignette"></div>
+        <div class="liquid-field-grain"></div>
+    </div>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
@@ -29,7 +36,7 @@
                 <span class="brand-sigil">TH</span>
                 <span class="brand-copy">
                     <strong>Trey Harnden</strong>
-                    <small>Field systems / Milwaukee</small>
+                    <small>Systems, miles, field notes</small>
                 </span>
             </a>
 
@@ -84,7 +91,7 @@
 <section class="section-band band-ink systems-intro-band">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label">01 / System map</p>
+            <p class="chapter-label">1 / System map</p>
             <div>
                 <h2 class="display-heading">Make the work<br>repeatable.</h2>
                 <p class="section-lede">Each system starts with a real operating constraint and ends with an inspectable workflow, an approval boundary, or a deployable artifact.</p>
@@ -244,7 +251,7 @@
 <section class="section-band band-paper">
     <div class="page-wrap directory-section" data-reveal>
         <div class="directory-heading">
-            <p class="chapter-label chapter-label-dark">02 / Public surfaces</p>
+            <p class="chapter-label chapter-label-dark">2 / Public surfaces</p>
             <div>
                 <h2>Folloze Projects</h2>
                 <p>Public pages, tools, and demos tied to Folloze ABM, AI, and go-to-market execution.</p>
@@ -254,35 +261,35 @@
         <div class="link-directory link-directory-dark">
 
             <a class="directory-row" href="https://abm-playbook.folloze.com/" target="_blank" rel="noopener" data-link-name="ABM Playbook Generator">
-                <span class="directory-number">01</span>
+                <span class="directory-number">1</span>
                 <span class="directory-name"><i class="fas fa-rocket" aria-hidden="true"></i>ABM Playbook Generator</span>
                 <span class="directory-meta">Folloze project</span>
                 <span aria-hidden="true">↗</span>
             </a>
 
             <a class="directory-row" href="https://github.com/0xTrey/Folloze-Skills" target="_blank" rel="noopener" data-link-name="Folloze Skills">
-                <span class="directory-number">02</span>
+                <span class="directory-number">2</span>
                 <span class="directory-name"><i class="fas fa-toolbox" aria-hidden="true"></i>Folloze Skills</span>
                 <span class="directory-meta">Folloze project</span>
                 <span aria-hidden="true">↗</span>
             </a>
 
             <a class="directory-row" href="https://folloze-link-builder.vercel.app/" target="_blank" rel="noopener" data-link-name="Folloze Link Builder">
-                <span class="directory-number">03</span>
+                <span class="directory-number">3</span>
                 <span class="directory-name"><i class="fas fa-link" aria-hidden="true"></i>Folloze Link Builder</span>
                 <span class="directory-meta">Folloze project</span>
                 <span aria-hidden="true">↗</span>
             </a>
 
             <a class="directory-row" href="https://www.folloze-blog.com/" target="_blank" rel="noopener" data-link-name="Folloze Blog">
-                <span class="directory-number">04</span>
+                <span class="directory-number">4</span>
                 <span class="directory-name"><i class="fas fa-newspaper" aria-hidden="true"></i>Folloze Blog</span>
                 <span class="directory-meta">Folloze project</span>
                 <span aria-hidden="true">↗</span>
             </a>
 
             <a class="directory-row" href="/projects/folloze-outbound-intent-loop"  data-link-name="Outbound Email Engine">
-                <span class="directory-number">05</span>
+                <span class="directory-number">5</span>
                 <span class="directory-name"><i class="fas fa-project-diagram" aria-hidden="true"></i>Outbound Email Engine</span>
                 <span class="directory-meta">Folloze project</span>
                 <span aria-hidden="true">↗</span>
@@ -301,6 +308,9 @@
                 <p>Building systems. Logging the miles. Sharing the field notes.</p>
             </div>
             <nav aria-label="Footer navigation">
+                <button class="liquid-motion-toggle" type="button" aria-pressed="false" data-liquid-toggle>
+                    <span aria-hidden="true"></span> Pause field
+                </button>
                 <a href="https://github.com/0xTrey" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
                 <a href="https://harnden.notion.site/My-Second-Brain-a2bcac8bd3424b6bbd838c709dc1bb73" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
                 <a href="/links">Contact</a>
@@ -309,5 +319,6 @@
     </footer>
 
     <script src="/static/js/main.js?v=5"></script>
+    <script src="/static/js/liquid-field.js?v=1"></script>
 </body>
 </html>

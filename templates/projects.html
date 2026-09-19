@@ -13,9 +13,9 @@
 
 <section class="index-strip" aria-label="Project categories">
     <div class="page-wrap index-strip-inner">
-        <span>01 / Elevation Engine</span>
-        <span>02 / Independent work</span>
-        <span>03 / Folloze GTM</span>
+        <span>1 / Elevation Engine</span>
+        <span>2 / Independent work</span>
+        <span>3 / Folloze GTM</span>
         <span class="index-strip-accent">MODE / BUILDING</span>
     </div>
 </section>
@@ -23,7 +23,7 @@
 <section class="section-band band-paper">
     <div class="page-wrap directory-section" data-reveal>
         <div class="directory-heading">
-            <p class="chapter-label chapter-label-dark">01 / Client work</p>
+            <p class="chapter-label chapter-label-dark">1 / Client work</p>
             <div>
                 <h2>{{ left_section.title }}</h2>
                 <p>{{ left_section.description }}</p>
@@ -33,7 +33,7 @@
         <div class="link-directory link-directory-dark">
             {% for link in left_section.links %}
             <a class="directory-row" href="{{ link.url }}" target="_blank" rel="noopener" data-link-name="{{ link.name }}">
-                <span class="directory-number">{{ "%02d"|format(loop.index) }}</span>
+                <span class="directory-number">{{ loop.index }}</span>
                 <span class="directory-name"><i class="{{ link.icon }}" aria-hidden="true"></i>{{ link.name }}</span>
                 <span class="directory-meta">Client build</span>
                 <span aria-hidden="true">↗</span>
@@ -46,7 +46,7 @@
 <section class="section-band band-ink">
     <div class="page-wrap directory-section" data-reveal>
         <div class="directory-heading">
-            <p class="chapter-label">02 / Experiments</p>
+            <p class="chapter-label">2 / Experiments</p>
             <div>
                 <h2>{{ bottom_right_section.title }}</h2>
                 <p>{{ bottom_right_section.description }}</p>
@@ -56,7 +56,7 @@
         <div class="link-directory">
             {% for link in bottom_right_section.links %}
             <a class="directory-row" href="{{ link.url }}" target="_blank" rel="noopener" data-link-name="{{ link.name }}">
-                <span class="directory-number">{{ "%02d"|format(loop.index) }}</span>
+                <span class="directory-number">{{ loop.index }}</span>
                 <span class="directory-name"><i class="{{ link.icon }}" aria-hidden="true"></i>{{ link.name }}</span>
                 <span class="directory-meta">Independent project</span>
                 <span aria-hidden="true">↗</span>
@@ -69,7 +69,7 @@
 <section class="project-route-band">
     <div class="page-wrap project-route-inner" data-reveal>
         <div>
-            <p class="chapter-label chapter-label-dark">03 / The main system</p>
+            <p class="chapter-label chapter-label-dark">3 / The main system</p>
             <h2>Folloze GTM lives in its own operating room.</h2>
         </div>
         <a class="button button-dark" href="/folloze-gtm" data-link-name="Folloze GTM">Open the systems index <span aria-hidden="true">→</span></a>

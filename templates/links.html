@@ -16,7 +16,7 @@
         <div class="link-directory link-directory-dark link-directory-large">
             {% for link in social_links %}
             <a class="directory-row" href="{{ link.url }}" target="_blank" rel="noopener" data-link-name="{{ link.name }}">
-                <span class="directory-number">{{ "%02d"|format(loop.index) }}</span>
+                <span class="directory-number">{{ loop.index }}</span>
                 <span class="directory-name">
                     {% if link.icon == 'x-logo' %}
                     <img class="directory-icon-image" src="{{ url_for('static', filename='images/x-logo-white.png') }}" alt="">
@@ -31,7 +31,7 @@
             {% endfor %}
 
             <a class="directory-row" href="{{ site.github_url }}" target="_blank" rel="noopener" data-link-name="GitHub">
-                <span class="directory-number">{{ "%02d"|format(social_links|length + 1) }}</span>
+                <span class="directory-number">{{ social_links|length + 1 }}</span>
                 <span class="directory-name"><i class="fab fa-github" aria-hidden="true"></i>GitHub</span>
                 <span class="directory-meta">code</span>
                 <span aria-hidden="true">↗</span>

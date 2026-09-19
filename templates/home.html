@@ -45,7 +45,7 @@
 <section class="section-band band-ink" id="systems">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label">02 / The work</p>
+            <p class="chapter-label">2 / The work</p>
             <div>
                 <h2 class="display-heading">Systems should<br>move real work.</h2>
                 <p class="section-lede">The through-line is simple: take a messy, repetitive process and turn it into something useful, inspectable, and easier to run again.</p>
@@ -55,7 +55,7 @@
         <div class="system-directory" data-reveal>
             {% for node in operator_home.nodes %}
             <a class="system-row" href="{{ node.url }}" {% if node.url.startswith('http') %}target="_blank" rel="noopener"{% endif %} data-link-name="{{ node.track_name }}">
-                <span class="system-index">{{ "%02d"|format(loop.index) }}</span>
+                <span class="system-index">{{ loop.index }}</span>
                 <span class="system-title"><i class="{{ node.icon }}" aria-hidden="true"></i>{{ node.name }}</span>
                 <span class="system-description">{{ node.description }}</span>
                 <span class="system-arrow" aria-hidden="true">↗</span>
@@ -68,7 +68,7 @@
 <section class="section-band band-paper">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label chapter-label-dark">03 / The miles</p>
+            <p class="chapter-label chapter-label-dark">3 / The miles</p>
             <div>
                 <h2 class="display-heading display-heading-dark">Track the work.<br>Track the life.</h2>
                 <p class="section-lede section-lede-dark">Training is the longest-running system here: consistent inputs, honest outputs, and enough miles to make the trend visible.</p>
@@ -112,7 +112,7 @@
 <section class="section-band band-charcoal">
     <div class="page-wrap">
         <div class="section-heading-grid" data-reveal>
-            <p class="chapter-label">04 / Field notes</p>
+            <p class="chapter-label">4 / Field notes</p>
             <div>
                 <h2 class="display-heading">Build in public.<br>Leave a trail.</h2>
                 <p class="section-lede">The journal and project pages are the index: what is active, what changed, and what was learned before the next pass.</p>
@@ -133,7 +133,7 @@
 <section class="contact-band">
     <div class="page-wrap contact-band-inner" data-reveal>
         <div>
-            <p class="chapter-label chapter-label-dark">05 / Make contact</p>
+            <p class="chapter-label chapter-label-dark">5 / Make contact</p>
             <h2>Have a good problem?</h2>
         </div>
         <a class="button button-dark" href="https://app.reclaim.ai/m/harnden" target="_blank" rel="noopener" data-link-name="Book A Call">Book a working session <span aria-hidden="true">↗</span></a>
