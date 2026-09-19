@@ -1,6 +1,25 @@
 # Current Status
 
-Last updated: 2026-09-17
+Last updated: 2026-09-19
+
+## Liquid Field V2
+
+- Branch: `codex/liquid-field-preview`
+- Published source commit: `08e2cbac1f2d29501523a445463b6a09b4e157f1`
+- Public preview: `https://v2.treyharnden.com/`
+- Separate Cloudflare Pages project: `treyharndencom-v2`
+- Immutable deployment: `https://eb974fe6.treyharndencom-v2.pages.dev/`
+- The new look and cursor-responsive field cover Home, Systems, Projects,
+  Training, Links, Now, and Friends. Motion can be switched off in the footer.
+- The `v2` DNS record is a DNS-only CNAME to `treyharndencom-v2.pages.dev`.
+  Cloudflare reported the custom domain active on 2026-09-19.
+- This release did not change the existing `treyharndencom-linktree` Pages
+  project or the apex and `www` DNS records. The apex homepage SHA-256 stayed
+  `10c84b652096ecbb79133c87dbdf19def9e23671c437a20df74026b4c5a537ff`
+  before and after the `v2` release.
+- All seven public routes and both liquid-field assets returned HTTP 200 from
+  `v2.treyharnden.com`. The `v2` homepage matched the Pages deployment byte for
+  byte, and desktop and mobile browser checks found no horizontal overflow.
 
 ## Personal Directory Credibility Pages
 
@@ -87,8 +106,16 @@ Build the static output:
 uv run python scripts/export_static.py
 ```
 
-After visual review, deploy the generated site to the existing Cloudflare Pages
-project:
+After visual review, deploy this branch's generated site to the separate v2
+Cloudflare Pages project:
+
+```bash
+env -u CLOUDFLARE_API_TOKEN npx wrangler pages deploy dist-cloudflare \
+  --project-name treyharndencom-v2 --branch main
+```
+
+The following command targets the existing apex production project. Do not use
+it for v2 updates:
 
 ```bash
 npx wrangler pages deploy dist-cloudflare --project-name treyharndencom-linktree
