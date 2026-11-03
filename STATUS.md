@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-03
 
-## Blender V3 Release Candidate
+## Blender V3 Published
 
 - Branch: `codex/treyharnden-v3-local`
 - Worktree: `/Users/treyharnden/Projects/TreyHarndencom-V3-Preview`
@@ -10,8 +10,9 @@ Last updated: 2026-11-03
 - Scope: actual Blender-authored alpine terrain with Three.js interaction,
   linked stations, responsive composition, reduced-motion and rendered-image
   fallbacks, current `/now` and `/friends` pages, and complete static export.
-- State: Trey approved production publication on November 3. Build, preservation
-  and fallback checks passed. Deployment and public verification are pending.
+- State: published and verified on November 3, 2026.
+- Deployed source commit: `2aafcf3588cba8b65c7acb107f081ce3016568db`, pushed to GitHub.
+- Production deployment: `ebcf5d5b-6f39-4e1d-bfcb-797044d8cd36`.
 - Review package: `docs/blender-review/README.md`
 - Release receipts: `docs/blender-review/release-2026-11-03/`
 - Blender 5.2.2 LTS created the editable scene, GLB model, and fallback render.
@@ -41,9 +42,9 @@ Last updated: 2026-11-03
 ## Live State
 
 - Production domain: `https://treyharnden.com`
-- Last recorded production deployment: `4ce0f0d0-a093-4fbc-ac54-af85ee71e9e9`
+- Last recorded production deployment: `ebcf5d5b-6f39-4e1d-bfcb-797044d8cd36`
 - Immutable deployment URL:
-  `https://4ce0f0d0.treyharndencom-linktree.pages.dev`
+  `https://ebcf5d5b.treyharndencom-linktree.pages.dev`
 - Canonical project route: `https://treyharnden.com/projects`
 - Legacy `/work` redirects to `/projects`
 - Apex and `www` are proxied Cloudflare CNAME records targeting
@@ -81,6 +82,10 @@ history.
   checksums from the immutable deployment, apex domain, and `www`.
 - On 2026-11-02, the local V3 static build passed seven-route desktop, mobile,
   short-phone, and zoom-reflow checks. See `docs/v3-review/README.md`.
+- On 2026-11-03, the approved Blender artifact matched every public route and
+  critical asset on apex, `www`, and the immutable deployment. Live desktop/mobile,
+  motion, keyboard/reset, station links, menu, reduced motion and fallback passed.
+  Analytics transport returned 204; reporting ingestion remains unverified.
 
 ## Deploy Workflow
 
@@ -108,8 +113,8 @@ npx wrangler pages deploy dist-cloudflare \
 
 ## Good Next Checks
 
-- Complete the authorized Blender release, then record its exact source commit,
-  deployment ID and public verification. Preserve the prior deployment for rollback.
+- Prior production deployment `4ce0f0d0-a093-4fbc-ac54-af85ee71e9e9` remains available
+  for rollback. No rollback or DNS change was performed.
 - The GitHub default branch remains a legacy archive. Production release source
   is tracked on `codex/treyharnden-v3-local`; do not overwrite unrelated branches.
 - Remove obsolete Vercel verification/fallback state only after confirming it is no

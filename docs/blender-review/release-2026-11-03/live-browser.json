@@ -1,0 +1,339 @@
+{
+  "observedAt": "2026-11-03T17:05:50.532Z",
+  "desktop": {
+    "brokenImages": 0,
+    "clientWidth": 1425,
+    "height": 900,
+    "scene": {
+      "atlasAngle": "0.00124",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "7",
+      "atlasMeshes": "13",
+      "atlasPaused": "false",
+      "atlasPixelSamples": "17",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scrollWidth": 1425,
+    "url": "https://treyharnden.com/",
+    "width": 1440
+  },
+  "mobile": {
+    "brokenImages": 0,
+    "clientWidth": 375,
+    "height": 844,
+    "scene": {
+      "atlasAngle": "0.00025",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "3",
+      "atlasMeshes": "13",
+      "atlasPaused": "false",
+      "atlasPixelSamples": "16",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scrollWidth": 375,
+    "url": "https://treyharnden.com/",
+    "width": 390
+  },
+  "controls": {
+    "moving": {
+      "angle": "0.05996",
+      "frames": "515"
+    },
+    "paused": {
+      "angle": "0.05966",
+      "frames": "519",
+      "paused": "true"
+    },
+    "keyboardRotatedCamera": "17.047,15.000,16.075",
+    "resetCamera": "15.000,15.000,18.000",
+    "stationUrl": "https://treyharnden.com/projects/",
+    "navOpen": "true",
+    "navClosed": "false"
+  },
+  "reducedMotion": {
+    "control": "Resume landscape motion",
+    "painted": "16",
+    "paused": "true"
+  },
+  "staticFallback": {
+    "canvasTabIndex": -1,
+    "controls": "none",
+    "posterWidth": 1400,
+    "state": "fallback"
+  },
+  "network": [
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "origin": "https://cdnjs.cloudflare.com",
+      "path": "/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/models/field-atlas-poster.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/images/trey-rainier-headshot.jpeg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-400.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/black-ops-one-latin-400.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/css/style.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/css/field-atlas.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/js/main.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-600.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-500.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/js/field-atlas.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://cdnjs.cloudflare.com",
+      "path": "/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://www.googletagmanager.com",
+      "path": "/gtag/js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/favicon.ico",
+      "status": 200,
+      "type": "Other"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/models/field-atlas.glb",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "origin": "https://www.google-analytics.com",
+      "path": "/g/collect",
+      "status": 204,
+      "type": "Fetch"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/projects/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "origin": "https://www.googletagmanager.com",
+      "path": "/gtag/js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/black-ops-one-latin-400.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-400.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://cdnjs.cloudflare.com",
+      "path": "/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/css/style.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/js/main.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://cdnjs.cloudflare.com",
+      "path": "/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-500.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-600.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/favicon.ico",
+      "status": 200,
+      "type": "Other"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/",
+      "status": 200,
+      "type": "Document"
+    },
+    {
+      "origin": "https://www.googletagmanager.com",
+      "path": "/gtag/js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/black-ops-one-latin-400.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-400.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://cdnjs.cloudflare.com",
+      "path": "/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/css/style.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/css/field-atlas.css",
+      "status": 200,
+      "type": "Stylesheet"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/models/field-atlas-poster.png",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/images/trey-rainier-headshot.jpeg",
+      "status": 200,
+      "type": "Image"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/js/main.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/js/field-atlas.js",
+      "status": 200,
+      "type": "Script"
+    },
+    {
+      "origin": "https://cdnjs.cloudflare.com",
+      "path": "/ajax/libs/font-awesome/6.4.0/webfonts/fa-solid-900.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-500.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/fonts/ibm-plex-mono-latin-600.woff2",
+      "status": 200,
+      "type": "Font"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/static/models/field-atlas.glb",
+      "status": 200,
+      "type": "Fetch"
+    },
+    {
+      "origin": "https://treyharnden.com",
+      "path": "/favicon.ico",
+      "status": 200,
+      "type": "Other"
+    }
+  ],
+  "runtimeIssues": [],
+  "analytics": {
+    "transportAcknowledged": true,
+    "reportingIngestionVerified": false
+  }
+}

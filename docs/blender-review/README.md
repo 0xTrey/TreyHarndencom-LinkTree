@@ -2,7 +2,7 @@
 
 Local preview: http://127.0.0.1:5097/
 
-This supersedes the shader-only V3 proposal. The homepage uses an original Blender-authored mountain landscape, exported as a real 3D model and rendered interactively with Three.js. Trey approved this immersive version for publication on November 3. Release evidence is in `release-2026-11-03/`; publication remains pending until deployment and live verification are recorded there.
+This supersedes the shader-only V3 proposal. The homepage uses an original Blender-authored mountain landscape, exported as a real 3D model and rendered interactively with Three.js. Trey approved this immersive version, and it was published and verified at [treyharnden.com](https://treyharnden.com/) on November 3. Source commit: `2aafcf3588cba8b65c7acb107f081ce3016568db`. Release evidence is in [release-2026-11-03](release-2026-11-03/README.md).
 
 ## Experience
 

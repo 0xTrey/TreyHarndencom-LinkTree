@@ -1,0 +1,420 @@
+{
+  "observed_at": "2026-11-03T17:04:40.176178+00:00",
+  "mode": "live",
+  "hosts": {
+    "https://treyharnden.com": {
+      "/": {
+        "status": 200,
+        "bytes": 13172,
+        "sha256": "b6a7885f706ad42a9adbb773d6c332481df25efa0b0b2ad20a246e46f6fe7651"
+      },
+      "/now": {
+        "status": 200,
+        "bytes": 5757,
+        "sha256": "1ec3452a18e141bebc569bc8630d56b17f2408c094d7eec2e5a49517b31d6931"
+      },
+      "/friends": {
+        "status": 200,
+        "bytes": 6661,
+        "sha256": "fee836445148fd1a09cea233a76e3623d99410a5c6e05b76f04a80f1da46cefd"
+      },
+      "/projects": {
+        "status": 200,
+        "bytes": 8714,
+        "sha256": "7228e6415f39a2d7d613e1bffe0c7ba61a1ae783098b2d3b99f3710e43b2f212"
+      },
+      "/links": {
+        "status": 200,
+        "bytes": 7554,
+        "sha256": "7447c6ad349308b0c8a7206b611c56af4347c1c7b9f409d2d13632b3e1b1aa9a"
+      },
+      "/workouts": {
+        "status": 200,
+        "bytes": 17598,
+        "sha256": "49f6995d7ca1e046a789bef46ad03690ed11034e1f52930f62a9557d064888e1"
+      },
+      "/folloze-gtm": {
+        "status": 200,
+        "bytes": 16567,
+        "sha256": "85b19194d616056aab4b8dce734a5e1dbec0ae7ffe562f33f310d96e455c71f6"
+      },
+      "/api/workouts": {
+        "status": 200,
+        "bytes": 7086,
+        "sha256": "2e12e81ebf4ad424ea62659034b4aedd2bbd70570bccb81a0eb38c0b6a26b32e"
+      },
+      "/static/css/style.css": {
+        "status": 200,
+        "bytes": 46158,
+        "sha256": "d6932b2c90ba36a8e1a4cd5e08e2aae047a7662682dc793e757b8960e5bb2f96",
+        "content_type": "text/css; charset=utf-8"
+      },
+      "/static/css/field-atlas.css": {
+        "status": 200,
+        "bytes": 5474,
+        "sha256": "777758779baa21d27d409861b9122e6967205e68068f62ada214f67999e812af",
+        "content_type": "text/css; charset=utf-8"
+      },
+      "/static/js/main.js": {
+        "status": 200,
+        "bytes": 5079,
+        "sha256": "4d2768a3e0414720524d5c9fc6310206f68beaca7fa5a887ff4f9a6404f30766",
+        "content_type": "application/javascript"
+      },
+      "/static/js/field-atlas.js": {
+        "status": 200,
+        "bytes": 648075,
+        "sha256": "83119624e59c2a739c3af79abbf07c08340247a1adee80cab51c711edb5cf2fb",
+        "content_type": "application/javascript"
+      },
+      "/static/models/field-atlas.glb": {
+        "status": 200,
+        "bytes": 5586532,
+        "sha256": "cba24b55df0d6d4ce70de9dfa8a8a124e3b4fe5512901f4fd3f7c0074c7740c4",
+        "content_type": "model/gltf-binary"
+      },
+      "/static/models/field-atlas-poster.png": {
+        "status": 200,
+        "bytes": 1359597,
+        "sha256": "c40d8d68fe25f686a341b383e90190bf49d8220b55c17a44eb1562d39922c134",
+        "content_type": "image/png"
+      }
+    },
+    "https://www.treyharnden.com": {
+      "/": {
+        "status": 200,
+        "bytes": 13172,
+        "sha256": "b6a7885f706ad42a9adbb773d6c332481df25efa0b0b2ad20a246e46f6fe7651"
+      },
+      "/now": {
+        "status": 200,
+        "bytes": 5757,
+        "sha256": "1ec3452a18e141bebc569bc8630d56b17f2408c094d7eec2e5a49517b31d6931"
+      },
+      "/friends": {
+        "status": 200,
+        "bytes": 6661,
+        "sha256": "fee836445148fd1a09cea233a76e3623d99410a5c6e05b76f04a80f1da46cefd"
+      },
+      "/projects": {
+        "status": 200,
+        "bytes": 8714,
+        "sha256": "7228e6415f39a2d7d613e1bffe0c7ba61a1ae783098b2d3b99f3710e43b2f212"
+      },
+      "/links": {
+        "status": 200,
+        "bytes": 7554,
+        "sha256": "7447c6ad349308b0c8a7206b611c56af4347c1c7b9f409d2d13632b3e1b1aa9a"
+      },
+      "/workouts": {
+        "status": 200,
+        "bytes": 17598,
+        "sha256": "49f6995d7ca1e046a789bef46ad03690ed11034e1f52930f62a9557d064888e1"
+      },
+      "/folloze-gtm": {
+        "status": 200,
+        "bytes": 16567,
+        "sha256": "85b19194d616056aab4b8dce734a5e1dbec0ae7ffe562f33f310d96e455c71f6"
+      },
+      "/api/workouts": {
+        "status": 200,
+        "bytes": 7086,
+        "sha256": "2e12e81ebf4ad424ea62659034b4aedd2bbd70570bccb81a0eb38c0b6a26b32e"
+      },
+      "/static/css/style.css": {
+        "status": 200,
+        "bytes": 46158,
+        "sha256": "d6932b2c90ba36a8e1a4cd5e08e2aae047a7662682dc793e757b8960e5bb2f96",
+        "content_type": "text/css; charset=utf-8"
+      },
+      "/static/css/field-atlas.css": {
+        "status": 200,
+        "bytes": 5474,
+        "sha256": "777758779baa21d27d409861b9122e6967205e68068f62ada214f67999e812af",
+        "content_type": "text/css; charset=utf-8"
+      },
+      "/static/js/main.js": {
+        "status": 200,
+        "bytes": 5079,
+        "sha256": "4d2768a3e0414720524d5c9fc6310206f68beaca7fa5a887ff4f9a6404f30766",
+        "content_type": "application/javascript"
+      },
+      "/static/js/field-atlas.js": {
+        "status": 200,
+        "bytes": 648075,
+        "sha256": "83119624e59c2a739c3af79abbf07c08340247a1adee80cab51c711edb5cf2fb",
+        "content_type": "application/javascript"
+      },
+      "/static/models/field-atlas.glb": {
+        "status": 200,
+        "bytes": 5586532,
+        "sha256": "cba24b55df0d6d4ce70de9dfa8a8a124e3b4fe5512901f4fd3f7c0074c7740c4",
+        "content_type": "model/gltf-binary"
+      },
+      "/static/models/field-atlas-poster.png": {
+        "status": 200,
+        "bytes": 1359597,
+        "sha256": "c40d8d68fe25f686a341b383e90190bf49d8220b55c17a44eb1562d39922c134",
+        "content_type": "image/png"
+      }
+    },
+    "https://ebcf5d5b.treyharndencom-linktree.pages.dev": {
+      "/": {
+        "status": 200,
+        "bytes": 13172,
+        "sha256": "b6a7885f706ad42a9adbb773d6c332481df25efa0b0b2ad20a246e46f6fe7651"
+      },
+      "/now": {
+        "status": 200,
+        "bytes": 5757,
+        "sha256": "1ec3452a18e141bebc569bc8630d56b17f2408c094d7eec2e5a49517b31d6931"
+      },
+      "/friends": {
+        "status": 200,
+        "bytes": 6661,
+        "sha256": "fee836445148fd1a09cea233a76e3623d99410a5c6e05b76f04a80f1da46cefd"
+      },
+      "/projects": {
+        "status": 200,
+        "bytes": 8714,
+        "sha256": "7228e6415f39a2d7d613e1bffe0c7ba61a1ae783098b2d3b99f3710e43b2f212"
+      },
+      "/links": {
+        "status": 200,
+        "bytes": 7554,
+        "sha256": "7447c6ad349308b0c8a7206b611c56af4347c1c7b9f409d2d13632b3e1b1aa9a"
+      },
+      "/workouts": {
+        "status": 200,
+        "bytes": 17598,
+        "sha256": "49f6995d7ca1e046a789bef46ad03690ed11034e1f52930f62a9557d064888e1"
+      },
+      "/folloze-gtm": {
+        "status": 200,
+        "bytes": 16567,
+        "sha256": "85b19194d616056aab4b8dce734a5e1dbec0ae7ffe562f33f310d96e455c71f6"
+      },
+      "/api/workouts": {
+        "status": 200,
+        "bytes": 7086,
+        "sha256": "2e12e81ebf4ad424ea62659034b4aedd2bbd70570bccb81a0eb38c0b6a26b32e"
+      },
+      "/static/css/style.css": {
+        "status": 200,
+        "bytes": 46158,
+        "sha256": "d6932b2c90ba36a8e1a4cd5e08e2aae047a7662682dc793e757b8960e5bb2f96",
+        "content_type": "text/css; charset=utf-8"
+      },
+      "/static/css/field-atlas.css": {
+        "status": 200,
+        "bytes": 5474,
+        "sha256": "777758779baa21d27d409861b9122e6967205e68068f62ada214f67999e812af",
+        "content_type": "text/css; charset=utf-8"
+      },
+      "/static/js/main.js": {
+        "status": 200,
+        "bytes": 5079,
+        "sha256": "4d2768a3e0414720524d5c9fc6310206f68beaca7fa5a887ff4f9a6404f30766",
+        "content_type": "application/javascript"
+      },
+      "/static/js/field-atlas.js": {
+        "status": 200,
+        "bytes": 648075,
+        "sha256": "83119624e59c2a739c3af79abbf07c08340247a1adee80cab51c711edb5cf2fb",
+        "content_type": "application/javascript"
+      },
+      "/static/models/field-atlas.glb": {
+        "status": 200,
+        "bytes": 5586532,
+        "sha256": "cba24b55df0d6d4ce70de9dfa8a8a124e3b4fe5512901f4fd3f7c0074c7740c4",
+        "content_type": "model/gltf-binary"
+      },
+      "/static/models/field-atlas-poster.png": {
+        "status": 200,
+        "bytes": 1359597,
+        "sha256": "c40d8d68fe25f686a341b383e90190bf49d8220b55c17a44eb1562d39922c134",
+        "content_type": "image/png"
+      }
+    }
+  },
+  "artifact": {
+    "_headers": {
+      "bytes": 818,
+      "sha256": "6e6efb7569d24278a1ba0981cb8ae864a0eda97390be3ce42e70c691cc1e2c1a"
+    },
+    "_redirects": {
+      "bytes": 76,
+      "sha256": "685bf98ba44c4ca922af22e4a7f9d44c9c3a81040c44e7cf43bf04ea8095ddc9"
+    },
+    "api/workouts.json": {
+      "bytes": 7086,
+      "sha256": "2e12e81ebf4ad424ea62659034b4aedd2bbd70570bccb81a0eb38c0b6a26b32e"
+    },
+    "folloze-gtm/index.html": {
+      "bytes": 16567,
+      "sha256": "85b19194d616056aab4b8dce734a5e1dbec0ae7ffe562f33f310d96e455c71f6"
+    },
+    "friends/index.html": {
+      "bytes": 6661,
+      "sha256": "fee836445148fd1a09cea233a76e3623d99410a5c6e05b76f04a80f1da46cefd"
+    },
+    "index.html": {
+      "bytes": 13172,
+      "sha256": "b6a7885f706ad42a9adbb773d6c332481df25efa0b0b2ad20a246e46f6fe7651"
+    },
+    "links/index.html": {
+      "bytes": 7554,
+      "sha256": "7447c6ad349308b0c8a7206b611c56af4347c1c7b9f409d2d13632b3e1b1aa9a"
+    },
+    "now/index.html": {
+      "bytes": 5757,
+      "sha256": "1ec3452a18e141bebc569bc8630d56b17f2408c094d7eec2e5a49517b31d6931"
+    },
+    "projects/folloze-outbound-intent-loop/folloze-logo-secondary.png": {
+      "bytes": 23561,
+      "sha256": "d86460c6269f86d8af570f0ec17e8f6d50018e840fe1b1843b8badc4fbefae47"
+    },
+    "projects/folloze-outbound-intent-loop/index.html": {
+      "bytes": 20715,
+      "sha256": "eb6a6b7a1daaedb7081dba0833865cbeef2bc1599d942f13e63317684f8ba12a"
+    },
+    "projects/index.html": {
+      "bytes": 8714,
+      "sha256": "7228e6415f39a2d7d613e1bffe0c7ba61a1ae783098b2d3b99f3710e43b2f212"
+    },
+    "static/css/field-atlas.css": {
+      "bytes": 5474,
+      "sha256": "777758779baa21d27d409861b9122e6967205e68068f62ada214f67999e812af"
+    },
+    "static/css/hero-field.css": {
+      "bytes": 3177,
+      "sha256": "59ea6417711fc2c708ba24ad678285cf5322ce358447b877520042b3e3cd8c00"
+    },
+    "static/css/style.css": {
+      "bytes": 46158,
+      "sha256": "d6932b2c90ba36a8e1a4cd5e08e2aae047a7662682dc793e757b8960e5bb2f96"
+    },
+    "static/fonts/LICENSE-black-ops-one.txt": {
+      "bytes": 4314,
+      "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+    },
+    "static/fonts/LICENSE-ibm-plex-mono.txt": {
+      "bytes": 4314,
+      "sha256": "18aabf190848725e2576eefb5c29ba06aac1029d02132252a7f312eac2e50cf3"
+    },
+    "static/fonts/black-ops-one-latin-400.woff2": {
+      "bytes": 30484,
+      "sha256": "ec8fdfd4a1108277729814cfd44625ace5fac746953c114bfb15f18077143710"
+    },
+    "static/fonts/ibm-plex-mono-latin-400.woff2": {
+      "bytes": 14812,
+      "sha256": "3c5a451f9ec27a354b0c2bcca636c6ec17a651281aabf29f8427e210a1d31e85"
+    },
+    "static/fonts/ibm-plex-mono-latin-500.woff2": {
+      "bytes": 14988,
+      "sha256": "756026ff72eb76fd971ac4b7504cec55eef62109d2684c2cad8da32170b80b37"
+    },
+    "static/fonts/ibm-plex-mono-latin-600.woff2": {
+      "bytes": 15704,
+      "sha256": "c4d3deb734a27e6d0dc7a6b464779f70ba1c272e26287860a14e35e85acb5b76"
+    },
+    "static/images/abm-playbook-preview.png": {
+      "bytes": 150340,
+      "sha256": "7077c32ae9768d6b79719038f402b92ed7f00f0ef7fd933266fa40274d5f1977"
+    },
+    "static/images/headshot-professional-v1-1280.jpg": {
+      "bytes": 591397,
+      "sha256": "0ff5907fc6c74cda71b1adbddff1b8d522a29fd18ededd88c42f20cab287f751"
+    },
+    "static/images/headshot-professional-v1-720.avif": {
+      "bytes": 60534,
+      "sha256": "77cc4f5d5aaab84f89de0e3ff087b4e5136c9a0351ca82646f3033166416aa7a"
+    },
+    "static/images/headshot-professional-v1-720.jpg": {
+      "bytes": 175650,
+      "sha256": "74736fd94c64430e01fe946ebcf11f69a94ec784f4b94808701f89d7a98ce1ee"
+    },
+    "static/images/headshot-professional-v1-960.jpg": {
+      "bytes": 359591,
+      "sha256": "285579211c4a26fcba6c5e378566abdbbe937d19b9488977b00986464d8a57a7"
+    },
+    "static/images/headshot-professional-v1-web.jpg": {
+      "bytes": 1547382,
+      "sha256": "b461dfd635c5e5b1230289af5a7fe7055bc8f8348fae01982470a7e4e86d19ec"
+    },
+    "static/images/headshot-professional-v1.jpg": {
+      "bytes": 14475267,
+      "sha256": "da3e13b0ecd82d1974bbf7ea26acbb1706a98231701a8e90b5bad8c69fc97909"
+    },
+    "static/images/headshot-professional-v2.jpg": {
+      "bytes": 217663,
+      "sha256": "fd4793f387c7a69437b9b2a6485b769fa59225857b58313032d4af4721c33820"
+    },
+    "static/images/trey-rainier-headshot.jpeg": {
+      "bytes": 37978,
+      "sha256": "b04b2872785cbb0deb31c52c9038a1837b431403707659cfbea582486f2a9ac1"
+    },
+    "static/images/x-logo-white.png": {
+      "bytes": 103016,
+      "sha256": "432bdd47255b48366843ec21d209e774f93b807e1fd0894fc983aad0dc7bd03b"
+    },
+    "static/js/field-atlas.LICENSE-lucide.txt": {
+      "bytes": 3208,
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57"
+    },
+    "static/js/field-atlas.LICENSE-three.txt": {
+      "bytes": 1081,
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+    },
+    "static/js/field-atlas.js": {
+      "bytes": 648075,
+      "sha256": "83119624e59c2a739c3af79abbf07c08340247a1adee80cab51c711edb5cf2fb"
+    },
+    "static/js/field-atlas.js.LEGAL.txt": {
+      "bytes": 572,
+      "sha256": "0a8cad518829917b82c75fc59878f72d81b0e8016265df934fbb78aa71db339a"
+    },
+    "static/js/hero-field.js": {
+      "bytes": 12051,
+      "sha256": "1ba8049c37b0b4ee73071fda0844c0da41cf6cb59db82ef0aa8b05e9344db5d0"
+    },
+    "static/js/main.js": {
+      "bytes": 5079,
+      "sha256": "4d2768a3e0414720524d5c9fc6310206f68beaca7fa5a887ff4f9a6404f30766"
+    },
+    "static/models/field-atlas-poster.png": {
+      "bytes": 1359597,
+      "sha256": "c40d8d68fe25f686a341b383e90190bf49d8220b55c17a44eb1562d39922c134"
+    },
+    "static/models/field-atlas.glb": {
+      "bytes": 5586532,
+      "sha256": "cba24b55df0d6d4ce70de9dfa8a8a124e3b4fe5512901f4fd3f7c0074c7740c4"
+    },
+    "static/projects/folloze-outbound-engine/folloze-logo-secondary.png": {
+      "bytes": 23561,
+      "sha256": "d86460c6269f86d8af570f0ec17e8f6d50018e840fe1b1843b8badc4fbefae47"
+    },
+    "static/projects/folloze-outbound-engine/index.html": {
+      "bytes": 20715,
+      "sha256": "eb6a6b7a1daaedb7081dba0833865cbeef2bc1599d942f13e63317684f8ba12a"
+    },
+    "workouts/index.html": {
+      "bytes": 17598,
+      "sha256": "49f6995d7ca1e046a789bef46ad03690ed11034e1f52930f62a9557d064888e1"
+    }
+  },
+  "primary_worktree": {
+    "status": " M data/workouts_snapshot.json\n M dist-cloudflare/api/workouts.json\n M dist-cloudflare/folloze-gtm/index.html\n M dist-cloudflare/index.html\n M dist-cloudflare/links/index.html\n M dist-cloudflare/projects/index.html\n M dist-cloudflare/static/css/style.css\n M dist-cloudflare/workouts/index.html\n?? dist-cloudflare/static/images/headshot-professional-v1-web.jpg\n",
+    "sha256": {
+      "data/workouts_snapshot.json": "4dd6186823cee7b33eb3b6bada27f8920cfe9659a79c85c2f59652f65eb4991e",
+      "dist-cloudflare/api/workouts.json": "4dd6186823cee7b33eb3b6bada27f8920cfe9659a79c85c2f59652f65eb4991e",
+      "dist-cloudflare/folloze-gtm/index.html": "4ed2aa50e934725fba8a5d31727996dd94c100c3e14debb18850ed56f018785c",
+      "dist-cloudflare/index.html": "62bc1cbeaebde42ea57f5bf1aba3ffc80f22aab97a3b2fde30bf12b214f1b076",
+      "dist-cloudflare/links/index.html": "d1bf9566a5bf972cd0fa3ea87cfc58f23cc42f69658cfff290aab5177abbdae2",
+      "dist-cloudflare/projects/index.html": "66edca74b16b4c4099732d35e2abf4a5fa5459fc52ee7c400884d6f46ce5ebb2",
+      "dist-cloudflare/static/css/style.css": "2779bc2cb2f76a503c13d10451343a3e88d4635d182d7ec27b14c604c35a8ff7",
+      "dist-cloudflare/workouts/index.html": "c8fc2c90893b8f5fbe151ffbefd8827350b1db5df4ca204d680109b103605aac",
+      "dist-cloudflare/static/images/headshot-professional-v1-web.jpg": "b461dfd635c5e5b1230289af5a7fe7055bc8f8348fae01982470a7e4e86d19ec"
+    }
+  }
+}
