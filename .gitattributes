@@ -1,0 +1,3 @@
+# Three.js preserves whitespace inside generated GLSL template strings.
+static/js/field-atlas.js whitespace=-blank-at-eol,-space-before-tab
+dist-cloudflare/static/js/field-atlas.js whitespace=-blank-at-eol,-space-before-tab

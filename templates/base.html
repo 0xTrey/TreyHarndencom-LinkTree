@@ -22,7 +22,8 @@
     <link rel="preload" href="{{ url_for('static', filename='fonts/black-ops-one-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="{{ url_for('static', filename='fonts/ibm-plex-mono-latin-400.woff2') }}" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=6) }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css', v=9) }}">
+    {% block page_styles %}{% endblock %}
 </head>
 <body class="page-{{ active_nav | default('default') }}">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -38,21 +39,21 @@
             </a>
 
             <button class="nav-toggle" type="button" aria-controls="site-nav" aria-expanded="false" title="Open navigation">
-                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                <span class="nav-toggle-icon" aria-hidden="true"></span>
                 <span class="sr-only">Open navigation</span>
             </button>
 
             <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
-                <a class="{% if active_nav == 'home' %}active{% endif %}" href="/">Home</a>
-                <a class="{% if active_nav == 'folloze-gtm' %}active{% endif %}" href="/folloze-gtm">Systems</a>
-                <a class="{% if active_nav == 'projects' %}active{% endif %}" href="/projects">Projects</a>
-                <a class="{% if active_nav == 'workouts' %}active{% endif %}" href="/workouts">Training</a>
-                <a class="{% if active_nav == 'links' %}active{% endif %}" href="/links">Links</a>
+                <a class="{% if active_nav == 'home' %}active{% endif %}" href="/" {% if active_nav == 'home' %}aria-current="page"{% endif %}>Home</a>
+                <a class="{% if active_nav == 'folloze-gtm' %}active{% endif %}" href="/folloze-gtm" {% if active_nav == 'folloze-gtm' %}aria-current="page"{% endif %}>Systems</a>
+                <a class="{% if active_nav == 'projects' %}active{% endif %}" href="/projects" {% if active_nav == 'projects' %}aria-current="page"{% endif %}>Projects</a>
+                <a class="{% if active_nav == 'workouts' %}active{% endif %}" href="/workouts" {% if active_nav == 'workouts' %}aria-current="page"{% endif %}>Training</a>
+                <a class="{% if active_nav == 'links' %}active{% endif %}" href="/links" {% if active_nav == 'links' %}aria-current="page"{% endif %}>Links</a>
             </nav>
         </div>
     </header>
 
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
         {% block content %}{% endblock %}
     </main>
 
@@ -63,13 +64,16 @@
                 <p>Building systems. Logging the miles. Sharing the field notes.</p>
             </div>
             <nav aria-label="Footer navigation">
+                <a href="/now" {% if active_nav == 'now' %}aria-current="page"{% endif %}>Now</a>
+                <a href="/friends" {% if active_nav == 'friends' %}aria-current="page"{% endif %}>Friends</a>
                 <a href="{{ site.github_url }}" target="_blank" rel="noopener" data-link-name="GitHub">GitHub ↗</a>
                 <a href="{{ site.notion_embed_url }}" target="_blank" rel="noopener" data-link-name="Public Journal">Journal ↗</a>
-                <a href="/links">Contact</a>
+                <a href="/links" {% if active_nav == 'links' %}aria-current="page"{% endif %}>Contact</a>
             </nav>
         </div>
     </footer>
 
-    <script src="{{ url_for('static', filename='js/main.js', v=5) }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js', v=7) }}"></script>
+    {% block page_scripts %}{% endblock %}
 </body>
 </html>

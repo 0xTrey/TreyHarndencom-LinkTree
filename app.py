@@ -70,7 +70,7 @@ SITE_CONFIG = {
 
 AI_GTM_PROJECTS = [
     {
-        'number': '01',
+        'number': '1',
         'name': 'Folloze Content Engine',
         'category': 'AEO / GEO pipeline',
         'icon': 'fas fa-newspaper',
@@ -82,7 +82,7 @@ AI_GTM_PROJECTS = [
         'track_name': 'GitHub: Folloze Content Engine',
     },
     {
-        'number': '02',
+        'number': '2',
         'name': 'Folloze AEO/GEO Blog Engine',
         'category': 'LLM citation surface',
         'icon': 'fas fa-sitemap',
@@ -94,7 +94,7 @@ AI_GTM_PROJECTS = [
         'repo_icon': 'fas fa-folder-tree',
     },
     {
-        'number': '03',
+        'number': '3',
         'name': 'Folloze LinkedIn Engine',
         'category': 'Executive content system',
         'icon': 'fab fa-linkedin',
@@ -106,7 +106,7 @@ AI_GTM_PROJECTS = [
         'track_name': 'GitHub: Folloze LinkedIn Engine',
     },
     {
-        'number': '04',
+        'number': '4',
         'name': 'Folloze Outbound Engine',
         'category': 'AI SDR operations',
         'icon': 'fas fa-route',
@@ -118,7 +118,7 @@ AI_GTM_PROJECTS = [
         'track_name': 'GitHub: Folloze Outbound Engine Public',
     },
     {
-        'number': '05',
+        'number': '5',
         'name': 'Post-Call Deal Room Autopilot',
         'category': 'Buyer-safe follow-up',
         'icon': 'fas fa-door-open',
@@ -130,7 +130,7 @@ AI_GTM_PROJECTS = [
         'repo_icon': 'fas fa-folder-tree',
     },
     {
-        'number': '06',
+        'number': '6',
         'name': 'Timely Extractor',
         'category': 'Local activity ledger',
         'icon': 'fas fa-wave-square',
@@ -142,7 +142,7 @@ AI_GTM_PROJECTS = [
         'repo_icon': 'fas fa-lock',
     },
     {
-        'number': '07',
+        'number': '7',
         'name': 'Folloze Automated Demo Environment Builder',
         'category': 'Demo environment builder',
         'icon': 'fas fa-layer-group',
@@ -154,7 +154,7 @@ AI_GTM_PROJECTS = [
         'repo_icon': 'fas fa-lock',
     },
     {
-        'number': '08',
+        'number': '8',
         'name': 'Folloze Sales Automation Stack',
         'category': 'AE operating system',
         'icon': 'fas fa-briefcase',
@@ -539,7 +539,7 @@ DEFAULT_STATIC_WORKOUT_SNAPSHOT = {
             'device': '',
             'distance': '2.46 mi',
             'duration': '46m 37s',
-            'elevation': '—',
+            'elevation': 'N/A',
             'url': 'https://strava.com/activities/19416855943',
         },
         {
@@ -549,7 +549,7 @@ DEFAULT_STATIC_WORKOUT_SNAPSHOT = {
             'device': '',
             'distance': '1.40 mi',
             'duration': '31m 9s',
-            'elevation': '—',
+            'elevation': 'N/A',
             'url': 'https://strava.com/activities/19409642381',
         },
         {
@@ -559,7 +559,7 @@ DEFAULT_STATIC_WORKOUT_SNAPSHOT = {
             'device': '',
             'distance': '1.00 mi',
             'duration': '20m 52s',
-            'elevation': '—',
+            'elevation': 'N/A',
             'url': 'https://strava.com/activities/19406175729',
         },
         {
@@ -569,7 +569,7 @@ DEFAULT_STATIC_WORKOUT_SNAPSHOT = {
             'device': '',
             'distance': '3.25 mi',
             'duration': '1h 6m',
-            'elevation': '—',
+            'elevation': 'N/A',
             'url': 'https://strava.com/activities/19403672958',
         },
         {
@@ -577,9 +577,9 @@ DEFAULT_STATIC_WORKOUT_SNAPSHOT = {
             'name': 'Morning Weight Training',
             'sport_type': 'Weight Training',
             'device': '',
-            'distance': '—',
+            'distance': 'N/A',
             'duration': '26m 53s',
-            'elevation': '—',
+            'elevation': 'N/A',
             'url': 'https://strava.com/activities/19401932069',
         },
     ],
@@ -1110,6 +1110,34 @@ def create_app():
                                  og_type='profile')
         except Exception as e:
             logger.error(f"Error rendering links page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/now')
+    def now():
+        try:
+            return render_template('now.html',
+                                 page_title='Now - Trey Harnden',
+                                 meta_description='What Trey Harnden is focused on now: practical AI systems, independent projects, consistent training, and more time outside.',
+                                 active_nav='now',
+                                 og_title='What Trey Harnden Is Doing Now',
+                                 og_description='Current work, projects, training, and priorities from Trey Harnden.',
+                                 og_type='profile')
+        except Exception as e:
+            logger.error(f"Error rendering now page: {str(e)}")
+            return "Internal Server Error", 500
+
+    @app.route('/friends')
+    def friends():
+        try:
+            return render_template('friends.html',
+                                 page_title='Friends - Trey Harnden',
+                                 meta_description='People whose independent websites and public work Trey Harnden keeps returning to.',
+                                 active_nav='friends',
+                                 og_title='People Worth Your Time - Trey Harnden',
+                                 og_description='A small, honest list of builders and writers worth following around the independent web.',
+                                 og_type='profile')
+        except Exception as e:
+            logger.error(f"Error rendering friends page: {str(e)}")
             return "Internal Server Error", 500
 
     @app.route('/projects')

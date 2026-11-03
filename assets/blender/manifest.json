@@ -1,0 +1,20 @@
+{
+  "asset": "Field Atlas",
+  "authoring_tool": "5.2.2 LTS",
+  "source": "assets/blender/field-atlas.blend",
+  "generator": "scripts/build_field_atlas.py",
+  "generator_sha256": "2f707281f3d8b5905af53eff44dd88f0b0fe5cbccd4d1e3b31ac824fb76c229e",
+  "blend_sha256": "cf43a28b54565b0f8931d4d25fca4afdc1a86a58b1f2f697e1722b290c542ca0",
+  "provenance": "Original procedural artwork. No third-party models, textures, or GPS data.",
+  "triangles": 126776,
+  "outputs": {
+    "field-atlas.glb": {
+      "bytes": 5586532,
+      "sha256": "cba24b55df0d6d4ce70de9dfa8a8a124e3b4fe5512901f4fd3f7c0074c7740c4"
+    },
+    "field-atlas-poster.png": {
+      "bytes": 1359597,
+      "sha256": "c40d8d68fe25f686a341b383e90190bf49d8220b55c17a44eb1562d39922c134"
+    }
+  }
+}

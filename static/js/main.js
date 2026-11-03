@@ -45,7 +45,6 @@ function initNavigation() {
         document.body.classList.remove('nav-open');
         toggle.setAttribute('aria-expanded', 'false');
         toggle.setAttribute('title', 'Open navigation');
-        toggle.querySelector('i')?.classList.replace('fa-xmark', 'fa-bars');
         const label = toggle.querySelector('.sr-only');
         if (label) label.textContent = 'Open navigation';
     };
@@ -56,7 +55,6 @@ function initNavigation() {
         document.body.classList.toggle('nav-open', willOpen);
         toggle.setAttribute('aria-expanded', String(willOpen));
         toggle.setAttribute('title', willOpen ? 'Close navigation' : 'Open navigation');
-        toggle.querySelector('i')?.classList.replace(willOpen ? 'fa-bars' : 'fa-xmark', willOpen ? 'fa-xmark' : 'fa-bars');
         const label = toggle.querySelector('.sr-only');
         if (label) label.textContent = willOpen ? 'Close navigation' : 'Open navigation';
     });
@@ -98,6 +96,23 @@ function initRevealAnimations() {
     targets.forEach(target => observer.observe(target));
 }
 
+function initImageFallbacks() {
+    document.querySelectorAll('[data-image-frame]').forEach(frame => {
+        const image = frame.querySelector('img');
+        if (!image) return;
+
+        const markLoaded = () => frame.classList.remove('is-image-missing');
+        const markMissing = () => frame.classList.add('is-image-missing');
+
+        image.addEventListener('load', markLoaded);
+        image.addEventListener('error', markMissing);
+
+        if (image.complete) {
+            image.naturalWidth > 0 ? markLoaded() : markMissing();
+        }
+    });
+}
+
 function initLinkTracking() {
     document.querySelectorAll('a[data-link-name]').forEach(link => {
         link.addEventListener('click', async function() {
@@ -121,6 +136,7 @@ function initLinkTracking() {
 document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initRevealAnimations();
+    initImageFallbacks();
     initLinkTracking();
     initLifeCounter();
 

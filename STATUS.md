@@ -1,6 +1,29 @@
 # Current Status
 
-Last updated: 2026-08-27
+Last updated: 2026-11-03
+
+## Blender V3 Release Candidate
+
+- Branch: `codex/treyharnden-v3-local`
+- Worktree: `/Users/treyharnden/Projects/TreyHarndencom-V3-Preview`
+- Preview: `http://127.0.0.1:5097/`
+- Scope: actual Blender-authored alpine terrain with Three.js interaction,
+  linked stations, responsive composition, reduced-motion and rendered-image
+  fallbacks, current `/now` and `/friends` pages, and complete static export.
+- State: Trey approved production publication on November 3. Build, preservation
+  and fallback checks passed. Deployment and public verification are pending.
+- Review package: `docs/blender-review/README.md`
+- Release receipts: `docs/blender-review/release-2026-11-03/`
+- Blender 5.2.2 LTS created the editable scene, GLB model, and fallback render.
+  Source and regeneration script are under `assets/blender` and `scripts`.
+
+## Personal Directory Credibility Pages
+
+- Source commit: `03e6a3958fdaf22d1d2a263359f4f31a31ea1739`
+- Public `/now` and `/friends` routes, footer links, responsive styles, and static
+  artifacts were added on 2026-09-17.
+- The V3 branch includes those routes so a later review cannot regress the current
+  public site.
 
 ## Field Systems V2
 
@@ -18,9 +41,9 @@ Last updated: 2026-08-27
 ## Live State
 
 - Production domain: `https://treyharnden.com`
-- Production deployment: `d6204cc2-d628-4f9f-becd-4da0be756029`
+- Last recorded production deployment: `4ce0f0d0-a093-4fbc-ac54-af85ee71e9e9`
 - Immutable deployment URL:
-  `https://d6204cc2.treyharndencom-linktree.pages.dev`
+  `https://4ce0f0d0.treyharndencom-linktree.pages.dev`
 - Canonical project route: `https://treyharnden.com/projects`
 - Legacy `/work` redirects to `/projects`
 - Apex and `www` are proxied Cloudflare CNAME records targeting
@@ -54,6 +77,10 @@ history.
   stylesheet, and optimized portrait checksums after deployment.
 - `/`, `/links`, `/projects`, `/folloze-gtm`, `/workouts`, and `/api/workouts` returned
   HTTP 200 from all three production hosts.
+- On 2026-09-17, `/now` and `/friends` returned HTTP 200 with matching HTML
+  checksums from the immutable deployment, apex domain, and `www`.
+- On 2026-11-02, the local V3 static build passed seven-route desktop, mobile,
+  short-phone, and zoom-reflow checks. See `docs/v3-review/README.md`.
 
 ## Deploy Workflow
 
@@ -81,7 +108,9 @@ npx wrangler pages deploy dist-cloudflare \
 
 ## Good Next Checks
 
-- Review and merge this branch into `main` so the default Git branch matches the live
-  production deployment.
+- Complete the authorized Blender release, then record its exact source commit,
+  deployment ID and public verification. Preserve the prior deployment for rollback.
+- The GitHub default branch remains a legacy archive. Production release source
+  is tracked on `codex/treyharnden-v3-local`; do not overwrite unrelated branches.
 - Remove obsolete Vercel verification/fallback state only after confirming it is no
   longer wanted.

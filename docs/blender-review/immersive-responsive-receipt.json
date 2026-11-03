@@ -1,0 +1,182 @@
+[
+  {
+    "brokenImages": 0,
+    "clientWidth": 1425,
+    "height": 900,
+    "labelsOverlapCopy": false,
+    "metricsHint": 56,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "17",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 866,
+      "height": 813,
+      "left": 456,
+      "right": 1539,
+      "top": 53,
+      "width": 1083,
+      "x": 456,
+      "y": 53
+    },
+    "scrollWidth": 1425,
+    "width": 1440
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 1905,
+    "height": 1080,
+    "labelsOverlapCopy": false,
+    "metricsHint": 144,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "16",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 960.765625,
+      "height": 910.53125,
+      "left": 647.6875,
+      "right": 2057.390625,
+      "top": 50.234375,
+      "width": 1409.703125,
+      "x": 647.6875,
+      "y": 50.234375
+    },
+    "scrollWidth": 1905,
+    "width": 1920
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 1009,
+    "height": 768,
+    "labelsOverlapCopy": false,
+    "metricsHint": 56,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "14",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 730.046875,
+      "height": 673.09375,
+      "left": 433.859375,
+      "right": 1089.71875,
+      "top": 56.953125,
+      "width": 655.859375,
+      "x": 433.859375,
+      "y": 56.953125
+    },
+    "scrollWidth": 1009,
+    "width": 1024
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 753,
+    "height": 1024,
+    "labelsOverlapCopy": false,
+    "metricsHint": 228.390625,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "10",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 742.609375,
+      "height": 360,
+      "left": 0,
+      "right": 753,
+      "top": 382.609375,
+      "width": 753,
+      "x": 0,
+      "y": 382.609375
+    },
+    "scrollWidth": 753,
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 375,
+    "height": 844,
+    "labelsOverlapCopy": false,
+    "metricsHint": 111.15625,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "16",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 679.84375,
+      "height": 310,
+      "left": 0,
+      "right": 375,
+      "top": 369.84375,
+      "width": 375,
+      "x": 0,
+      "y": 369.84375
+    },
+    "scrollWidth": 375,
+    "width": 390
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 305,
+    "height": 568,
+    "labelsOverlapCopy": false,
+    "metricsHint": 24,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "13",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 491,
+      "height": 180,
+      "left": 0,
+      "right": 305,
+      "top": 311,
+      "width": 305,
+      "x": 0,
+      "y": 311
+    },
+    "scrollWidth": 305,
+    "width": 320
+  }
+]

@@ -29,3 +29,5 @@ Pasted-*.txt
 ~
 .vercel
 .wrangler/
+node_modules/
+*.blend1

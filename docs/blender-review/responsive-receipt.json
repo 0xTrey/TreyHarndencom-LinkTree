@@ -1,0 +1,197 @@
+[
+  {
+    "brokenImages": 0,
+    "clientWidth": 1425,
+    "headline": {
+      "bottom": 344.78125,
+      "height": 172.78125,
+      "left": 72.5,
+      "right": 592.5,
+      "top": 172,
+      "width": 520,
+      "x": 72.5,
+      "y": 172
+    },
+    "height": 900,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "9",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 843,
+      "height": 767,
+      "left": 370.5,
+      "right": 1425,
+      "top": 76,
+      "width": 1054.5,
+      "x": 370.5,
+      "y": 76
+    },
+    "scrollWidth": 1425,
+    "signalVisible": 56,
+    "width": 1440
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 1009,
+    "headline": {
+      "bottom": 283.34375,
+      "height": 135.34375,
+      "left": 40,
+      "right": 473.859375,
+      "top": 148,
+      "width": 433.859375,
+      "x": 40,
+      "y": 148
+    },
+    "height": 768,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "9",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 711,
+      "height": 635,
+      "left": 433.859375,
+      "right": 1009,
+      "top": 76,
+      "width": 575.140625,
+      "x": 433.859375,
+      "y": 76
+    },
+    "scrollWidth": 1009,
+    "signalVisible": 56,
+    "width": 1024
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 753,
+    "headline": {
+      "bottom": 237.34375,
+      "height": 135.34375,
+      "left": 28,
+      "right": 725,
+      "top": 102,
+      "width": 697,
+      "x": 28,
+      "y": 102
+    },
+    "height": 1024,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "6",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 742.609375,
+      "height": 360,
+      "left": 0,
+      "right": 753,
+      "top": 382.609375,
+      "width": 753,
+      "x": 0,
+      "y": 382.609375
+    },
+    "scrollWidth": 753,
+    "signalVisible": 228.390625,
+    "width": 768
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 375,
+    "headline": {
+      "bottom": 201.65625,
+      "height": 103.65625,
+      "left": 22,
+      "right": 353,
+      "top": 98,
+      "width": 331,
+      "x": 22,
+      "y": 98
+    },
+    "height": 844,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "13",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 679.84375,
+      "height": 310,
+      "left": 0,
+      "right": 375,
+      "top": 369.84375,
+      "width": 375,
+      "x": 0,
+      "y": 369.84375
+    },
+    "scrollWidth": 375,
+    "signalVisible": 111.15625,
+    "width": 390
+  },
+  {
+    "brokenImages": 0,
+    "clientWidth": 305,
+    "headline": {
+      "bottom": 168.625,
+      "height": 80.625,
+      "left": 22,
+      "right": 283,
+      "top": 88,
+      "width": 261,
+      "x": 22,
+      "y": 88
+    },
+    "height": 568,
+    "model": {
+      "atlasAngle": "0.00000",
+      "atlasCamera": "15.000,15.000,18.000",
+      "atlasFrames": "2",
+      "atlasMeshes": "13",
+      "atlasPaused": "true",
+      "atlasPixelSamples": "7",
+      "atlasState": "ready",
+      "fieldAtlas": "",
+      "model": "/static/models/field-atlas.glb"
+    },
+    "scene": {
+      "bottom": 491,
+      "height": 180,
+      "left": 0,
+      "right": 305,
+      "top": 311,
+      "width": 305,
+      "x": 0,
+      "y": 311
+    },
+    "scrollWidth": 305,
+    "signalVisible": 24,
+    "width": 320
+  }
+]
