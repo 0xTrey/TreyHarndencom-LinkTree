@@ -1,0 +1,15 @@
+{
+  "name": "trey-field-atlas",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:atlas": "node scripts/build_atlas_bundle.mjs"
+  },
+  "dependencies": {
+    "three": "0.187.0",
+    "lucide": "1.66.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}
